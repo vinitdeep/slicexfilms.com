@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import VideoLightbox from '../../components/VideoLightbox';
 import GoldenDust from '../../components/GoldenDust';
+import { withBase } from '../../lib/basePath';
 
 // Real films from youtube.com/@slicexfilms8741
 const thumb = (id) => `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
@@ -754,13 +755,13 @@ export default function HomePage() {
           <div className="md:col-span-3 flex flex-col space-y-space-md">
             <span className="font-label-uppercase text-label-uppercase uppercase text-primary tracking-widest font-semibold">INDEX</span>
             <nav className="flex flex-col space-y-space-sm">
-              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="home" href="/">Home Archive</a>
-              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="about" href="/about">The Cinema Collective</a>
-              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="services" href="/services">Editorial Offerings</a>
-              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="portfolio" href="/portfolio">Featured Exhibitions</a>
-              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="films" href="/films">Cinematic Masterpieces</a>
-              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="packages" href="/book-your-date">Commission Investment</a>
-              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="contact" href="/contact">Inquire Studio</a>
+              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="home" href={withBase("/")}>Home Archive</a>
+              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="about" href={withBase("/about/")}>The Cinema Collective</a>
+              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="services" href={withBase("/services/")}>Editorial Offerings</a>
+              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="portfolio" href={withBase("/portfolio/")}>Featured Exhibitions</a>
+              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="films" href={withBase("/films/")}>Cinematic Masterpieces</a>
+              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="packages" href={withBase("/book-your-date/")}>Commission Investment</a>
+              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="contact" href={withBase("/contact/")}>Inquire Studio</a>
             </nav>
           </div>
           <div className="md:col-span-3 flex flex-col space-y-space-md">

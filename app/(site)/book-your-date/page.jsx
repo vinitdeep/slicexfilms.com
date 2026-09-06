@@ -1,4 +1,5 @@
 'use client';
+import { withBase } from '../../../lib/basePath';
 
 function selectPkgTab(btn, key) {
   document.querySelectorAll('.pkg-tab-btn').forEach((b) => {
@@ -904,19 +905,19 @@ export default function BookYourDatePage() {
             <h3 className="font-label-lg text-label-lg uppercase tracking-widest text-primary mb-space-xs">Navigation Archive</h3>
             <ul className="grid grid-cols-2 gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
               <li>
-                <a className="hover:text-primary transition-colors" data-path="home" href="/">Home Archive</a>
+                <a className="hover:text-primary transition-colors" data-path="home" href={withBase("/")}>Home Archive</a>
               </li>
               <li>
-                <a className="hover:text-primary transition-colors" data-path="films" href="/films">Cinema Collective</a>
+                <a className="hover:text-primary transition-colors" data-path="films" href={withBase("/films/")}>Cinema Collective</a>
               </li>
               <li>
-                <a className="hover:text-primary transition-colors" data-path="services" href="/services">Editorial Offerings</a>
+                <a className="hover:text-primary transition-colors" data-path="services" href={withBase("/services/")}>Editorial Offerings</a>
               </li>
               <li>
-                <a className="hover:text-primary transition-colors" data-path="portfolio" href="/portfolio">Featured Exhibitions</a>
+                <a className="hover:text-primary transition-colors" data-path="portfolio" href={withBase("/portfolio/")}>Featured Exhibitions</a>
               </li>
               <li>
-                <a className="hover:text-primary transition-colors" data-path="contact" href="/contact">Inquire Studio</a>
+                <a className="hover:text-primary transition-colors" data-path="contact" href={withBase("/contact/")}>Inquire Studio</a>
               </li>
               <li>
                 <a className="hover:text-primary transition-colors" data-path="client-portal" href="#">Admin Portal</a>

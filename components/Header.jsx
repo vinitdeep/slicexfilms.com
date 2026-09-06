@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
+import { withBase } from '../lib/basePath';
 
 const NAV_ITEMS = [
   { dp: 'home', href: '/', label: 'HOME' },
@@ -49,7 +50,7 @@ export default function Header() {
             <img
               alt="SliceX Films Logo"
               className="h-8 w-auto object-contain transition-transform group-hover:scale-105"
-              src="/assets/logo.jpg"
+              src={withBase("/assets/logo.jpg")}
             />
             <div className="flex flex-col">
               <span className="font-['Playfair_Display'] text-[20px] uppercase tracking-wider text-primary font-normal leading-none">

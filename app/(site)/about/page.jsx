@@ -1,3 +1,4 @@
+import { withBase } from '../../../lib/basePath';
 export const metadata = { title: "SliceX Films | About — The Cinema Collective" };
 
 export default function AboutPage() {
@@ -390,10 +391,10 @@ export default function AboutPage() {
         To preserve our uncompromised level of craft and intimate attention, we accept strictly 18 commissions per season across India, Europe, and destinations worldwide.
       </p>
           <div className="flex flex-col sm:flex-row items-center gap-space-md w-full justify-center pt-space-sm">
-            <a className="w-full sm:w-auto px-space-2xl py-space-md bg-primary-container text-on-primary-container font-label-md text-label-md uppercase rounded tracking-[0.16em] hover:bg-primary transition-all duration-300 shadow-[0_0_30px_rgba(212,175,55,0.3)] text-center" data-path="contact" href="/contact">
+            <a className="w-full sm:w-auto px-space-2xl py-space-md bg-primary-container text-on-primary-container font-label-md text-label-md uppercase rounded tracking-[0.16em] hover:bg-primary transition-all duration-300 shadow-[0_0_30px_rgba(212,175,55,0.3)] text-center" data-path="contact" href={withBase("/contact/")}>
           Secure Your Wedding Date
         </a>
-            <a className="w-full sm:w-auto px-space-xl py-space-md bg-surface-container-low text-on-surface hover:text-primary font-label-md text-label-md uppercase rounded tracking-[0.16em] transition-all duration-300 text-center" data-path="portfolio" href="/portfolio">
+            <a className="w-full sm:w-auto px-space-xl py-space-md bg-surface-container-low text-on-surface hover:text-primary font-label-md text-label-md uppercase rounded tracking-[0.16em] transition-all duration-300 text-center" data-path="portfolio" href={withBase("/portfolio/")}>
           Explore Film Portfolio
         </a>
           </div>
@@ -432,19 +433,19 @@ export default function AboutPage() {
             <h3 className="font-label-lg text-label-lg uppercase tracking-widest text-primary mb-space-xs">Navigation Archive</h3>
             <ul className="grid grid-cols-2 gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
               <li className="">
-                <a className="hover:text-primary transition-colors" data-path="home" href="/">Home Archive</a>
+                <a className="hover:text-primary transition-colors" data-path="home" href={withBase("/")}>Home Archive</a>
               </li>
               <li className="">
-                <a className="hover:text-primary transition-colors" data-path="films" href="/films">Cinema Collective</a>
+                <a className="hover:text-primary transition-colors" data-path="films" href={withBase("/films/")}>Cinema Collective</a>
               </li>
               <li className="">
-                <a className="hover:text-primary transition-colors" data-path="services" href="/services">Editorial Offerings</a>
+                <a className="hover:text-primary transition-colors" data-path="services" href={withBase("/services/")}>Editorial Offerings</a>
               </li>
               <li className="">
-                <a className="hover:text-primary transition-colors" data-path="portfolio" href="/portfolio">Featured Exhibitions</a>
+                <a className="hover:text-primary transition-colors" data-path="portfolio" href={withBase("/portfolio/")}>Featured Exhibitions</a>
               </li>
               <li className="">
-                <a className="hover:text-primary transition-colors" data-path="contact" href="/contact">Inquire Studio</a>
+                <a className="hover:text-primary transition-colors" data-path="contact" href={withBase("/contact/")}>Inquire Studio</a>
               </li>
               <li className="">
                 <a className="hover:text-primary transition-colors" data-path="client-portal" href="#">Admin Portal</a>

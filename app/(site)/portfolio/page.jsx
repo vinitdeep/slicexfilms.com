@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import VideoLightbox from '../../../components/VideoLightbox';
+import { withBase } from '../../../lib/basePath';
 
 export default function PortfolioPage() {
   useEffect(() => {
@@ -340,10 +341,10 @@ export default function PortfolioPage() {
             </p>
               </div>
               <div className="lg:col-span-4 flex flex-col sm:flex-row lg:flex-col gap-space-sm justify-end items-stretch">
-                <a className="inline-flex items-center justify-center px-space-lg py-space-md bg-primary-container text-on-primary-container font-label-md text-label-md uppercase tracking-wider rounded font-semibold shadow-lg hover:bg-primary transition-all duration-300 text-center" data-path="contact" href="/contact">
+                <a className="inline-flex items-center justify-center px-space-lg py-space-md bg-primary-container text-on-primary-container font-label-md text-label-md uppercase tracking-wider rounded font-semibold shadow-lg hover:bg-primary transition-all duration-300 text-center" data-path="contact" href={withBase("/contact/")}>
               REQUEST PRIVATE VAULT ACCESS
             </a>
-                <a className="inline-flex items-center justify-center px-space-lg py-space-md bg-surface-container-highest text-on-surface hover:text-primary font-label-md text-label-md uppercase tracking-wider rounded transition-all duration-300 text-center" data-path="contact" href="/contact">
+                <a className="inline-flex items-center justify-center px-space-lg py-space-md bg-surface-container-highest text-on-surface hover:text-primary font-label-md text-label-md uppercase tracking-wider rounded transition-all duration-300 text-center" data-path="contact" href={withBase("/contact/")}>
               BOOK YOUR DATE
             </a>
               </div>
@@ -375,19 +376,19 @@ export default function PortfolioPage() {
             <h3 className="font-label-lg text-label-lg uppercase tracking-widest text-primary mb-space-xs">Navigation Archive</h3>
             <ul className="grid grid-cols-2 gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
               <li className="">
-                <a className="hover:text-primary transition-colors" data-path="home" href="/">Home Archive</a>
+                <a className="hover:text-primary transition-colors" data-path="home" href={withBase("/")}>Home Archive</a>
               </li>
               <li className="">
-                <a className="hover:text-primary transition-colors" data-path="films" href="/films">Cinema Collective</a>
+                <a className="hover:text-primary transition-colors" data-path="films" href={withBase("/films/")}>Cinema Collective</a>
               </li>
               <li className="">
-                <a className="hover:text-primary transition-colors" data-path="services" href="/services">Editorial Offerings</a>
+                <a className="hover:text-primary transition-colors" data-path="services" href={withBase("/services/")}>Editorial Offerings</a>
               </li>
               <li className="">
-                <a className="hover:text-primary transition-colors" data-path="portfolio" href="/portfolio">Featured Exhibitions</a>
+                <a className="hover:text-primary transition-colors" data-path="portfolio" href={withBase("/portfolio/")}>Featured Exhibitions</a>
               </li>
               <li className="">
-                <a className="hover:text-primary transition-colors" data-path="contact" href="/contact">Inquire Studio</a>
+                <a className="hover:text-primary transition-colors" data-path="contact" href={withBase("/contact/")}>Inquire Studio</a>
               </li>
               <li className="">
                 <a className="hover:text-primary transition-colors" data-path="client-portal" href="#">Admin Portal</a>

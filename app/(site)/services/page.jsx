@@ -1,3 +1,4 @@
+import { withBase } from '../../../lib/basePath';
 export const metadata = { title: "SliceX Films | Services — Technical Architecture" };
 
 export default function ServicesPage() {
@@ -104,7 +105,7 @@ export default function ServicesPage() {
                   </div>
                 </div>
                 <div className="pt-space-md flex items-center justify-between">
-                  <a className="inline-flex items-center gap-space-xs text-primary font-label-md text-label-md uppercase tracking-[0.18em] hover:translate-x-1 transition-transform" data-path="contact" href="/contact">
+                  <a className="inline-flex items-center gap-space-xs text-primary font-label-md text-label-md uppercase tracking-[0.18em] hover:translate-x-1 transition-transform" data-path="contact" href={withBase("/contact/")}>
                 COMMISSION WEDDING FILM
                 <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
 </a>
@@ -149,7 +150,7 @@ export default function ServicesPage() {
                   </div>
                 </div>
                 <div className="pt-space-sm flex items-center justify-between">
-                  <a className="inline-flex items-center gap-space-xs text-primary font-label-md text-label-md uppercase tracking-[0.18em] hover:translate-x-1 transition-transform" data-path="contact" href="/contact">
+                  <a className="inline-flex items-center gap-space-xs text-primary font-label-md text-label-md uppercase tracking-[0.18em] hover:translate-x-1 transition-transform" data-path="contact" href={withBase("/contact/")}>
                 EXPLORE STILL PORTFOLIO
                 <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
 </a>
@@ -191,7 +192,7 @@ export default function ServicesPage() {
                   </div>
                 </div>
                 <div className="pt-space-sm flex items-center justify-between">
-                  <a className="inline-flex items-center gap-space-xs text-primary font-label-md text-label-md uppercase tracking-[0.18em] hover:translate-x-1 transition-transform" data-path="contact" href="/contact">
+                  <a className="inline-flex items-center gap-space-xs text-primary font-label-md text-label-md uppercase tracking-[0.18em] hover:translate-x-1 transition-transform" data-path="contact" href={withBase("/contact/")}>
                 PLAN DESTINATION PROLOGUE
                 <span className="material-symbols-outlined text-[16px]">arrow_forward</span>
 </a>
@@ -224,7 +225,7 @@ export default function ServicesPage() {
                     <p className="font-body-sm text-body-sm text-on-surface">2-Day Quick-Edits for social announcement • Complete 8-10 min archival audio-visual documentary chronicle.</p>
                   </div>
                 </div>
-                <a className="inline-flex items-center gap-space-2xs text-primary font-label-sm text-label-sm uppercase tracking-widest hover:translate-x-1 transition-transform" data-path="contact" href="/contact">
+                <a className="inline-flex items-center gap-space-2xs text-primary font-label-sm text-label-sm uppercase tracking-widest hover:translate-x-1 transition-transform" data-path="contact" href={withBase("/contact/")}>
               INQUIRE ENGAGEMENT
               <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
 </a>
@@ -254,7 +255,7 @@ export default function ServicesPage() {
                     <p className="font-body-sm text-body-sm text-on-surface">48-Hour delivery guarantee on high-velocity 9:16 vertical reels • Master Reception Cut screened same evening for guests.</p>
                   </div>
                 </div>
-                <a className="inline-flex items-center gap-space-2xs text-primary font-label-sm text-label-sm uppercase tracking-widest hover:translate-x-1 transition-transform" data-path="contact" href="/contact">
+                <a className="inline-flex items-center gap-space-2xs text-primary font-label-sm text-label-sm uppercase tracking-widest hover:translate-x-1 transition-transform" data-path="contact" href={withBase("/contact/")}>
               SAME-DAY AVAILABILITY
               <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
 </a>
@@ -284,7 +285,7 @@ export default function ServicesPage() {
                     <p className="font-body-sm text-body-sm text-on-surface">5.1K Apple ProRes 422 HQ aerial plates • High-angle establishing master compositions for feature cinema inclusion.</p>
                   </div>
                 </div>
-                <a className="inline-flex items-center gap-space-2xs text-primary font-label-sm text-label-sm uppercase tracking-widest hover:translate-x-1 transition-transform" data-path="contact" href="/contact">
+                <a className="inline-flex items-center gap-space-2xs text-primary font-label-sm text-label-sm uppercase tracking-widest hover:translate-x-1 transition-transform" data-path="contact" href={withBase("/contact/")}>
               EXPLORE FLIGHT PROTOCOLS
               <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
 </a>
@@ -433,11 +434,11 @@ export default function ServicesPage() {
           </p>
             </div>
             <div className="lg:col-span-4 flex flex-col gap-space-md lg:items-end">
-              <a className="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-xl py-space-md bg-primary-container text-on-primary-container font-label-md text-label-md uppercase tracking-[0.16em] rounded shadow-[0_0_30px_rgba(212,175,55,0.35)] hover:bg-primary transition-all duration-300" data-path="contact" href="/contact">
+              <a className="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-xl py-space-md bg-primary-container text-on-primary-container font-label-md text-label-md uppercase tracking-[0.16em] rounded shadow-[0_0_30px_rgba(212,175,55,0.35)] hover:bg-primary transition-all duration-300" data-path="contact" href={withBase("/contact/")}>
                 <span>INQUIRE FOR YOUR DATES</span>
                 <span className="material-symbols-outlined text-[18px]">calendar_today</span>
               </a>
-              <a className="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-lg py-space-xs bg-surface-container text-on-surface font-label-sm text-label-sm uppercase tracking-widest rounded hover:text-primary transition-colors" data-path="packages" href="/book-your-date">
+              <a className="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-lg py-space-xs bg-surface-container text-on-surface font-label-sm text-label-sm uppercase tracking-widest rounded hover:text-primary transition-colors" data-path="packages" href={withBase("/book-your-date/")}>
                 <span>VIEW CURATED PACKAGES</span>
                 <span className="material-symbols-outlined text-[16px]">arrow_outward</span>
               </a>
@@ -472,19 +473,19 @@ export default function ServicesPage() {
             <h3 className="font-label-lg text-label-lg uppercase tracking-widest text-primary mb-space-xs">Navigation Archive</h3>
             <ul className="grid grid-cols-2 gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
               <li>
-                <a className="hover:text-primary transition-colors" data-path="home" href="/">Home Archive</a>
+                <a className="hover:text-primary transition-colors" data-path="home" href={withBase("/")}>Home Archive</a>
               </li>
               <li>
-                <a className="hover:text-primary transition-colors" data-path="films" href="/films">Cinema Collective</a>
+                <a className="hover:text-primary transition-colors" data-path="films" href={withBase("/films/")}>Cinema Collective</a>
               </li>
               <li>
-                <a className="hover:text-primary transition-colors" data-path="services" href="/services">Editorial Offerings</a>
+                <a className="hover:text-primary transition-colors" data-path="services" href={withBase("/services/")}>Editorial Offerings</a>
               </li>
               <li>
-                <a className="hover:text-primary transition-colors" data-path="portfolio" href="/portfolio">Featured Exhibitions</a>
+                <a className="hover:text-primary transition-colors" data-path="portfolio" href={withBase("/portfolio/")}>Featured Exhibitions</a>
               </li>
               <li>
-                <a className="hover:text-primary transition-colors" data-path="contact" href="/contact">Inquire Studio</a>
+                <a className="hover:text-primary transition-colors" data-path="contact" href={withBase("/contact/")}>Inquire Studio</a>
               </li>
               <li>
                 <a className="hover:text-primary transition-colors" data-path="client-portal" href="#">Admin Portal</a>
