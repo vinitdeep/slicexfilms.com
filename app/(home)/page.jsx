@@ -3,10 +3,14 @@
 import { useEffect } from 'react';
 import VideoLightbox from '../../components/VideoLightbox';
 import GoldenDust from '../../components/GoldenDust';
+import HeroVideo from '../../components/HeroVideo';
 import { withBase } from '../../lib/basePath';
 
 // Real films from youtube.com/@slicexfilms8741
 const thumb = (id) => `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
+
+// Ambient hero background film (muted, looped, graded to the gold palette).
+const HERO_VIDEO = { id: 'LbZdGXwFpg4', mobileFocusX: 50 };
 
 const FEATURE_FILM = { id: 'MIBoIxNjfXM', title: 'Pratap & Supriya — The Wedding Film' };
 
@@ -102,7 +106,7 @@ export default function HomePage() {
     <div className="flex flex-col w-full selection:bg-primary selection:text-on-primary">
       <section className="relative w-full min-h-[calc(100vh-5rem)] flex flex-col justify-between overflow-hidden bg-surface-container-lowest">
         <div className="absolute inset-0 z-0">
-          <div className="w-full h-full bg-cover bg-center filter contrast-125 brightness-75 scale-105 transition-transform duration-1000 ease-out" data-alt="Editorial black and white haute couture wedding portrait of an elegant couple bathed in dramatic golden hour backlight through ancient olive trees, soft atmospheric smoke, 35mm film grain, high fashion cinematography reminiscent of Vogue Sposa cover spread, ultra high contrast" id="hero-bg-zoom" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida/AEtjO1Xn67NRSNMIirZfjhvqVUMhUBOmQxRqb79KvO_Orhpyaz3lqZUBt8SdgVbs8ysloTH3lSroysNvq_isSEwfsSXtpSupLx77t9LoOEoACPNs59XyGgfMLjs1Ie1oandYL-8Ij89uoqQHGYEy6saUpSj0TJveOF6sxHnlFxOp-4RF0cvQxGcFeLLXzp926UsSdkyh0a7APIQO_aO-tTlTEwOLVFKmpxGFrt2z6mvu8ry6fUg5F07zklN5bZrZ')" }}></div>
+          <HeroVideo videoId={HERO_VIDEO.id} mobileFocusX={HERO_VIDEO.mobileFocusX} />
           <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/50 to-surface-container-lowest/80"></div>
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.08)_0%,_transparent_60%,_rgba(14,14,14,0.9)_100%)]"></div>
         </div>

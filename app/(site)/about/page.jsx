@@ -144,7 +144,7 @@ export default function AboutPage() {
           </div>
           <div className="lg:col-span-5 flex flex-col gap-space-md">
             <div className="relative rounded-xl overflow-hidden bg-surface-container-low shadow-2xl group">
-              <div className="w-full aspect-[4/5] bg-cover bg-center" data-alt="A moody editorial portrait of a cinematic film director holding a vintage cinema camera viewfinder, dressed in an unstructured black tailored jacket, warm chiaroscuro key lighting from the side, deep obsidian shadows, warm amber dust motes in the background, refined luxury atmosphere, film grain texture." style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDa4HV_YRzOkgXJ3wDHc92Q_IfyZOPHS0wHWo0_l0i2a7rth13NfGXynLNnwynJo-9YITZmi2b1hfUTYQAvtcwEKIStFf0ZOIaxGoJzpNQNQuwtJNrr7eO7VhZ8t8vzS6kUT0PVUGj8VNIfeY-aDxR7r3Xd3CmdHkL5pI2mgGmjcieTdQ5Q85TZiMQ2bxQVwI7QUuKzIeSpwW1xyXt1hWOuVnW-_teL1fsFpsEkTfQ9BQMUOAcc_3nlzg')" }}></div>
+              <img alt="Abhishek Anand, founder and principal cinematographer of SliceX Films, seated in the studio holding a Sony Alpha camera under warm tungsten light" className="w-full aspect-[4/5] object-cover object-top transition-transform duration-700 ease-out group-hover:scale-[1.03]" src={withBase('/assets/abhishek-anand.jpg')} loading="lazy" />
               <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-transparent opacity-80"></div>
               <div className="absolute bottom-0 inset-x-0 p-space-lg flex items-center justify-between">
                 <div>
