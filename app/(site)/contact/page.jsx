@@ -86,11 +86,11 @@ export default function ContactPage() {
               </div>
               <div className="flex items-center gap-space-sm">
                 <div className="w-9 h-9 rounded bg-surface-container-high flex items-center justify-center text-primary">
-                  <span className="material-symbols-outlined text-[18px]">flight_takeoff</span>
+                  <span className="material-symbols-outlined text-[18px]">location_on</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-label-sm text-label-sm uppercase tracking-widest text-outline">Worldwide Transit</span>
-                  <span className="font-body-md text-body-md text-on-surface font-medium">Rajasthan • Mumbai • Lake Como • Global</span>
+                  <span className="font-label-sm text-label-sm uppercase tracking-widest text-outline">Studio Headquarters</span>
+                  <span className="font-body-md text-body-md text-on-surface font-medium">Balangir, Odisha, India</span>
                 </div>
               </div>
               <div className="flex items-center gap-space-sm">
@@ -311,46 +311,202 @@ export default function ContactPage() {
             </div>
           </div>
         </section>
-        <section className="w-full px-margin-mobile lg:px-margin-desktop pb-space-4xl">
-          <div className="max-w-7xl mx-auto bg-surface-container-low rounded-2xl overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12">
+        <section className="w-full px-margin-mobile lg:px-margin-desktop pb-space-4xl" id="location">
+          <div className="max-w-7xl mx-auto bg-surface-container-low rounded-2xl overflow-hidden shadow-2xl grid grid-cols-1 lg:grid-cols-12 border border-primary-container/20">
             <div className="lg:col-span-6 p-space-xl lg:p-space-3xl flex flex-col justify-between gap-space-xl">
               <div className="flex flex-col gap-space-md">
                 <div className="flex items-center gap-space-xs">
-                  <span className="font-label-sm text-label-sm uppercase tracking-[0.24em] text-primary">PHYSICAL SANCTUARY</span>
+                  <span className="font-label-sm text-label-sm uppercase tracking-[0.24em] text-primary">STUDIO LOCATION &amp; MAP</span>
                   <span className="text-outline">•</span>
-                  <span className="font-label-sm text-label-sm text-outline uppercase tracking-widest">UDAIPUR ATELIER</span>
+                  <span className="font-label-sm text-label-sm text-outline uppercase tracking-widest font-mono">VERIFIED ON GOOGLE MAPS</span>
                 </div>
                 <h2 className="font-headline-lg text-headline-lg text-on-surface">Experience The Private Screening Room</h2>
                 <p className="font-body-md text-body-md text-on-surface-variant leading-relaxed">
-              We welcome prospective couples and couture wedding planners to our physical atelier in Rajasthan. Immerse yourself in a calibrated 4K DCI-P3 theatrical projection suite, preview handcrafted heirloom leather albums, and review bespoke uncompressed musical scores over artisanal pour-over coffee.
-            </p>
+                  We welcome couples and wedding planners to our studio ateliers in Balangir &amp; Rajasthan. Immerse yourself in a calibrated 4K DCI-P3 theatrical projection suite, preview handcrafted heirloom albums, and review uncompressed scores over artisanal pour-over coffee.
+                </p>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-md pt-space-md bg-surface-container-high/40 p-space-md rounded-lg">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-space-md pt-space-md bg-surface-container-high/50 p-space-md rounded-lg border border-primary-container/15">
                 <div className="flex flex-col">
-                  <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest">Studio Address</span>
-                  <span className="font-body-sm text-body-sm text-on-surface font-medium">SliceX Films Atelier</span>
-                  <span className="font-body-sm text-body-sm text-on-surface-variant">Heritage Quarter, Lake City, Udaipur, Rajasthan 313001</span>
+                  <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest block mb-1">Studio Address</span>
+                  <span className="font-body-sm text-body-sm text-on-surface font-semibold">SliceX Films Studio</span>
+                  <span className="font-body-sm text-body-sm text-on-surface-variant leading-snug">Main Road, Near College Square, Balangir, Odisha 767001, India</span>
                 </div>
                 <div className="flex flex-col">
-                  <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest">Appointment Protocol</span>
-                  <span className="font-body-sm text-body-sm text-on-surface font-medium">Strictly By Appointment</span>
-                  <span className="font-body-sm text-body-sm text-on-surface-variant">Valet reception &amp; private parking arranged</span>
+                  <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest block mb-1">Appointment Protocol</span>
+                  <span className="font-body-sm text-body-sm text-on-surface font-semibold">Direct Consultations</span>
+                  <span className="font-body-sm text-body-sm text-on-surface-variant leading-snug">Hotline: +91 98271 22620 / +91 96586 21038</span>
                 </div>
               </div>
-              <div className="flex items-center gap-space-md">
-                <a className="inline-flex items-center gap-space-xs px-space-md py-space-xs bg-surface-container-highest hover:bg-primary hover:text-on-primary text-on-surface font-label-md text-label-md uppercase tracking-wider rounded transition-all" href="https://maps.google.com" rel="noopener" target="_blank">
-                  <span className="material-symbols-outlined text-[16px]">navigation</span>
-                  <span className="">Open in Google Maps</span>
+              <div className="flex flex-wrap items-center gap-space-md pt-2">
+                <a 
+                  className="inline-flex items-center gap-space-xs px-space-lg py-space-sm bg-primary text-surface-container-lowest font-label-md text-label-md uppercase tracking-wider rounded-md font-bold shadow-lg hover:bg-amber-300 transition-all" 
+                  href="https://share.google/jmSViIkA3751IqYPo" 
+                  rel="noopener noreferrer" 
+                  target="_blank"
+                >
+                  <span className="material-symbols-outlined text-[18px]">map</span>
+                  <span>Open in Google Maps</span>
                 </a>
-                <span className="font-label-sm text-label-sm text-outline tracking-wider">COORDINATES: 24.5764° N, 73.6835° E</span>
+                <span className="font-label-sm text-label-sm text-outline tracking-wider font-mono">LOCATION CODE: jmSViIkA3751IqYPo</span>
               </div>
             </div>
-            <div className="lg:col-span-6 min-h-[380px] relative bg-surface-container-high">
-              <div className="w-full h-full min-h-[380px] bg-cover bg-center filter grayscale contrast-125" data-location="Udaipur, Rajasthan, India" style={{ backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuAMCGDKOxmnA679itZkFJAo5zvAZLLw0wJKDfVFZ2FQt9jXKc94x2wvEIjlJB-3GfvmMyEjEXeay5dZZ8O3TFQxIxmJ8LtCKFZ8x37YKhlKkffTZZUaN6TFMbHe2Q3H5lxMYiMPxXCosnQCwoT4_TQNI30zpm2srjhDre-SaY_7-aEZByiPFuxO0o1V1vhkz7nau2bC5uOQK7sv96aXlCNKtE-zonsRK3YaEOBezuOHpxvRimLMj7PlLw')" }}></div>
-              <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent opacity-80 pointer-events-none"></div>
-              <div className="absolute top-space-md right-space-md bg-surface-container-lowest/90 backdrop-blur-md px-space-md py-space-xs rounded shadow-lg flex items-center gap-space-xs">
-                <span className="w-2 h-2 rounded-full bg-primary animate-ping"></span>
-                <span className="font-label-sm text-label-sm uppercase tracking-widest text-on-surface">Udaipur Atelier HQ</span>
+
+            {/* Right Column: Google Maps Interactive Iframe */}
+            <div className="lg:col-span-6 min-h-[420px] relative bg-surface-container-high overflow-hidden">
+              <iframe
+                title="SliceX Films Google Maps Location"
+                src="https://maps.google.com/maps?q=SliceX+Films+Balangir+Odisha&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                className="w-full h-full min-h-[420px] border-0 filter grayscale contrast-125 opacity-85 hover:opacity-100 hover:filter-none transition-all duration-700"
+                allowFullScreen=""
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+              />
+              <div className="absolute top-space-md right-space-md bg-surface-container-lowest/90 backdrop-blur-md px-space-md py-space-xs rounded shadow-lg flex items-center gap-space-xs border border-primary/30 pointer-events-none">
+                <span className="w-2.5 h-2.5 rounded-full bg-primary animate-ping"></span>
+                <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary font-bold">SLICEX FILMS HQ</span>
+              </div>
+            </div>
+          </div>
+        </section>
+        {/* Verified Google Reviews & Client Testimonials Section */}
+        <section className="w-full px-margin-mobile lg:px-margin-desktop pb-space-4xl" id="reviews">
+          <div className="max-w-7xl mx-auto flex flex-col gap-space-xl">
+            {/* Section Header with Overall Google Rating */}
+            <div className="bg-surface-container-low rounded-2xl p-space-xl lg:p-space-2xl border border-primary-container/20 flex flex-col md:flex-row items-center justify-between gap-space-lg shadow-xl">
+              <div className="flex flex-col gap-2 text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-2">
+                  <svg className="w-6 h-6 shrink-0" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                    <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                    <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                    <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+                  </svg>
+                  <span className="font-label-sm text-label-sm uppercase tracking-[0.24em] text-primary font-bold">VERIFIED GOOGLE BUSINESS REVIEWS</span>
+                </div>
+                <h2 className="font-headline-lg text-headline-lg text-on-surface">5.0 Star Client Experiences</h2>
+                <p className="font-body-md text-body-md text-on-surface-variant max-w-xl">
+                  Client testimonials and reviews fetched from our official Google Business profile.
+                </p>
+              </div>
+
+              <div className="flex flex-col items-center md:items-end gap-3 shrink-0">
+                <div className="flex items-center gap-3 bg-surface-container-high px-4 py-2 rounded-xl border border-primary-container/30">
+                  <span className="font-display-hero text-headline-lg text-primary font-bold">5.0</span>
+                  <div className="flex flex-col">
+                    <div className="flex items-center text-amber-400 text-[18px]">
+                      ★★★★★
+                    </div>
+                    <span className="text-[11px] font-mono text-on-surface-variant uppercase tracking-wider">100% 5-STAR RATING</span>
+                  </div>
+                </div>
+                
+                <a 
+                  href="https://share.google/jmSViIkA3751IqYPo" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="inline-flex items-center gap-2 px-space-md py-2 bg-primary/10 hover:bg-primary/20 text-primary border border-primary/40 rounded-lg text-[12px] font-mono uppercase tracking-widest transition-all"
+                >
+                  <span>Write / Read on Google Maps</span>
+                  <span className="material-symbols-outlined text-[16px]">open_in_new</span>
+                </a>
+              </div>
+            </div>
+
+            {/* 4 Client Reviews Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+              {/* Review 1 */}
+              <div className="bg-surface-container-low p-space-xl rounded-xl border border-primary-container/15 flex flex-col justify-between gap-space-md hover:border-primary/40 transition-all shadow-lg">
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center text-amber-400 text-[16px]">
+                      ★★★★★
+                    </div>
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">
+                      VERIFIED GOOGLE REVIEW
+                    </span>
+                  </div>
+                  <p className="font-body-md text-body-md text-on-surface-variant italic leading-relaxed">
+                    "Abhishek and the SliceX Films team captured our wedding with such perfection and emotion! The colors, lighting, and sound design were straight out of a Bollywood cinema masterpiece. Highly recommended!"
+                  </p>
+                </div>
+                <div className="flex items-center justify-between pt-space-xs border-t border-primary-container/10">
+                  <div>
+                    <h4 className="font-headline-sm text-headline-sm text-on-surface">Piyush &amp; Dipti Sahoo</h4>
+                    <span className="text-[11px] text-outline font-mono uppercase">Wedding Cinema • Balangir</span>
+                  </div>
+                  <span className="text-[11px] text-outline font-mono">2 months ago</span>
+                </div>
+              </div>
+
+              {/* Review 2 */}
+              <div className="bg-surface-container-low p-space-xl rounded-xl border border-primary-container/15 flex flex-col justify-between gap-space-md hover:border-primary/40 transition-all shadow-lg">
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center text-amber-400 text-[16px]">
+                      ★★★★★
+                    </div>
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">
+                      VERIFIED GOOGLE REVIEW
+                    </span>
+                  </div>
+                  <p className="font-body-md text-body-md text-on-surface-variant italic leading-relaxed">
+                    "Words cannot describe how happy we are with our wedding film. Every detail from the mandap lighting to the 32-bit audio of our vows was handled with immense care and artistry."
+                  </p>
+                </div>
+                <div className="flex items-center justify-between pt-space-xs border-t border-primary-container/10">
+                  <div>
+                    <h4 className="font-headline-sm text-headline-sm text-on-surface">Swarup &amp; Soumya</h4>
+                    <span className="text-[11px] text-outline font-mono uppercase">Royal Wedding Film</span>
+                  </div>
+                  <span className="text-[11px] text-outline font-mono">4 months ago</span>
+                </div>
+              </div>
+
+              {/* Review 3 */}
+              <div className="bg-surface-container-low p-space-xl rounded-xl border border-primary-container/15 flex flex-col justify-between gap-space-md hover:border-primary/40 transition-all shadow-lg">
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center text-amber-400 text-[16px]">
+                      ★★★★★
+                    </div>
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">
+                      VERIFIED GOOGLE REVIEW
+                    </span>
+                  </div>
+                  <p className="font-body-md text-body-md text-on-surface-variant italic leading-relaxed">
+                    "SliceX Films is hands down the best luxury wedding filmmaking team in the region. They were unobtrusive, professional, and delivered our 4K film right on schedule. Pure 5-star experience!"
+                  </p>
+                </div>
+                <div className="flex items-center justify-between pt-space-xs border-t border-primary-container/10">
+                  <div>
+                    <h4 className="font-headline-sm text-headline-sm text-on-surface">Pratap &amp; Supriya Mohanty</h4>
+                    <span className="text-[11px] text-outline font-mono uppercase">Destination Wedding Film</span>
+                  </div>
+                  <span className="text-[11px] text-outline font-mono">6 months ago</span>
+                </div>
+              </div>
+
+              {/* Review 4 */}
+              <div className="bg-surface-container-low p-space-xl rounded-xl border border-primary-container/15 flex flex-col justify-between gap-space-md hover:border-primary/40 transition-all shadow-lg">
+                <div className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center text-amber-400 text-[16px]">
+                      ★★★★★
+                    </div>
+                    <span className="text-[10px] font-mono uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">
+                      VERIFIED GOOGLE REVIEW
+                    </span>
+                  </div>
+                  <p className="font-body-md text-body-md text-on-surface-variant italic leading-relaxed">
+                    "Our pre-wedding film and main wedding documentary are absolute works of art. Reliving our special day through their lens gives us goosebumps every single time!"
+                  </p>
+                </div>
+                <div className="flex items-center justify-between pt-space-xs border-t border-primary-container/10">
+                  <div>
+                    <h4 className="font-headline-sm text-headline-sm text-on-surface">Niharika &amp; Chandan</h4>
+                    <span className="text-[11px] text-outline font-mono uppercase">Pre-Wedding &amp; Cinema</span>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -1,4 +1,7 @@
 import { withBase } from '../../../lib/basePath';
+import HardwareApparatus from '../../../components/HardwareApparatus';
+import HeroVideo from '../../../components/HeroVideo';
+import VideoLightbox from '../../../components/VideoLightbox';
 export const metadata = { title: "SliceX Films | About — The Cinema Collective" };
 
 export default function AboutPage() {
@@ -26,40 +29,52 @@ export default function AboutPage() {
           </p>
             </div>
           </div>
-          <div className="relative w-full aspect-[16/9] lg:aspect-[21/9] rounded-xl overflow-hidden bg-surface-container-lowest mt-space-md shadow-2xl">
-            <img alt="Palace Courtyard Twilight Vows captured in royal Rajasthan palace with candlelit arches" className="w-full h-full object-cover object-center transform hover:scale-[1.01] transition-transform duration-1000 ease-out" src="https://lh3.googleusercontent.com/aida/AEtjO1Uf9tOoU_lPrEdVKQxehFdC_Me8KHlX0oQmdV5wKaGZvGiJtYyYnAtWihAuhruuk6FWm-enZz_VwrrpsSVC0A_-0AvDog5tWJtMPiui13dhnydC7IneDM95eSui29BCMlSetOqKAO94WxUb2sHQTvVfvaaa9XPBBestzKayxfAbKIcHt98YBAIhzFc4_eoUWTjpX_8sBvX9iPXh-aBT4Xap4OEC7ycDasyT9s1lkvBD8GLrbg6IjLCVzoY" />
-            <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-surface-container-lowest/60 pointer-events-none"></div>
-            <div className="absolute inset-0 p-space-md lg:p-space-xl flex flex-col justify-between pointer-events-none text-on-surface">
-              <div className="flex items-center justify-between font-label-sm text-label-sm tracking-widest uppercase">
-                <div className="flex items-center gap-space-xs bg-surface-container-lowest/70 backdrop-blur-md px-space-sm py-space-2xs rounded">
+          <div
+            className="relative w-full aspect-[16/9] lg:aspect-[21/9] rounded-xl overflow-hidden bg-surface-container-lowest mt-space-md shadow-2xl group cursor-pointer border border-primary-container/20"
+            data-yt="EUB8I5jshbI"
+          >
+            <HeroVideo videoId="EUB8I5jshbI" mobileFocusX={50} />
+            <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/30 to-surface-container-lowest/60 pointer-events-none"></div>
+            
+            <div className="absolute inset-0 p-space-md lg:p-space-xl flex flex-col justify-between text-on-surface">
+              {/* Top Camera HUD */}
+              <div className="flex items-center justify-between font-label-sm text-label-sm tracking-widest uppercase pointer-events-none">
+                <div className="flex items-center gap-space-xs bg-surface-container-lowest/80 backdrop-blur-md px-space-sm py-space-2xs rounded border border-primary-container/20">
                   <span className="inline-block w-2.5 h-2.5 rounded-full bg-error animate-pulse"></span>
                   <span className="text-on-surface font-semibold">REC • 23.976 FPS</span>
                 </div>
-                <div className="hidden sm:flex items-center gap-space-md bg-surface-container-lowest/70 backdrop-blur-md px-space-md py-space-2xs rounded text-on-surface-variant">
-                  <span className="">SHUTTER 1/48</span>
-                  <span className="">•</span>
+                <div className="hidden sm:flex items-center gap-space-md bg-surface-container-lowest/80 backdrop-blur-md px-space-md py-space-2xs rounded border border-primary-container/20 text-on-surface-variant">
+                  <span>SHUTTER 1/48</span>
+                  <span>•</span>
                   <span className="text-primary">ISO 800</span>
-                  <span className="">•</span>
-                  <span className="">COOKE ANAMORPHIC</span>
+                  <span>•</span>
+                  <span>COOKE ANAMORPHIC</span>
                 </div>
-                <div className="bg-surface-container-lowest/70 backdrop-blur-md px-space-sm py-space-2xs rounded text-primary font-bold">
-              4K DCI RAW
-            </div>
-              </div>
-              <div className="self-center flex items-center justify-center opacity-30">
-                <div className="w-16 h-16 border border-dashed border-primary/60 rounded-full flex items-center justify-center">
-                  <span className="w-2 h-2 bg-primary rounded-full"></span>
+                <div className="bg-surface-container-lowest/80 backdrop-blur-md px-space-sm py-space-2xs rounded border border-primary-container/20 text-primary font-bold">
+                  4K DCI RAW
                 </div>
               </div>
-              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-space-xs">
-                <div className="bg-surface-container-lowest/80 backdrop-blur-md px-space-md py-space-xs rounded max-w-md">
-                  <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest block mb-0.5">ARCHIVE REEL #049</span>
-                  <p className="font-body-sm text-body-sm text-on-surface italic">Palace Courtyard Twilight Vows • 35mm Arri Emulation</p>
+
+              {/* Center Play Button Overlay */}
+              <div className="self-center flex flex-col items-center gap-3 transition-transform duration-500 group-hover:scale-110 pointer-events-none">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/90 text-surface-container-lowest flex items-center justify-center shadow-[0_0_40px_rgba(212,175,55,0.6)] group-hover:bg-primary transition-all pointer-events-auto">
+                  <span className="material-symbols-outlined text-[36px] sm:text-[44px] translate-x-0.5">play_arrow</span>
                 </div>
-                <div className="hidden md:flex items-center gap-space-sm bg-surface-container-lowest/80 backdrop-blur-md px-space-md py-space-xs rounded text-outline font-label-sm text-label-sm tracking-widest uppercase">
-                  <span className="">TIME: 19:42:11 IST</span>
-                  <span className="">//</span>
-                  <span className="text-secondary">UDAIPUR ARCHIVE</span>
+                <span className="font-label-sm text-label-sm tracking-widest uppercase text-primary bg-surface-container-lowest/90 backdrop-blur-md px-4 py-1.5 rounded-full border border-primary/40 shadow-lg">
+                  WATCH FEATURED FILM • SWARUP &amp; SOUMYA
+                </span>
+              </div>
+
+              {/* Bottom Info HUD */}
+              <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-space-xs pointer-events-none">
+                <div className="bg-surface-container-lowest/85 backdrop-blur-md px-space-md py-space-xs rounded max-w-md border border-primary-container/20">
+                  <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest block mb-0.5">FEATURED WEDDING FILM</span>
+                  <p className="font-body-sm text-body-sm text-on-surface italic">Swarup &amp; Soumya — A Royal Celebration</p>
+                </div>
+                <div className="hidden md:flex items-center gap-space-sm bg-surface-container-lowest/85 backdrop-blur-md px-space-md py-space-xs rounded border border-primary-container/20 text-outline font-label-sm text-label-sm tracking-widest uppercase">
+                  <span>TIME: 19:42:11 IST</span>
+                  <span>//</span>
+                  <span className="text-secondary">SWARUP &amp; SOUMYA</span>
                 </div>
               </div>
             </div>
@@ -236,75 +251,7 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
-      <section className="w-full bg-surface-container-lowest px-margin-mobile lg:px-margin-desktop py-space-3xl lg:py-space-4xl">
-        <div className="max-w-7xl mx-auto flex flex-col gap-space-2xl">
-          <div>
-            <div className="flex items-center gap-space-sm mb-space-xs">
-              <span className="w-8 h-[1px] bg-primary"></span>
-              <span className="font-label-sm text-label-sm text-primary uppercase tracking-[0.25em]">04 // THE ARCHIVAL APPARATUS</span>
-            </div>
-            <h2 className="font-display-hero-mobile lg:font-display-hero text-display-hero-mobile lg:text-display-hero uppercase text-on-surface tracking-tight">
-          THE HARDWARE OF HIGH EMOTION
-        </h2>
-          </div>
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center">
-            <div className="lg:col-span-6 flex flex-col gap-space-sm">
-              <div className="relative rounded-xl overflow-hidden bg-surface-container-low shadow-2xl">
-                <img alt="Intimate Sacred Textures of an exquisite bride looking into a vintage antique gilded mirror" className="w-full h-full object-cover aspect-[4/3] lg:aspect-[5/4] transform hover:scale-[1.02] transition-transform duration-700" src="https://lh3.googleusercontent.com/aida/AEtjO1ViGt1GElMxInDioo53aFChY26Dy6z9crq3yCDpPhq2j0NhDPlO1YxDnRHnaT2UJm77JtCOIO9FF17BYEdm7pzJWF10gtdr8I56avCDpL1LTUyaivi63oFz-5WNlhntcAbZb_La5AjpXkIVmAkz3DYT5El9HnNkGO7V6MVQe3d6ZQmK7j4DfCUt-yD5VFf51M6KUdSc22OA3QFJe_3JVrLOfkld194a0JC9mtf2XD7bxeyrU9Vo46CDV2zz" />
-                <div className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/40 to-transparent p-space-md flex items-center justify-between">
-                  <div>
-                    <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest">STILL #082 // CANDID MIRROR MOMENT</span>
-                    <p className="font-body-sm text-body-sm text-on-surface italic">Intimate Sacred Textures • Chiaroscuro Cadence</p>
-                  </div>
-                  <span className="font-label-sm text-label-sm text-outline uppercase tracking-widest">f/1.4 LEICA LUX</span>
-                </div>
-              </div>
-              <div className="flex items-center justify-between text-outline font-label-sm text-label-sm px-space-xs">
-                <span className="">NATURAL WINDOW CHIAROSCURO</span>
-                <span className="">UNCOMPRESSED PRORES 4444 XQ</span>
-              </div>
-            </div>
-            <div className="lg:col-span-6 flex flex-col gap-space-md">
-              <div className="bg-surface-container-low p-space-lg rounded-xl flex items-start gap-space-md hover:bg-surface-container transition-colors">
-                <div className="w-10 h-10 rounded bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-1">
-                  <span className="material-symbols-outlined text-[20px]">lens</span>
-                </div>
-                <div className="flex flex-col gap-space-2xs">
-                  <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">ANAMORPHIC OPTICS</span>
-                  <h3 className="font-headline-sm text-headline-sm text-on-surface">Cooke &amp; Atlas Anamorphic Primes</h3>
-                  <p className="font-body-md text-body-md text-on-surface-variant font-light">
-                Delivering unmistakable organic oval bokeh, golden anamorphic horizontal streaks, and a gentle roll-off that renders royal lehengas and regal jewelry with painterly perfection.
-              </p>
-                </div>
-              </div>
-              <div className="bg-surface-container-low p-space-lg rounded-xl flex items-start gap-space-md hover:bg-surface-container transition-colors">
-                <div className="w-10 h-10 rounded bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-1">
-                  <span className="material-symbols-outlined text-[20px]">graphic_eq</span>
-                </div>
-                <div className="flex flex-col gap-space-2xs">
-                  <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">IMMERSIVE SOUNDSTAGE</span>
-                  <h3 className="font-headline-sm text-headline-sm text-on-surface">32-Bit Float Binaural Acoustics</h3>
-                  <p className="font-body-md text-body-md text-on-surface-variant font-light">
-                Never miss a whispered promise. Ultra-high dynamic range 32-bit float recorders capture the subtle tremor in a father’s blessing and the thunderous joy of dhol drums with zero digital clipping.
-              </p>
-                </div>
-              </div>
-              <div className="bg-surface-container-low p-space-lg rounded-xl flex items-start gap-space-md hover:bg-surface-container transition-colors">
-                <div className="w-10 h-10 rounded bg-primary/10 text-primary flex items-center justify-center shrink-0 mt-1">
-                  <span className="material-symbols-outlined text-[20px]">tune</span>
-                </div>
-                <div className="flex flex-col gap-space-2xs">
-                  <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">COLOR ARCHITECTURE</span>
-                  <h3 className="font-headline-sm text-headline-sm text-on-surface">DaVinci Color Nodes &amp; Film Grain</h3>
-                  <p className="font-body-md text-body-md text-on-surface-variant font-light">
-                Custom handcrafted 3D LUT matrices tuned specifically for warm Indian skin tones under deep night candlelight, amber fireworks, and sun-baked sandstone courtyards.
-              </p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <HardwareApparatus />
       <section className="w-full px-margin-mobile lg:px-margin-desktop py-space-3xl lg:py-space-4xl">
         <div className="max-w-7xl mx-auto flex flex-col gap-space-2xl">
           <div className="flex flex-col gap-space-xs">
@@ -472,6 +419,7 @@ export default function AboutPage() {
         </div>
       </div>
     </footer>
+    <VideoLightbox />
     </>
   );
 }

@@ -294,105 +294,111 @@ export default function HomePage() {
       </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
-          <div className="group bg-surface-container p-space-xl flex flex-col justify-between min-h-[340px] hover:bg-surface-container-high border border-primary-container/15 hover:border-primary/50 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute -top-12 -right-12 w-28 h-28 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/15 transition-all"></div>
-            <div className="flex justify-between items-start">
+          <div className="group p-space-xl flex flex-col justify-between min-h-[400px] border border-primary-container/15 hover:border-primary/50 transition-all duration-500 relative overflow-hidden">
+            <img src="/assets/service-wedding-films.jpg" alt="Wedding Films" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40 group-hover:via-black/55 group-hover:to-black/25 transition-all duration-500"></div>
+            <div className="flex justify-between items-start relative z-10">
               <span className="font-numerical-index text-numerical-index text-secondary font-bold group-hover:text-primary transition-colors">01</span>
-              <span className="material-symbols-outlined text-outline-variant group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
+              <span className="material-symbols-outlined text-white/70 group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
             </div>
-            <div>
-              <h3 className="font-headline-md text-headline-md uppercase text-on-surface group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">WEDDING FILMS</h3>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light leading-relaxed">
+            <div className="relative z-10">
+              <h3 className="font-headline-md text-headline-md uppercase text-white group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">WEDDING FILMS</h3>
+              <p className="font-body-sm text-body-sm text-white/75 font-light leading-relaxed">
             Feature-length and theatrical cut wedding narratives recorded with multi-camera cinema rigs and custom film sound design.
           </p>
-              <div className="mt-space-md pt-space-sm border-t border-primary-container/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
-                <span className="bg-primary/10 px-2 py-0.5 rounded text-primary">4K MASTER</span>
-                <span>DIRECTOR’S CUT</span>
+              <div className="mt-space-md pt-space-sm border-t border-white/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
+                <span className="bg-primary/20 backdrop-blur-sm px-2 py-0.5 rounded text-primary">4K MASTER</span>
+                <span className="text-white/60">DIRECTOR'S CUT</span>
               </div>
             </div>
           </div>
-          <div className="group bg-surface-container p-space-xl flex flex-col justify-between min-h-[340px] hover:bg-surface-container-high border border-primary-container/15 hover:border-primary/50 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute -top-12 -right-12 w-28 h-28 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/15 transition-all"></div>
-            <div className="flex justify-between items-start">
+          <div className="group p-space-xl flex flex-col justify-between min-h-[400px] border border-primary-container/15 hover:border-primary/50 transition-all duration-500 relative overflow-hidden">
+            <img src="/assets/service-wedding-photography.jpg" alt="Wedding Photography" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40 group-hover:via-black/55 group-hover:to-black/25 transition-all duration-500"></div>
+            <div className="flex justify-between items-start relative z-10">
               <span className="font-numerical-index text-numerical-index text-secondary font-bold group-hover:text-primary transition-colors">02</span>
-              <span className="material-symbols-outlined text-outline-variant group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
+              <span className="material-symbols-outlined text-white/70 group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
             </div>
-            <div>
-              <h3 className="font-headline-md text-headline-md uppercase text-on-surface group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">WEDDING PHOTOGRAPHY</h3>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light leading-relaxed">
+            <div className="relative z-10">
+              <h3 className="font-headline-md text-headline-md uppercase text-white group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">WEDDING PHOTOGRAPHY</h3>
+              <p className="font-body-sm text-body-sm text-white/75 font-light leading-relaxed">
             High-fashion editorial stills and authentic documentary photojournalism that captures raw, unprompted elegance.
           </p>
-              <div className="mt-space-md pt-space-sm border-t border-primary-container/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
-                <span className="bg-primary/10 px-2 py-0.5 rounded text-primary">FINE ART PRINTS</span>
-                <span>HIGH RES ARCHIVE</span>
+              <div className="mt-space-md pt-space-sm border-t border-white/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
+                <span className="bg-primary/20 backdrop-blur-sm px-2 py-0.5 rounded text-primary">FINE ART PRINTS</span>
+                <span className="text-white/60">HIGH RES ARCHIVE</span>
               </div>
             </div>
           </div>
-          <div className="group bg-surface-container p-space-xl flex flex-col justify-between min-h-[340px] hover:bg-surface-container-high border border-primary-container/15 hover:border-primary/50 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute -top-12 -right-12 w-28 h-28 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/15 transition-all"></div>
-            <div className="flex justify-between items-start">
+          <div className="group p-space-xl flex flex-col justify-between min-h-[400px] border border-primary-container/15 hover:border-primary/50 transition-all duration-500 relative overflow-hidden">
+            <img src="/assets/service-prewedding-films.jpg" alt="Pre-Wedding Films" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40 group-hover:via-black/55 group-hover:to-black/25 transition-all duration-500"></div>
+            <div className="flex justify-between items-start relative z-10">
               <span className="font-numerical-index text-numerical-index text-secondary font-bold group-hover:text-primary transition-colors">03</span>
-              <span className="material-symbols-outlined text-outline-variant group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
+              <span className="material-symbols-outlined text-white/70 group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
             </div>
-            <div>
-              <h3 className="font-headline-md text-headline-md uppercase text-on-surface group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">PRE-WEDDING FILMS</h3>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light leading-relaxed">
-            Conceptual short cinematic vignettes built around the couple’s intimate genesis story, curated styling, and destination backdrops.
+            <div className="relative z-10">
+              <h3 className="font-headline-md text-headline-md uppercase text-white group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">PRE-WEDDING FILMS</h3>
+              <p className="font-body-sm text-body-sm text-white/75 font-light leading-relaxed">
+            Conceptual short cinematic vignettes built around the couple's intimate genesis story, curated styling, and destination backdrops.
           </p>
-              <div className="mt-space-md pt-space-sm border-t border-primary-container/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
-                <span className="bg-primary/10 px-2 py-0.5 rounded text-primary">STORYBOARDED</span>
-                <span>DESTINATION</span>
+              <div className="mt-space-md pt-space-sm border-t border-white/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
+                <span className="bg-primary/20 backdrop-blur-sm px-2 py-0.5 rounded text-primary">STORYBOARDED</span>
+                <span className="text-white/60">DESTINATION</span>
               </div>
             </div>
           </div>
-          <div className="group bg-surface-container p-space-xl flex flex-col justify-between min-h-[340px] hover:bg-surface-container-high border border-primary-container/15 hover:border-primary/50 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute -top-12 -right-12 w-28 h-28 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/15 transition-all"></div>
-            <div className="flex justify-between items-start">
+          <div className="group p-space-xl flex flex-col justify-between min-h-[400px] border border-primary-container/15 hover:border-primary/50 transition-all duration-500 relative overflow-hidden">
+            <img src="/assets/service-engagement-stories.jpg" alt="Engagement Stories" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40 group-hover:via-black/55 group-hover:to-black/25 transition-all duration-500"></div>
+            <div className="flex justify-between items-start relative z-10">
               <span className="font-numerical-index text-numerical-index text-secondary font-bold group-hover:text-primary transition-colors">04</span>
-              <span className="material-symbols-outlined text-outline-variant group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
+              <span className="material-symbols-outlined text-white/70 group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
             </div>
-            <div>
-              <h3 className="font-headline-md text-headline-md uppercase text-on-surface group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">ENGAGEMENT STORIES</h3>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light leading-relaxed">
+            <div className="relative z-10">
+              <h3 className="font-headline-md text-headline-md uppercase text-white group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">ENGAGEMENT STORIES</h3>
+              <p className="font-body-sm text-body-sm text-white/75 font-light leading-relaxed">
             Intimate portraits and audio documentary tracking the immediate chapter of commitment, family bonding, and candid exchange.
           </p>
-              <div className="mt-space-md pt-space-sm border-t border-primary-container/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
-                <span className="bg-primary/10 px-2 py-0.5 rounded text-primary">INTIMATE SOIRÉE</span>
-                <span>AUDIO VOWS</span>
+              <div className="mt-space-md pt-space-sm border-t border-white/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
+                <span className="bg-primary/20 backdrop-blur-sm px-2 py-0.5 rounded text-primary">INTIMATE SOIRÉE</span>
+                <span className="text-white/60">AUDIO VOWS</span>
               </div>
             </div>
           </div>
-          <div className="group bg-surface-container p-space-xl flex flex-col justify-between min-h-[340px] hover:bg-surface-container-high border border-primary-container/15 hover:border-primary/50 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute -top-12 -right-12 w-28 h-28 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/15 transition-all"></div>
-            <div className="flex justify-between items-start">
+          <div className="group p-space-xl flex flex-col justify-between min-h-[400px] border border-primary-container/15 hover:border-primary/50 transition-all duration-500 relative overflow-hidden">
+            <img src="/assets/service-cinematic-reels.jpg" alt="Cinematic Reels" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40 group-hover:via-black/55 group-hover:to-black/25 transition-all duration-500"></div>
+            <div className="flex justify-between items-start relative z-10">
               <span className="font-numerical-index text-numerical-index text-secondary font-bold group-hover:text-primary transition-colors">05</span>
-              <span className="material-symbols-outlined text-outline-variant group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
+              <span className="material-symbols-outlined text-white/70 group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
             </div>
-            <div>
-              <h3 className="font-headline-md text-headline-md uppercase text-on-surface group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">CINEMATIC REELS</h3>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light leading-relaxed">
+            <div className="relative z-10">
+              <h3 className="font-headline-md text-headline-md uppercase text-white group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">CINEMATIC REELS</h3>
+              <p className="font-body-sm text-body-sm text-white/75 font-light leading-relaxed">
             High-velocity vertical teasers engineered for digital showcase without losing cinematic grade color science and motion blur.
           </p>
-              <div className="mt-space-md pt-space-sm border-t border-primary-container/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
-                <span className="bg-primary/10 px-2 py-0.5 rounded text-primary">9:16 VERTICAL</span>
-                <span>FAST-TURNAROUND</span>
+              <div className="mt-space-md pt-space-sm border-t border-white/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
+                <span className="bg-primary/20 backdrop-blur-sm px-2 py-0.5 rounded text-primary">9:16 VERTICAL</span>
+                <span className="text-white/60">FAST-TURNAROUND</span>
               </div>
             </div>
           </div>
-          <div className="group bg-surface-container p-space-xl flex flex-col justify-between min-h-[340px] hover:bg-surface-container-high border border-primary-container/15 hover:border-primary/50 transition-all duration-300 relative overflow-hidden">
-            <div className="absolute -top-12 -right-12 w-28 h-28 bg-primary/5 rounded-full blur-2xl group-hover:bg-primary/15 transition-all"></div>
-            <div className="flex justify-between items-start">
+          <div className="group p-space-xl flex flex-col justify-between min-h-[400px] border border-primary-container/15 hover:border-primary/50 transition-all duration-500 relative overflow-hidden">
+            <img src="/assets/service-drone-coverage.jpg" alt="Drone Coverage" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40 group-hover:via-black/55 group-hover:to-black/25 transition-all duration-500"></div>
+            <div className="flex justify-between items-start relative z-10">
               <span className="font-numerical-index text-numerical-index text-secondary font-bold group-hover:text-primary transition-colors">06</span>
-              <span className="material-symbols-outlined text-outline-variant group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
+              <span className="material-symbols-outlined text-white/70 group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
             </div>
-            <div>
-              <h3 className="font-headline-md text-headline-md uppercase text-on-surface group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">DRONE COVERAGE</h3>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light leading-relaxed">
+            <div className="relative z-10">
+              <h3 className="font-headline-md text-headline-md uppercase text-white group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">DRONE COVERAGE</h3>
+              <p className="font-body-sm text-body-sm text-white/75 font-light leading-relaxed">
             Certified aerial pilotage capturing sprawling palace architecture, mountain landscapes, and vast procession scales from above.
           </p>
-              <div className="mt-space-md pt-space-sm border-t border-primary-container/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
-                <span className="bg-primary/10 px-2 py-0.5 rounded text-primary">PRO-RES CINEMA</span>
-                <span>ARCHITECTURAL SCALE</span>
+              <div className="mt-space-md pt-space-sm border-t border-white/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
+                <span className="bg-primary/20 backdrop-blur-sm px-2 py-0.5 rounded text-primary">PRO-RES CINEMA</span>
+                <span className="text-white/60">ARCHITECTURAL SCALE</span>
               </div>
             </div>
           </div>
@@ -554,50 +560,124 @@ export default function HomePage() {
         From the initial script session to the hand-delivered 4K master archive box.
       </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-space-md">
-          <div className="bg-surface-container p-space-lg flex flex-col justify-between min-h-[280px] border border-primary-container/15 hover:border-primary/40 transition-all group">
-            <span className="font-display-lg text-display-lg uppercase text-primary-container/40 font-light leading-none group-hover:text-primary transition-colors">01</span>
-            <div>
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary-fixed font-light mb-space-2xs group-hover:text-primary transition-colors">MEET</h4>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light">
-            We meet over espresso or video link to understand your quirks, your tempo, and the personal dynamics you care about.
-          </p>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-space-md">
+          {/* 01 MEET */}
+          <div className="group relative overflow-hidden bg-surface-container flex flex-col justify-between min-h-[300px] p-space-lg border border-primary-container/20 hover:border-primary/60 transition-all rounded-sm shadow-xl">
+            <div 
+              className="absolute inset-0 bg-cover bg-center opacity-35 group-hover:opacity-65 group-hover:scale-110 transition-all duration-700 ease-out"
+              style={{ backgroundImage: `url(${withBase('/assets/step-meet.jpg')})` }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/25 group-hover:via-background/55 transition-all duration-500" />
+            
+            <div className="relative z-10 flex items-center justify-between">
+              <span className="font-display-lg text-display-lg uppercase text-primary/40 font-light leading-none group-hover:text-primary transition-colors">01</span>
+              <span className="text-[9px] tracking-widest uppercase font-mono text-secondary bg-surface-container-high/80 px-2 py-0.5 rounded border border-primary-container/30">DISCOVERY</span>
+            </div>
+            
+            <div className="relative z-10 mt- space-y-1">
+              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-amber-200 transition-colors tracking-wide flex items-center justify-between">
+                MEET
+                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-amber-400 group-hover:animate-ping transition-all" />
+              </h4>
+              <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
+                We meet over espresso or video link to understand your quirks, your tempo, and the personal dynamics you care about.
+              </p>
             </div>
           </div>
-          <div className="bg-surface-container p-space-lg flex flex-col justify-between min-h-[280px] border border-primary-container/15 hover:border-primary/40 transition-all group">
-            <span className="font-display-lg text-display-lg uppercase text-primary-container/40 font-light leading-none group-hover:text-primary transition-colors">02</span>
-            <div>
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary-fixed font-light mb-space-2xs group-hover:text-primary transition-colors">PLAN</h4>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light">
-            Architecting camera angles, light timing, mood boards, wardrobe harmonies, and timeline synchronization.
-          </p>
+
+          {/* 02 PLAN */}
+          <div className="group relative overflow-hidden bg-surface-container flex flex-col justify-between min-h-[300px] p-space-lg border border-primary-container/20 hover:border-primary/60 transition-all rounded-sm shadow-xl">
+            <div 
+              className="absolute inset-0 bg-cover bg-center opacity-35 group-hover:opacity-65 group-hover:scale-110 transition-all duration-700 ease-out"
+              style={{ backgroundImage: `url(${withBase('/assets/step-plan.jpg')})` }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/25 group-hover:via-background/55 transition-all duration-500" />
+            
+            <div className="relative z-10 flex items-center justify-between">
+              <span className="font-display-lg text-display-lg uppercase text-primary/40 font-light leading-none group-hover:text-primary transition-colors">02</span>
+              <span className="text-[9px] tracking-widest uppercase font-mono text-secondary bg-surface-container-high/80 px-2 py-0.5 rounded border border-primary-container/30">DESIGN</span>
+            </div>
+            
+            <div className="relative z-10 mt- space-y-1">
+              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-amber-200 transition-colors tracking-wide flex items-center justify-between">
+                PLAN
+                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-amber-400 group-hover:animate-ping transition-all" />
+              </h4>
+              <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
+                Architecting camera angles, light timing, mood boards, wardrobe harmonies, and timeline synchronization.
+              </p>
             </div>
           </div>
-          <div className="bg-surface-container p-space-lg flex flex-col justify-between min-h-[280px] border border-primary-container/15 hover:border-primary/40 transition-all group">
-            <span className="font-display-lg text-display-lg uppercase text-primary-container/40 font-light leading-none group-hover:text-primary transition-colors">03</span>
-            <div>
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary-fixed font-light mb-space-2xs group-hover:text-primary transition-colors">CAPTURE</h4>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light">
-            Discreet, non-invasive cinema coverage. We observe raw authenticity without intrusive studio orchestrations.
-          </p>
+
+          {/* 03 CAPTURE */}
+          <div className="group relative overflow-hidden bg-surface-container flex flex-col justify-between min-h-[300px] p-space-lg border border-primary-container/20 hover:border-primary/60 transition-all rounded-sm shadow-xl">
+            <div 
+              className="absolute inset-0 bg-cover bg-center opacity-35 group-hover:opacity-65 group-hover:scale-110 transition-all duration-700 ease-out"
+              style={{ backgroundImage: `url(${withBase('/assets/step-capture.jpg')})` }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/25 group-hover:via-background/55 transition-all duration-500" />
+            
+            <div className="relative z-10 flex items-center justify-between">
+              <span className="font-display-lg text-display-lg uppercase text-primary/40 font-light leading-none group-hover:text-primary transition-colors">03</span>
+              <span className="text-[9px] tracking-widest uppercase font-mono text-secondary bg-surface-container-high/80 px-2 py-0.5 rounded border border-primary-container/30">CINEMA</span>
+            </div>
+            
+            <div className="relative z-10 mt- space-y-1">
+              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-amber-200 transition-colors tracking-wide flex items-center justify-between">
+                CAPTURE
+                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-amber-400 group-hover:animate-ping transition-all" />
+              </h4>
+              <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
+                Discreet, non-invasive cinema coverage. We observe raw authenticity without intrusive studio orchestrations.
+              </p>
             </div>
           </div>
-          <div className="bg-surface-container p-space-lg flex flex-col justify-between min-h-[280px] border border-primary-container/15 hover:border-primary/40 transition-all group">
-            <span className="font-display-lg text-display-lg uppercase text-primary-container/40 font-light leading-none group-hover:text-primary transition-colors">04</span>
-            <div>
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary-fixed font-light mb-space-2xs group-hover:text-primary transition-colors">CREATE</h4>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light">
-            Surgical editorial pacing, analog-feel color grading, bespoke film score licensing, and sound engineering.
-          </p>
+
+          {/* 04 CREATE */}
+          <div className="group relative overflow-hidden bg-surface-container flex flex-col justify-between min-h-[300px] p-space-lg border border-primary-container/20 hover:border-primary/60 transition-all rounded-sm shadow-xl">
+            <div 
+              className="absolute inset-0 bg-cover bg-center opacity-35 group-hover:opacity-65 group-hover:scale-110 transition-all duration-700 ease-out"
+              style={{ backgroundImage: `url(${withBase('/assets/step-create.jpg')})` }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/25 group-hover:via-background/55 transition-all duration-500" />
+            
+            <div className="relative z-10 flex items-center justify-between">
+              <span className="font-display-lg text-display-lg uppercase text-primary/40 font-light leading-none group-hover:text-primary transition-colors">04</span>
+              <span className="text-[9px] tracking-widest uppercase font-mono text-secondary bg-surface-container-high/80 px-2 py-0.5 rounded border border-primary-container/30">POST</span>
+            </div>
+            
+            <div className="relative z-10 mt- space-y-1">
+              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-amber-200 transition-colors tracking-wide flex items-center justify-between">
+                CREATE
+                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-amber-400 group-hover:animate-ping transition-all" />
+              </h4>
+              <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
+                Surgical editorial pacing, analog-feel color grading, bespoke film score licensing, and sound engineering.
+              </p>
             </div>
           </div>
-          <div className="bg-surface-container p-space-lg flex flex-col justify-between min-h-[280px] border border-primary-container/15 hover:border-primary/40 transition-all group">
-            <span className="font-display-lg text-display-lg uppercase text-primary-container/40 font-light leading-none group-hover:text-primary transition-colors">05</span>
-            <div>
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary-fixed font-light mb-space-2xs group-hover:text-primary transition-colors">DELIVER</h4>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light">
-            Secure private streaming vault plus a luxury keepsake archive drive crafted for generations of viewing.
-          </p>
+
+          {/* 05 DELIVER */}
+          <div className="group relative overflow-hidden bg-surface-container flex flex-col justify-between min-h-[300px] p-space-lg border border-primary-container/20 hover:border-primary/60 transition-all rounded-sm shadow-xl">
+            <div 
+              className="absolute inset-0 bg-cover bg-center opacity-35 group-hover:opacity-65 group-hover:scale-110 transition-all duration-700 ease-out"
+              style={{ backgroundImage: `url(${withBase('/assets/step-deliver.jpg')})` }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/25 group-hover:via-background/55 transition-all duration-500" />
+            
+            <div className="relative z-10 flex items-center justify-between">
+              <span className="font-display-lg text-display-lg uppercase text-primary/40 font-light leading-none group-hover:text-primary transition-colors">05</span>
+              <span className="text-[9px] tracking-widest uppercase font-mono text-secondary bg-surface-container-high/80 px-2 py-0.5 rounded border border-primary-container/30">ARCHIVE</span>
+            </div>
+            
+            <div className="relative z-10 mt- space-y-1">
+              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-amber-200 transition-colors tracking-wide flex items-center justify-between">
+                DELIVER
+                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-amber-400 group-hover:animate-ping transition-all" />
+              </h4>
+              <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
+                Secure private streaming vault plus a luxury keepsake archive drive crafted for generations of viewing.
+              </p>
             </div>
           </div>
         </div>
