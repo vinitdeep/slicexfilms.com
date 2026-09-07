@@ -1,5 +1,9 @@
 'use client';
+import SiteFooter from '../../../components/SiteFooter';
 import { withBase } from '../../../lib/basePath';
+import { useContent, submitLead } from '../../../lib/content';
+
+const tel = (v) => `tel:${String(v || '').replace(/[^\d+]/g, '')}`;
 
 function selectPill(button, groupId) {
   const parent = document.getElementById(groupId);
@@ -34,20 +38,32 @@ function toggleFaq(btn) {
 function handleDossierSubmit() {
   const feedback = document.getElementById('formFeedback');
   const submitBtn = document.getElementById('submitDossierBtn');
+  const val = (id) => (document.getElementById(id) || {}).value || '';
+  const pill = (gid) => { const a = document.querySelector(`#${gid} button.bg-primary-container`); return a ? a.textContent.trim() : ''; };
   submitBtn.disabled = true;
   submitBtn.classList.add('opacity-75');
   submitBtn.innerHTML = '<span>DISPATCHING DOSSIER...</span>';
-  setTimeout(() => {
+  submitLead({
+    name: val('partnerOne'),
+    partner: val('partnerTwo'),
+    email: val('emailAddr'),
+    phone: val('phoneNum'),
+    event_date: val('eventDates'),
+    destination: val('venueLocation'),
+    package: [pill('scopeGroup'), pill('gatheringGroup')].filter(Boolean).join(' · '),
+    budget: pill('budgetGroup'),
+    message: val('visionNotes'),
+    source: 'contact-form',
+  }).catch(() => {}).finally(() => {
     submitBtn.innerHTML = '<span>DOSSIER TRANSMITTED ✓</span>';
     submitBtn.classList.remove('bg-primary-container', 'hover:bg-primary');
     submitBtn.classList.add('bg-surface-container-highest', 'text-primary');
-    if (feedback) {
-      feedback.classList.remove('hidden');
-    }
-  }, 1000);
+    if (feedback) feedback.classList.remove('hidden');
+  });
 }
 
 export default function ContactPage() {
+  const c = useContent('contact');
   return (
     <>
     <div className="flex flex-col w-full">
@@ -90,7 +106,7 @@ export default function ContactPage() {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-label-sm text-label-sm uppercase tracking-widest text-outline">Studio Headquarters</span>
-                  <span className="font-body-md text-body-md text-on-surface font-medium">Balangir, Odisha, India</span>
+                  <span className="font-body-md text-body-md text-on-surface font-medium">{c.city}</span>
                 </div>
               </div>
               <div className="flex items-center gap-space-sm">
@@ -99,7 +115,7 @@ export default function ContactPage() {
                 </div>
                 <div className="flex flex-col">
                   <span className="font-label-sm text-label-sm uppercase tracking-widest text-outline">Direct Private Line</span>
-                  <a className="font-body-md text-body-md text-primary font-medium hover:underline" href="tel:+919827122620">+91 98271 22620</a>
+                  <a className="font-body-md text-body-md text-primary font-medium hover:underline" href={tel(c.phone1)}>{c.phone1}</a>
                 </div>
               </div>
             </div>
@@ -235,9 +251,9 @@ export default function ContactPage() {
               For direct high-profile commissions, royal state protocols, confidential NDAs, and bespoke directorial consultations.
             </p>
                 <div className="flex items-center justify-between pt-space-2xs">
-                  <a className="inline-flex items-center gap-space-xs font-body-md text-body-md text-on-surface hover:text-primary transition-colors" href="tel:+919658621038">
+                  <a className="inline-flex items-center gap-space-xs font-body-md text-body-md text-on-surface hover:text-primary transition-colors" href={tel(c.phone2)}>
                     <span className="material-symbols-outlined text-[16px] text-primary">phone_iphone</span>
-                    <span className="">+91 96586 21038</span>
+                    <span className="">{c.phone2}</span>
                   </a>
                   <a className="font-label-sm text-label-sm uppercase tracking-widest text-outline hover:text-primary transition-colors" href="mailto:abhishek@slicexfilms.com">Direct Desk</a>
                 </div>
@@ -255,19 +271,19 @@ export default function ContactPage() {
                 <div className="flex flex-col gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
                   <div className="flex items-center justify-between">
                     <span className="">Studio Hotline:</span>
-                    <a className="text-on-surface font-medium hover:text-primary" href="tel:+919827122620">+91 98271 22620</a>
+                    <a className="text-on-surface font-medium hover:text-primary" href={tel(c.phone1)}>{c.phone1}</a>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="">Direct Mailbox:</span>
-                    <a className="text-on-surface font-medium hover:text-primary" href="mailto:slicexfilms@gmail.com">slicexfilms@gmail.com</a>
+                    <a className="text-on-surface font-medium hover:text-primary" href={`mailto:${c.email}`}>{c.email}</a>
                   </div>
                   <div className="flex items-center justify-between">
                     <span className="">Atelier Archival:</span>
-                    <a className="text-on-surface font-medium hover:text-primary" href="mailto:atelier@slicexfilms.com">atelier@slicexfilms.com</a>
+                    <a className="text-on-surface font-medium hover:text-primary" href={`mailto:${c.email2}`}>{c.email2}</a>
                   </div>
                 </div>
               </div>
-              <a className="group bg-surface-container-high hover:bg-surface-container-highest p-space-md rounded-xl transition-all shadow-lg flex items-center justify-between" href="https://wa.me/919827122620?text=Hello%20SliceX%20Films%20Atelier,%20I%20would%20like%20to%20inquire%20about%20a%20wedding%20cinematography%20commission." rel="noopener" target="_blank">
+              <a className="group bg-surface-container-high hover:bg-surface-container-highest p-space-md rounded-xl transition-all shadow-lg flex items-center justify-between" href={`https://wa.me/${c.whatsapp}?text=Hello%20SliceX%20Films%20Atelier,%20I%20would%20like%20to%20inquire%20about%20a%20wedding%20cinematography%20commission.`} rel="noopener" target="_blank">
                 <div className="flex items-center gap-space-sm">
                   <div className="w-11 h-11 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center group-hover:scale-105 transition-transform">
                     <span className="material-symbols-outlined text-[22px]">chat</span>
@@ -301,11 +317,11 @@ export default function ContactPage() {
                 </div>
                 <div className="flex justify-between pt-space-2xs">
                   <span className="">Mon – Sat Private Consultations:</span>
-                  <span className="text-on-surface">10:00 AM – 8:00 PM IST</span>
+                  <span className="text-on-surface">{c.hours}</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="">Production Transit &amp; Shoot Desk:</span>
-                  <span className="text-primary font-medium">24/7 Global Hotline</span>
+                  <span className="text-primary font-medium">{c.hotline}</span>
                 </div>
               </div>
             </div>
@@ -329,12 +345,12 @@ export default function ContactPage() {
                 <div className="flex flex-col">
                   <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest block mb-1">Studio Address</span>
                   <span className="font-body-sm text-body-sm text-on-surface font-semibold">SliceX Films Studio</span>
-                  <span className="font-body-sm text-body-sm text-on-surface-variant leading-snug">Main Road, Near College Square, Balangir, Odisha 767001, India</span>
+                  <span className="font-body-sm text-body-sm text-on-surface-variant leading-snug">{c.address}</span>
                 </div>
                 <div className="flex flex-col">
                   <span className="font-label-sm text-label-sm text-primary uppercase tracking-widest block mb-1">Appointment Protocol</span>
                   <span className="font-body-sm text-body-sm text-on-surface font-semibold">Direct Consultations</span>
-                  <span className="font-body-sm text-body-sm text-on-surface-variant leading-snug">Hotline: +91 98271 22620 / +91 96586 21038</span>
+                  <span className="font-body-sm text-body-sm text-on-surface-variant leading-snug">Hotline: {c.phone1} / {c.phone2}</span>
                 </div>
               </div>
               <div className="flex flex-wrap items-center gap-space-md pt-2">
@@ -355,7 +371,7 @@ export default function ContactPage() {
             <div className="lg:col-span-6 min-h-[420px] relative bg-surface-container-high overflow-hidden">
               <iframe
                 title="SliceX Films Google Maps Location"
-                src="https://maps.google.com/maps?q=SliceX+Films+Balangir+Odisha&t=&z=14&ie=UTF8&iwloc=&output=embed"
+                src={`https://maps.google.com/maps?q=${encodeURIComponent(c.mapQuery || 'SliceX Films Balangir Odisha')}&t=&z=14&ie=UTF8&iwloc=&output=embed`}
                 className="w-full h-full min-h-[420px] border-0 filter grayscale contrast-125 opacity-85 hover:opacity-100 hover:filter-none transition-all duration-700"
                 allowFullScreen=""
                 loading="lazy"
@@ -568,11 +584,11 @@ export default function ContactPage() {
               <p className="font-body-sm text-body-sm text-on-surface-variant">Connect directly with our Lead Producer for instant date availability check.</p>
             </div>
             <div className="flex items-center gap-space-md flex-wrap justify-center">
-              <a className="px-space-lg py-space-sm bg-primary-container text-on-primary-container font-label-md text-label-md uppercase tracking-wider rounded shadow hover:bg-primary transition-all flex items-center gap-space-xs" href="tel:+919827122620">
+              <a className="px-space-lg py-space-sm bg-primary-container text-on-primary-container font-label-md text-label-md uppercase tracking-wider rounded shadow hover:bg-primary transition-all flex items-center gap-space-xs" href={tel(c.phone1)}>
                 <span className="material-symbols-outlined text-[18px]">call</span>
-                <span className="">+91 98271 22620</span>
+                <span className="">{c.phone1}</span>
               </a>
-              <a className="px-space-lg py-space-sm bg-surface-container-highest text-on-surface font-label-md text-label-md uppercase tracking-wider rounded hover:bg-surface-bright transition-all" href="mailto:slicexfilms@gmail.com">
+              <a className="px-space-lg py-space-sm bg-surface-container-highest text-on-surface font-label-md text-label-md uppercase tracking-wider rounded hover:bg-surface-bright transition-all" href={`mailto:${c.email}`}>
             Draft Email
           </a>
             </div>
@@ -580,68 +596,7 @@ export default function ContactPage() {
         </section>
       </div>
     </div>
-    <footer className="w-full bg-surface-container-lowest text-on-surface pt-space-4xl pb-space-2xl">
-      <div className="w-full px-margin-mobile lg:px-margin-desktop">
-        <div className="pb-space-3xl mb-space-3xl">
-          <span className="font-label-sm text-label-sm uppercase text-primary tracking-[0.3em] block mb-space-xs">HAUTE CINEMATOGRAPHY</span>
-          <h2 className="font-display-hero-mobile lg:font-display-hero text-display-hero-mobile lg:text-display-hero uppercase tracking-tight text-on-surface mb-space-2xs">SLICEX FILMS</h2>
-          <p className="font-headline-sm text-headline-sm italic text-outline font-light">CAPTURE. CREATE. INSPIRE.</p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-space-xl pb-space-3xl">
-          <div className="lg:col-span-4 flex flex-col gap-space-md">
-            <h3 className="font-label-lg text-label-lg uppercase tracking-widest text-primary">The Atelier</h3>
-            <p className="font-body-sm text-body-sm text-on-surface-variant max-w-sm">Handcrafted heirloom wedding cinema &amp; fine-art photography for extraordinary couples across the globe. Preserving timeless romance through pure chiaroscuro and analog soul.</p>
-            <div className="flex items-center gap-space-md pt-space-xs">
-              <a aria-label="Instagram" className="font-label-sm text-label-sm text-outline hover:text-primary tracking-widest uppercase transition-colors" href="#">Instagram</a>
-              <span className="text-outline-variant">/</span>
-              <a aria-label="Facebook" className="font-label-sm text-label-sm text-outline hover:text-primary tracking-widest uppercase transition-colors" href="#">Facebook</a>
-              <span className="text-outline-variant">/</span>
-              <a aria-label="YouTube" className="font-label-sm text-label-sm text-outline hover:text-primary tracking-widest uppercase transition-colors" href="#">YouTube</a>
-            </div>
-          </div>
-          <div className="lg:col-span-4 flex flex-col gap-space-sm">
-            <h3 className="font-label-lg text-label-lg uppercase tracking-widest text-primary mb-space-xs">Navigation Archive</h3>
-            <ul className="grid grid-cols-2 gap-space-xs font-body-sm text-body-sm text-on-surface-variant">
-              <li className="">
-                <a className="hover:text-primary transition-colors" data-path="home" href={withBase("/")}>Home Archive</a>
-              </li>
-              <li className="">
-                <a className="hover:text-primary transition-colors" data-path="films" href={withBase("/films/")}>Cinema Collective</a>
-              </li>
-              <li className="">
-                <a className="hover:text-primary transition-colors" data-path="services" href={withBase("/services/")}>Editorial Offerings</a>
-              </li>
-              <li className="">
-                <a className="hover:text-primary transition-colors" data-path="portfolio" href={withBase("/portfolio/")}>Featured Exhibitions</a>
-              </li>
-              <li className="">
-                <a className="hover:text-primary transition-colors" data-path="contact" href={withBase("/contact/")}>Inquire Studio</a>
-              </li>
-              <li className="">
-                <a className="hover:text-primary transition-colors" data-path="client-portal" href="#">Admin Portal</a>
-              </li>
-            </ul>
-          </div>
-          <div className="lg:col-span-4 flex flex-col gap-space-sm">
-            <h3 className="font-label-lg text-label-lg uppercase tracking-widest text-primary mb-space-xs">Direct Inquiries</h3>
-            <p className="font-body-sm text-body-sm text-on-surface-variant">Private consultations by appointment only.</p>
-            <div className="flex flex-col gap-space-2xs font-body-sm text-body-sm text-on-surface-variant pt-space-xs">
-              <a className="hover:text-primary transition-colors" href="tel:+919827122620">+91 98271 22620</a>
-              <a className="hover:text-primary transition-colors" href="tel:+919658621038">+91 96586 21038</a>
-              <a className="hover:text-primary transition-colors pt-space-2xs text-on-surface" href="mailto:slicexfilms@gmail.com">slicexfilms@gmail.com</a>
-            </div>
-          </div>
-        </div>
-        <div className="pt-space-xl flex flex-col sm:flex-row items-center justify-between gap-space-md font-label-sm text-label-sm text-outline tracking-widest uppercase">
-          <p className="">© 2024 SLICEX FILMS. ALL RIGHTS RESERVED.</p>
-          <div className="flex items-center gap-space-md">
-            <a className="hover:text-primary transition-colors" data-path="privacy-policy" href="#">Privacy Policy</a>
-            <span className="text-outline-variant">•</span>
-            <a className="hover:text-primary transition-colors" data-path="terms-of-service" href="#">Terms of Service</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <SiteFooter />
     </>
   );
 }

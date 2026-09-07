@@ -4,6 +4,9 @@ import { useEffect } from 'react';
 import VideoLightbox from '../../components/VideoLightbox';
 import GoldenDust from '../../components/GoldenDust';
 import HeroVideo from '../../components/HeroVideo';
+import HomeServices from '../../components/HomeServices';
+import PackagesGrid from '../../components/PackagesGrid';
+import SiteFooter from '../../components/SiteFooter';
 import { withBase } from '../../lib/basePath';
 
 // Real films from youtube.com/@slicexfilms8741
@@ -173,7 +176,7 @@ export default function HomePage() {
           </div>
           <div className="lg:col-span-7 flex flex-col justify-between space-y-space-xl lg:pl-space-xl">
             <div className="space-y-space-lg">
-              <blockquote className="font-editorial-quote text-editorial-quote text-on-surface font-light leading-relaxed bg-surface-container/30 border-l-2 border-primary p-space-lg rounded-r-lg">
+              <blockquote className="font-editorial-quote text-body-lg md:text-editorial-quote text-on-surface font-light leading-relaxed bg-surface-container/30 border-l-2 border-primary p-space-md md:p-space-lg rounded-r-lg">
             “At SliceX Films, we don’t just capture couples—we cast them. Whether it’s a shy smile or an inside joke, we see every couple as the lead characters in their own story. It’s never about how they look, dress, or pose. To us, every couple is a hero and heroine—worthy of their own movie.”
           </blockquote>
               <p className="font-body-lg text-body-lg text-on-surface-variant font-light leading-relaxed">
@@ -196,7 +199,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <section className="w-full bg-surface-container-lowest py-space-4xl overflow-hidden border-y border-amber-500/30 relative" id="film-roll-archive">
+      <section className="w-full bg-surface-container-lowest py-space-2xl md:py-space-4xl overflow-hidden border-y border-amber-500/30 relative" id="film-roll-archive">
         <style dangerouslySetInnerHTML={{ __html: `
     @keyframes filmScroll {
       0% { transform: translateX(0); }
@@ -219,7 +222,7 @@ export default function HomePage() {
       flex-shrink: 0;
     }
   ` }} />
-        <div className="w-full px-margin-mobile lg:px-margin-desktop mb-space-2xl flex flex-col md:flex-row md:items-end justify-between gap-space-md">
+        <div className="w-full px-margin-mobile lg:px-margin-desktop mb-space-lg md:mb-space-2xl flex flex-col md:flex-row md:items-end justify-between gap-space-sm md:gap-space-md">
           <div>
             <div className="flex items-center gap-space-xs mb-space-2xs font-metadata-dense text-metadata-dense uppercase tracking-widest text-secondary">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#f2ca50]"></span>
@@ -238,7 +241,7 @@ export default function HomePage() {
             {[0, 1].map((g) => (
               <div key={g} className="flex items-stretch flex-shrink-0" aria-hidden={g === 1 ? 'true' : undefined}>
                 {FILM_STRIP.map((v, i) => (
-                  <div key={v.id + '-' + g} data-yt={v.id} className="w-[360px] md:w-[420px] bg-[#12100d] border-x border-amber-900/30 flex flex-col px-3 py-2 flex-shrink-0 group cursor-pointer hover:bg-[#1a1712] transition-colors">
+                  <div key={v.id + '-' + g} data-yt={v.id} className="w-[240px] sm:w-[320px] md:w-[420px] bg-[#12100d] border-x border-amber-900/30 flex flex-col px-3 py-2 flex-shrink-0 group cursor-pointer hover:bg-[#1a1712] transition-colors">
                     <div className="flex items-center justify-between py-1 px-1 text-[10px] tracking-[0.2em] font-mono text-amber-500/80">
                       <span>{v.stock}</span>
                       <div className="flex items-center gap-2">
@@ -257,14 +260,14 @@ export default function HomePage() {
                         </span>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between py-1 px-1 text-[10px] tracking-[0.2em] font-mono text-amber-500/80">
-                      <span className="text-secondary uppercase text-[9px] tracking-wider font-semibold">{v.title} // {v.tag}</span>
-                      <div className="flex items-center gap-2">
+                    <div className="flex items-center justify-between gap-2 py-1 px-1 text-[10px] tracking-[0.2em] font-mono text-amber-500/80">
+                      <span className="text-secondary uppercase text-[9px] tracking-wider font-semibold truncate min-w-0">{v.title} // {v.tag}</span>
+                      <div className="hidden sm:flex items-center gap-2">
                         <span className="sprocket-hole"></span>
                         <span className="sprocket-hole"></span>
                         <span className="sprocket-hole"></span>
                       </div>
-                      <span className="text-outline">FRAME {21 + i}</span>
+                      <span className="text-outline whitespace-nowrap">FRAME {21 + i}</span>
                     </div>
                   </div>
                 ))}
@@ -283,8 +286,8 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <section className="w-full bg-surface-container-low py-space-4xl px-margin-mobile lg:px-margin-desktop border-b border-primary-container/20" id="services">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-space-3xl pb-space-md border-b border-primary-container/20 gap-space-md">
+      <section className="w-full bg-surface-container-low py-space-2xl md:py-space-4xl px-margin-mobile lg:px-margin-desktop border-b border-primary-container/20" id="services">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-space-xl md:mb-space-3xl pb-space-md border-b border-primary-container/20 gap-space-md">
           <div>
             <span className="font-numerical-index text-numerical-index text-secondary uppercase font-semibold">02 / SERVICES</span>
             <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase font-light text-primary tracking-tight mt-space-2xs">WHAT WE CREATE</h2>
@@ -293,116 +296,7 @@ export default function HomePage() {
         Curated cinematic modalities executed on cinema prime lenses and calibrated archival grade finishing.
       </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
-          <div className="group p-space-xl flex flex-col justify-between min-h-[400px] border border-primary-container/15 hover:border-primary/50 transition-all duration-500 relative overflow-hidden">
-            <img src="/assets/service-wedding-films.jpg" alt="Wedding Films" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40 group-hover:via-black/55 group-hover:to-black/25 transition-all duration-500"></div>
-            <div className="flex justify-between items-start relative z-10">
-              <span className="font-numerical-index text-numerical-index text-secondary font-bold group-hover:text-primary transition-colors">01</span>
-              <span className="material-symbols-outlined text-white/70 group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
-            </div>
-            <div className="relative z-10">
-              <h3 className="font-headline-md text-headline-md uppercase text-white group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">WEDDING FILMS</h3>
-              <p className="font-body-sm text-body-sm text-white/75 font-light leading-relaxed">
-            Feature-length and theatrical cut wedding narratives recorded with multi-camera cinema rigs and custom film sound design.
-          </p>
-              <div className="mt-space-md pt-space-sm border-t border-white/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
-                <span className="bg-primary/20 backdrop-blur-sm px-2 py-0.5 rounded text-primary">4K MASTER</span>
-                <span className="text-white/60">DIRECTOR'S CUT</span>
-              </div>
-            </div>
-          </div>
-          <div className="group p-space-xl flex flex-col justify-between min-h-[400px] border border-primary-container/15 hover:border-primary/50 transition-all duration-500 relative overflow-hidden">
-            <img src="/assets/service-wedding-photography.jpg" alt="Wedding Photography" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40 group-hover:via-black/55 group-hover:to-black/25 transition-all duration-500"></div>
-            <div className="flex justify-between items-start relative z-10">
-              <span className="font-numerical-index text-numerical-index text-secondary font-bold group-hover:text-primary transition-colors">02</span>
-              <span className="material-symbols-outlined text-white/70 group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
-            </div>
-            <div className="relative z-10">
-              <h3 className="font-headline-md text-headline-md uppercase text-white group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">WEDDING PHOTOGRAPHY</h3>
-              <p className="font-body-sm text-body-sm text-white/75 font-light leading-relaxed">
-            High-fashion editorial stills and authentic documentary photojournalism that captures raw, unprompted elegance.
-          </p>
-              <div className="mt-space-md pt-space-sm border-t border-white/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
-                <span className="bg-primary/20 backdrop-blur-sm px-2 py-0.5 rounded text-primary">FINE ART PRINTS</span>
-                <span className="text-white/60">HIGH RES ARCHIVE</span>
-              </div>
-            </div>
-          </div>
-          <div className="group p-space-xl flex flex-col justify-between min-h-[400px] border border-primary-container/15 hover:border-primary/50 transition-all duration-500 relative overflow-hidden">
-            <img src="/assets/service-prewedding-films.jpg" alt="Pre-Wedding Films" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40 group-hover:via-black/55 group-hover:to-black/25 transition-all duration-500"></div>
-            <div className="flex justify-between items-start relative z-10">
-              <span className="font-numerical-index text-numerical-index text-secondary font-bold group-hover:text-primary transition-colors">03</span>
-              <span className="material-symbols-outlined text-white/70 group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
-            </div>
-            <div className="relative z-10">
-              <h3 className="font-headline-md text-headline-md uppercase text-white group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">PRE-WEDDING FILMS</h3>
-              <p className="font-body-sm text-body-sm text-white/75 font-light leading-relaxed">
-            Conceptual short cinematic vignettes built around the couple's intimate genesis story, curated styling, and destination backdrops.
-          </p>
-              <div className="mt-space-md pt-space-sm border-t border-white/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
-                <span className="bg-primary/20 backdrop-blur-sm px-2 py-0.5 rounded text-primary">STORYBOARDED</span>
-                <span className="text-white/60">DESTINATION</span>
-              </div>
-            </div>
-          </div>
-          <div className="group p-space-xl flex flex-col justify-between min-h-[400px] border border-primary-container/15 hover:border-primary/50 transition-all duration-500 relative overflow-hidden">
-            <img src="/assets/service-engagement-stories.jpg" alt="Engagement Stories" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40 group-hover:via-black/55 group-hover:to-black/25 transition-all duration-500"></div>
-            <div className="flex justify-between items-start relative z-10">
-              <span className="font-numerical-index text-numerical-index text-secondary font-bold group-hover:text-primary transition-colors">04</span>
-              <span className="material-symbols-outlined text-white/70 group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
-            </div>
-            <div className="relative z-10">
-              <h3 className="font-headline-md text-headline-md uppercase text-white group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">ENGAGEMENT STORIES</h3>
-              <p className="font-body-sm text-body-sm text-white/75 font-light leading-relaxed">
-            Intimate portraits and audio documentary tracking the immediate chapter of commitment, family bonding, and candid exchange.
-          </p>
-              <div className="mt-space-md pt-space-sm border-t border-white/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
-                <span className="bg-primary/20 backdrop-blur-sm px-2 py-0.5 rounded text-primary">INTIMATE SOIRÉE</span>
-                <span className="text-white/60">AUDIO VOWS</span>
-              </div>
-            </div>
-          </div>
-          <div className="group p-space-xl flex flex-col justify-between min-h-[400px] border border-primary-container/15 hover:border-primary/50 transition-all duration-500 relative overflow-hidden">
-            <img src="/assets/service-cinematic-reels.jpg" alt="Cinematic Reels" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40 group-hover:via-black/55 group-hover:to-black/25 transition-all duration-500"></div>
-            <div className="flex justify-between items-start relative z-10">
-              <span className="font-numerical-index text-numerical-index text-secondary font-bold group-hover:text-primary transition-colors">05</span>
-              <span className="material-symbols-outlined text-white/70 group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
-            </div>
-            <div className="relative z-10">
-              <h3 className="font-headline-md text-headline-md uppercase text-white group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">CINEMATIC REELS</h3>
-              <p className="font-body-sm text-body-sm text-white/75 font-light leading-relaxed">
-            High-velocity vertical teasers engineered for digital showcase without losing cinematic grade color science and motion blur.
-          </p>
-              <div className="mt-space-md pt-space-sm border-t border-white/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
-                <span className="bg-primary/20 backdrop-blur-sm px-2 py-0.5 rounded text-primary">9:16 VERTICAL</span>
-                <span className="text-white/60">FAST-TURNAROUND</span>
-              </div>
-            </div>
-          </div>
-          <div className="group p-space-xl flex flex-col justify-between min-h-[400px] border border-primary-container/15 hover:border-primary/50 transition-all duration-500 relative overflow-hidden">
-            <img src="/assets/service-drone-coverage.jpg" alt="Drone Coverage" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/70 to-black/40 group-hover:via-black/55 group-hover:to-black/25 transition-all duration-500"></div>
-            <div className="flex justify-between items-start relative z-10">
-              <span className="font-numerical-index text-numerical-index text-secondary font-bold group-hover:text-primary transition-colors">06</span>
-              <span className="material-symbols-outlined text-white/70 group-hover:text-primary group-hover:rotate-45 transition-all text-[24px]">arrow_outward</span>
-            </div>
-            <div className="relative z-10">
-              <h3 className="font-headline-md text-headline-md uppercase text-white group-hover:text-primary font-normal tracking-tight mb-space-sm transition-colors">DRONE COVERAGE</h3>
-              <p className="font-body-sm text-body-sm text-white/75 font-light leading-relaxed">
-            Certified aerial pilotage capturing sprawling palace architecture, mountain landscapes, and vast procession scales from above.
-          </p>
-              <div className="mt-space-md pt-space-sm border-t border-white/20 flex items-center justify-between font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
-                <span className="bg-primary/20 backdrop-blur-sm px-2 py-0.5 rounded text-primary">PRO-RES CINEMA</span>
-                <span className="text-white/60">ARCHITECTURAL SCALE</span>
-              </div>
-            </div>
-          </div>
-        </div>
+        <HomeServices />
       </section>
       <section className="w-full bg-surface py-space-5xl px-margin-mobile lg:px-margin-desktop relative overflow-hidden" id="featured-work">
         <div className="absolute left-1/3 top-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2"></div>
@@ -690,95 +584,7 @@ export default function HomePage() {
         Transparent commission structures tailored for intimate gatherings to grand royal multi-day destination events.
       </p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-lg mb-space-4xl">
-          <div className="bg-surface-container p-space-xl flex flex-col justify-between relative hover:bg-surface-container-high border border-primary-container/20 hover:border-primary/50 transition-all">
-            <div>
-              <span className="font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">OPTION 01</span>
-              <h3 className="font-headline-sm text-headline-sm uppercase text-primary font-light mt-space-2xs">PRE-WEDDING FILM</h3>
-              <div className="mt-space-lg mb-space-lg">
-                <span className="font-display-lg-mobile text-display-lg-mobile font-normal text-primary-fixed">₹35,000</span>
-                <span className="font-metadata-dense text-metadata-dense text-secondary uppercase block mt-1 font-semibold">STARTING COMMISSION</span>
-              </div>
-              <ul className="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant border-t border-primary-container/20 pt-space-md">
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> 1 Day Conceptual Shoot</li>
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> 1-2 Minute Cinematic Teaser</li>
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> 25 Editorial Edited Stills</li>
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> Drone Aerial Footage</li>
-              </ul>
-            </div>
-            <div className="pt-space-xl">
-              <a className="w-full inline-block text-center py-space-sm bg-surface-container-highest border border-primary-container/40 text-primary font-label-uppercase text-label-uppercase uppercase rounded-full hover:bg-primary hover:text-on-primary hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] transition-all tracking-widest font-semibold" href="tel:+919827122620">
-            INQUIRE TIER
-          </a>
-            </div>
-          </div>
-          <div className="bg-surface-container p-space-xl flex flex-col justify-between relative hover:bg-surface-container-high border border-primary-container/20 hover:border-primary/50 transition-all">
-            <div>
-              <span className="font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">OPTION 02</span>
-              <h3 className="font-headline-sm text-headline-sm uppercase text-primary font-light mt-space-2xs">ENGAGEMENT ARCHIVE</h3>
-              <div className="mt-space-lg mb-space-lg">
-                <span className="font-display-lg-mobile text-display-lg-mobile font-normal text-primary-fixed">₹35,000</span>
-                <span className="font-metadata-dense text-metadata-dense text-secondary uppercase block mt-1 font-semibold">FLAT COMMISSION</span>
-              </div>
-              <ul className="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant border-t border-primary-container/20 pt-space-md">
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> Full Ceremony Coverage</li>
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> Traditional + Candid Photo</li>
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> 3-4 Minute Film Highlight</li>
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> 4K Delivery Within 14 Days</li>
-              </ul>
-            </div>
-            <div className="pt-space-xl">
-              <a className="w-full inline-block text-center py-space-sm bg-surface-container-highest border border-primary-container/40 text-primary font-label-uppercase text-label-uppercase uppercase rounded-full hover:bg-primary hover:text-on-primary hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] transition-all tracking-widest font-semibold" href="tel:+919827122620">
-            INQUIRE TIER
-          </a>
-            </div>
-          </div>
-          <div className="bg-surface-container p-space-xl flex flex-col justify-between relative hover:bg-surface-container-high border border-primary-container/30 hover:border-primary/60 transition-all shadow-md">
-            <div>
-              <span className="font-metadata-dense text-metadata-dense text-primary tracking-widest uppercase font-bold">OPTION 03 • POPULAR</span>
-              <h3 className="font-headline-sm text-headline-sm uppercase text-primary font-light mt-space-2xs">SINGLE SIDE WEDDING</h3>
-              <div className="mt-space-lg mb-space-lg">
-                <span className="font-display-lg-mobile text-display-lg-mobile font-normal text-primary-fixed">₹1,10,000</span>
-                <span className="font-metadata-dense text-metadata-dense text-secondary uppercase block mt-1 font-semibold">COMPLETE CEREMONY</span>
-              </div>
-              <ul className="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant border-t border-primary-container/20 pt-space-md">
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> 2-3 Day Dedicated Crew</li>
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> 15-20 Min Cinematic Film</li>
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> Instagram Teasers Included</li>
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> Hardcover Heritage Album</li>
-              </ul>
-            </div>
-            <div className="pt-space-xl">
-              <a className="w-full inline-block text-center py-space-sm bg-surface-container-highest border border-primary-container/50 text-primary font-label-uppercase text-label-uppercase uppercase rounded-full hover:bg-primary hover:text-on-primary hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] transition-all tracking-widest font-semibold" href="tel:+919827122620">
-            INQUIRE TIER
-          </a>
-            </div>
-          </div>
-          <div className="bg-surface-container-high p-space-xl flex flex-col justify-between relative shadow-[0_0_40px_rgba(212,175,55,0.15)] border-2 border-primary/60">
-            <div className="absolute -top-3.5 right-6 bg-gradient-to-r from-primary-container via-primary to-secondary text-[#241a00] font-bold px-space-md py-1 rounded-full font-metadata-dense text-metadata-dense uppercase tracking-widest shadow-[0_0_15px_rgba(212,175,55,0.4)]">
-          FLAGSHIP COMMISSION
-        </div>
-            <div>
-              <span className="font-metadata-dense text-metadata-dense text-primary tracking-widest uppercase font-bold">OPTION 04</span>
-              <h3 className="font-headline-sm text-headline-sm uppercase text-primary font-light mt-space-2xs">BOTH SIDE WEDDING</h3>
-              <div className="mt-space-lg mb-space-lg">
-                <span className="font-display-lg-mobile text-display-lg-mobile font-normal text-primary">₹2,40,000</span>
-                <span className="font-metadata-dense text-metadata-dense text-secondary uppercase block mt-1 font-semibold">THE FULL PRODUCTION</span>
-              </div>
-              <ul className="space-y-space-xs font-body-sm text-body-sm text-on-surface-variant border-t border-primary-container/30 pt-space-md">
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> Complete Dual Family Coverage</li>
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> 6-Crew Director &amp; Drones</li>
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> 30-Min Feature Film + Reels</li>
-                <li className="flex items-center gap-space-xs"><span className="material-symbols-outlined text-[16px] text-primary">check</span> 2 Luxury Fine-Art Photo Books</li>
-              </ul>
-            </div>
-            <div className="pt-space-xl">
-              <a className="w-full inline-block text-center py-space-sm bg-gradient-to-r from-[#d4af37] via-[#f2ca50] to-[#ffe088] text-[#241a00] font-label-uppercase text-label-uppercase uppercase font-bold rounded-full shadow-[0_0_20px_rgba(212,175,55,0.35)] hover:shadow-[0_0_30px_rgba(212,175,55,0.6)] hover:scale-[1.02] transition-all tracking-widest" href="tel:+919827122620">
-            COMMISSION STUDIO
-          </a>
-            </div>
-          </div>
-        </div>
+        <PackagesGrid />
         <div className="bg-surface-container-lowest p-space-xl lg:p-space-3xl rounded-lg border border-primary-container/20 shadow-2xl relative overflow-hidden">
           <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
           <div className="max-w-2xl mx-auto text-center mb-space-2xl">
@@ -826,54 +632,7 @@ export default function HomePage() {
         </div>
       </section>
     </div>
-    <footer className="w-full bg-surface-container-lowest text-on-surface-variant pt-space-4xl pb-space-2xl border-t border-primary-container/20">
-      <div className="w-full px-margin-mobile lg:px-margin-desktop">
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-gutter-desktop pb-space-3xl">
-          <div className="md:col-span-6 flex flex-col justify-between">
-            <div className="space-y-space-md">
-              <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg tracking-tight uppercase text-primary font-light leading-none">SLICEX FILMS</h2>
-              <p className="font-editorial-quote text-editorial-quote text-secondary italic">CAPTURE. CREATE. INSPIRE.</p>
-            </div>
-            <p className="font-body-sm text-body-sm text-on-surface-variant max-w-md pt-space-lg">Handcrafted cinematic narratives and fine-art wedding archives designed for couples across the globe. Preserving unscripted emotion with high-fashion editorial purity.</p>
-          </div>
-          <div className="md:col-span-3 flex flex-col space-y-space-md">
-            <span className="font-label-uppercase text-label-uppercase uppercase text-primary tracking-widest font-semibold">INDEX</span>
-            <nav className="flex flex-col space-y-space-sm">
-              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="home" href={withBase("/")}>Home Archive</a>
-              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="about" href={withBase("/about/")}>The Cinema Collective</a>
-              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="services" href={withBase("/services/")}>Editorial Offerings</a>
-              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="portfolio" href={withBase("/portfolio/")}>Featured Exhibitions</a>
-              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="films" href={withBase("/films/")}>Cinematic Masterpieces</a>
-              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="packages" href={withBase("/book-your-date/")}>Commission Investment</a>
-              <a className="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors" data-path="contact" href={withBase("/contact/")}>Inquire Studio</a>
-            </nav>
-          </div>
-          <div className="md:col-span-3 flex flex-col space-y-space-md">
-            <span className="font-label-uppercase text-label-uppercase uppercase text-primary tracking-widest font-semibold">DIRECT CONTACT</span>
-            <div className="flex flex-col space-y-space-xs font-body-sm text-body-sm">
-              <a className="text-on-surface-variant hover:text-primary transition-colors" href="tel:+919827122620">+91 98271 22620</a>
-              <a className="text-on-surface-variant hover:text-primary transition-colors" href="tel:+919658621038">+91 96586 21038</a>
-              <a className="text-on-surface-variant hover:text-primary transition-colors" href="mailto:slicexfilms@gmail.com">slicexfilms@gmail.com</a>
-            </div>
-            <div className="pt-space-md">
-              <span className="font-label-uppercase text-label-uppercase uppercase text-primary tracking-widest block mb-space-sm font-semibold">PRESENCE</span>
-              <div className="flex flex-col space-y-space-xs font-body-sm text-body-sm">
-                <a className="text-on-surface-variant hover:text-primary transition-colors" href="https://www.instagram.com/slicexfilms/" rel="noopener noreferrer" target="_blank">Instagram / @slicexfilms</a>
-                <a className="text-on-surface-variant hover:text-primary transition-colors" href="https://www.facebook.com/SliceXfilms" rel="noopener noreferrer" target="_blank">Facebook / SliceXfilms</a>
-                <a className="text-on-surface-variant hover:text-primary transition-colors" href="https://www.youtube.com/@slicexfilms8741" rel="noopener noreferrer" target="_blank">YouTube / @slicexfilms8741</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="pt-space-xl flex flex-col sm:flex-row items-center justify-between gap-space-md font-metadata-dense text-metadata-dense text-outline tracking-widest uppercase border-t border-primary-container/20">
-          <p>© 2025 SLICEX FILMS. ALL RIGHTS RESERVED.</p>
-          <div className="flex items-center gap-space-lg">
-            <a className="text-outline hover:text-primary transition-colors" data-path="terms-and-conditions" href="#">TERMS &amp; CONDITIONS</a>
-            <a className="text-outline hover:text-primary transition-colors" data-path="privacy-policy" href="#">PRIVACY POLICY</a>
-          </div>
-        </div>
-      </div>
-    </footer>
+    <SiteFooter />
     </>
   );
 }

@@ -11,6 +11,7 @@ const NAV_ITEMS = [
   { dp: 'services', href: '/services', label: 'SERVICES' },
   { dp: 'portfolio', href: '/portfolio', label: 'PORTFOLIO' },
   { dp: 'films', href: '/films', label: 'FILMS' },
+  { dp: 'gallery', href: '/gallery', label: 'GALLERY' },
   { dp: 'packages', href: '/book-your-date', label: 'PACKAGES' },
   { dp: 'contact', href: '/contact', label: 'CONTACT' },
 ];
