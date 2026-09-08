@@ -35,6 +35,10 @@
   body {
     margin: 0;
     padding: 0;
+    /* Belt-and-braces: nothing should ever be able to push a horizontal
+       scrollbar / blank gutter on phones, whatever a component does. */
+    max-width: 100%;
+    overflow-x: hidden;
   }
   body {
     overscroll-behavior: none;
