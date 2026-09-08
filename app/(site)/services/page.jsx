@@ -49,7 +49,7 @@ export default function ServicesPage() {
       </section>
       <section className="w-full px-margin-mobile lg:px-margin-desktop py-space-4xl">
         <div className="max-w-7xl mx-auto flex flex-col gap-space-4xl">
-          <article className="group relative bg-surface-container rounded-xl overflow-hidden shadow-2xl transition-all duration-500 hover:shadow-[0_20px_50px_rgba(212,175,55,0.1)]">
+          <article className="group relative bg-surface-container rounded-xl overflow-hidden shadow-2xl transition-all duration-500 hover:shadow-[0_20px_50px_rgba(0,184,200,0.1)]">
             <div className="grid grid-cols-1 lg:grid-cols-12">
               <div className="lg:col-span-7 relative min-h-[460px] lg:min-h-[580px] overflow-hidden bg-surface-container-lowest">
                 <img className="absolute inset-0 w-full h-full object-cover object-center transform scale-100 group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Ultra-luxury Indian royal wedding in Jodhpur palace courtyard at blue hour dusk with warm lantern glows, couple in handcrafted zardozi velvet sherwani and royal crimson lehenga, cinematic shallow depth of field, anamorphic 2.39 to 1 letterbox ratio, film grain, chiaroscuro golden highlights on ancient stone pillars" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAEYOMf4c9GitEZvHfWkMB3QznRtQvRAM1EN0VU0TeGLlBt6tOp0zgg3j-C3HUDUti-pteVYrrL0z1JIfFFyg7-U2Y6s8o_Jg5ycd5V2I68l6JSrYAT06u8G2o35ihJ6hh_2FjkpQHG8ABTTNGQ6zYCq3fFHMYWewwKaasPJs4BOfLv6QsvGXUoAJdfSkUwVUe8MKEGwbHX6Cv7rEXWPAfdCeWmsM2-KcjlAExgHbgao64mutzchWXpEQ" />
@@ -116,7 +116,7 @@ export default function ServicesPage() {
             </div>
           </article>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-space-xl">
-            <article className="group bg-surface-container rounded-xl overflow-hidden shadow-xl flex flex-col justify-between transition-all duration-300 hover:shadow-[0_15px_40px_rgba(212,175,55,0.08)]">
+            <article className="group bg-surface-container rounded-xl overflow-hidden shadow-xl flex flex-col justify-between transition-all duration-300 hover:shadow-[0_15px_40px_rgba(0,184,200,0.08)]">
               <div className="relative h-80 overflow-hidden bg-surface-container-lowest">
                 <img className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Editorial wedding photography close-up in high fashion Vogue style, bride with delicate lace veil catching golden rim light, groom in bespoke black velvet tuxedo, intimate black and white chiaroscuro aesthetic with rich tonal gradations and subtle film grain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDjxlSL-iizywlSZBCQCW4PMGDaMUxAK3xOKUw2d7H4l7YmRiNl44d2TUmVQpq86j70qdJLZKO6kT7VVp1La0JrP34WCYgarcGlTo5Mmhn3dfAUlQycW9Xy6pD9RSHKULj_-bxY5xkOV_pQ6eoHEPsKJHeUZC4d-nN717hmMYKabXcVw1HwB2-ptlcxjo8Sj29zryGMCvhpbyuY8nhYb0MpP-M-q3S2IVezcSOziISkslqN_iuiSSG-vg" />
                 <div className="absolute top-space-md left-space-md flex items-center gap-space-xs">
@@ -158,7 +158,7 @@ export default function ServicesPage() {
                 </div>
               </div>
             </article>
-            <article className="group bg-surface-container rounded-xl overflow-hidden shadow-xl flex flex-col justify-between transition-all duration-300 hover:shadow-[0_15px_40px_rgba(212,175,55,0.08)]">
+            <article className="group bg-surface-container rounded-xl overflow-hidden shadow-xl flex flex-col justify-between transition-all duration-300 hover:shadow-[0_15px_40px_rgba(0,184,200,0.08)]">
               <div className="relative h-80 overflow-hidden bg-surface-container-lowest">
                 <img className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Editorial pre-wedding photoshoot on Amalfi coast cliffside or Lake Como terrace at sunset, stylish couple with flowing silk haute couture gown moving in the alpine breeze, soft cinematic golden hour lighting, analog 35mm film aesthetic" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB3N_C5bMyMAZepo-cML5nk0Nmnsg8ugaKXRMdMhCA4O2QV0QMZvhufXKIBXOBvnVUz_vHboQ_hoxAdrHPnl-wCljcz2VAitLmWh6EIqewcuhxTJp5bCS7l_wQpkAn4GIzBLpd-P5YjBxFF0VgiJLFGIJcBS8dGijbMMua55FHsJI84w0Noj9N6autEo4KatR9jIPU1C2jupjZqxIyCdiXYW5yPa7cxhkD6CQn3aEea7d1_xH9jUTv_fw" />
                 <div className="absolute top-space-md left-space-md flex items-center gap-space-xs">
@@ -202,7 +202,7 @@ export default function ServicesPage() {
             </article>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-xl">
-            <article className="group bg-surface-container rounded-xl overflow-hidden shadow-xl flex flex-col justify-between transition-all duration-300 hover:shadow-[0_15px_40px_rgba(212,175,55,0.08)]">
+            <article className="group bg-surface-container rounded-xl overflow-hidden shadow-xl flex flex-col justify-between transition-all duration-300 hover:shadow-[0_15px_40px_rgba(0,184,200,0.08)]">
               <div className="relative h-64 overflow-hidden bg-surface-container-lowest">
                 <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Intimate engagement session inside a candlelit private architectural library, bride wearing solitaire diamond ring embracing fiancé, muted warm bronze tones, gentle lens flare, dark moody editorial lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBLskSYFHb6AXTy1QJ7z-mONANdCnucrf71I-zZuYWnQqSQaQMeNXQ4a_qTovL2Cy6wh7ioe5GCCvfT1JGFyQD4Ba3W_BkK1vlY21O1qli8LyBg5T_H7rH3T9N9MkmCNqXwdspQ7j8nRsO_yUIJNT8QqowtofTQx2W1WekCjUvlChdh0xXB0gS65y0_JUiA7oqeC2iYbcg9cX9rgqNxdDty-oGHLtRTy1CMBLPd9AIL717eu2eIcP1osQ" />
                 <div className="absolute top-space-md left-space-md">
@@ -232,7 +232,7 @@ export default function ServicesPage() {
 </a>
               </div>
             </article>
-            <article className="group bg-surface-container rounded-xl overflow-hidden shadow-xl flex flex-col justify-between transition-all duration-300 hover:shadow-[0_15px_40px_rgba(212,175,55,0.08)]">
+            <article className="group bg-surface-container rounded-xl overflow-hidden shadow-xl flex flex-col justify-between transition-all duration-300 hover:shadow-[0_15px_40px_rgba(0,184,200,0.08)]">
               <div className="relative h-64 overflow-hidden bg-surface-container-lowest">
                 <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Same day edit live screening at a luxury gala wedding reception, ballroom guests watching magnificent high definition cinema screen displaying wedding ceremony that happened earlier in the day, champagne glasses glowing" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBGu6ZXeVQHoSt-qAA_s-YtEY5kkK4jsHX3U2EyhVw_SnyHyOBytNFvkir0gIjkC1VKi591JjqoeJnRybVP576HdzgYCZ-LIxDjmNuDuX17OlruAT-s3QtE0sBtsF2BgBa9kQujGzKvj2VCjY9CsxvX5iKTcO2Mwr1wqhvpOXQWh37_9goWahG4KR470izfI0J2Cp8JX9Mr008Pj1aDrUJBpvisfLmxmNFwWMnIiEb3gL5sdvcisLc3dw" />
                 <div className="absolute top-space-md left-space-md">
@@ -262,7 +262,7 @@ export default function ServicesPage() {
 </a>
               </div>
             </article>
-            <article className="group bg-surface-container rounded-xl overflow-hidden shadow-xl flex flex-col justify-between transition-all duration-300 hover:shadow-[0_15px_40px_rgba(212,175,55,0.08)]">
+            <article className="group bg-surface-container rounded-xl overflow-hidden shadow-xl flex flex-col justify-between transition-all duration-300 hover:shadow-[0_15px_40px_rgba(0,184,200,0.08)]">
               <div className="relative h-64 overflow-hidden bg-surface-container-lowest">
                 <img className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out" data-alt="Epic aerial drone cinema shot over a majestic heritage palace fortress in Udaipur India surrounded by tranquil reflective waters, warm evening lights, dramatic scale, cinematic widescreen perspective, 4K resolution" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSlsPntPXeKKrC_YIXx3xdp7vOKkYY8lkrsWNPTOAUPaveBSM_QUa74NFdcvm0DRrPfxDKOiXKleoICnW_z2Fhv5gqPJRjmvOoKnQE952vw20rAMjBZS0RzM7gGCzBIYuA3jNt4M2vkK6sf1Y_jmJx8_gbhmMBZuQ1UHK4F8VgfC_TG3OwWYyi-QCFKfZSErxp_Etv8w4K4RYJTFsn85Evqf4pZ9S_TEUADQs9IoI9_G6T-vh5lm8Kjg" />
                 <div className="absolute top-space-md left-space-md">
@@ -435,7 +435,7 @@ export default function ServicesPage() {
           </p>
             </div>
             <div className="lg:col-span-4 flex flex-col gap-space-md lg:items-end">
-              <a className="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-xl py-space-md bg-primary-container text-on-primary-container font-label-md text-label-md uppercase tracking-[0.16em] rounded shadow-[0_0_30px_rgba(212,175,55,0.35)] hover:bg-primary transition-all duration-300" data-path="contact" href={withBase("/contact/")}>
+              <a className="w-full sm:w-auto inline-flex items-center justify-center gap-space-xs px-space-xl py-space-md bg-primary-container text-on-primary-container font-label-md text-label-md uppercase tracking-[0.16em] rounded shadow-[0_0_30px_rgba(0,184,200,0.35)] hover:bg-primary transition-all duration-300" data-path="contact" href={withBase("/contact/")}>
                 <span>INQUIRE FOR YOUR DATES</span>
                 <span className="material-symbols-outlined text-[18px]">calendar_today</span>
               </a>

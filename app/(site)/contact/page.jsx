@@ -355,7 +355,7 @@ export default function ContactPage() {
               </div>
               <div className="flex flex-wrap items-center gap-space-md pt-2">
                 <a 
-                  className="inline-flex items-center gap-space-xs px-space-lg py-space-sm bg-primary text-surface-container-lowest font-label-md text-label-md uppercase tracking-wider rounded-md font-bold shadow-lg hover:bg-amber-300 transition-all" 
+                  className="inline-flex items-center gap-space-xs px-space-lg py-space-sm bg-primary text-surface-container-lowest font-label-md text-label-md uppercase tracking-wider rounded-md font-bold shadow-lg hover:bg-cyan-300 transition-all" 
                   href="https://share.google/jmSViIkA3751IqYPo" 
                   rel="noopener noreferrer" 
                   target="_blank"
@@ -409,7 +409,7 @@ export default function ContactPage() {
                 <div className="flex items-center gap-3 bg-surface-container-high px-4 py-2 rounded-xl border border-primary-container/30">
                   <span className="font-display-hero text-headline-lg text-primary font-bold">5.0</span>
                   <div className="flex flex-col">
-                    <div className="flex items-center text-amber-400 text-[18px]">
+                    <div className="flex items-center text-cyan-400 text-[18px]">
                       ★★★★★
                     </div>
                     <span className="text-[11px] font-mono text-on-surface-variant uppercase tracking-wider">100% 5-STAR RATING</span>
@@ -434,7 +434,7 @@ export default function ContactPage() {
               <div className="bg-surface-container-low p-space-xl rounded-xl border border-primary-container/15 flex flex-col justify-between gap-space-md hover:border-primary/40 transition-all shadow-lg">
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center text-amber-400 text-[16px]">
+                    <div className="flex items-center text-cyan-400 text-[16px]">
                       ★★★★★
                     </div>
                     <span className="text-[10px] font-mono uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">
@@ -458,7 +458,7 @@ export default function ContactPage() {
               <div className="bg-surface-container-low p-space-xl rounded-xl border border-primary-container/15 flex flex-col justify-between gap-space-md hover:border-primary/40 transition-all shadow-lg">
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center text-amber-400 text-[16px]">
+                    <div className="flex items-center text-cyan-400 text-[16px]">
                       ★★★★★
                     </div>
                     <span className="text-[10px] font-mono uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">
@@ -482,7 +482,7 @@ export default function ContactPage() {
               <div className="bg-surface-container-low p-space-xl rounded-xl border border-primary-container/15 flex flex-col justify-between gap-space-md hover:border-primary/40 transition-all shadow-lg">
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center text-amber-400 text-[16px]">
+                    <div className="flex items-center text-cyan-400 text-[16px]">
                       ★★★★★
                     </div>
                     <span className="text-[10px] font-mono uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">
@@ -506,7 +506,7 @@ export default function ContactPage() {
               <div className="bg-surface-container-low p-space-xl rounded-xl border border-primary-container/15 flex flex-col justify-between gap-space-md hover:border-primary/40 transition-all shadow-lg">
                 <div className="flex flex-col gap-3">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center text-amber-400 text-[16px]">
+                    <div className="flex items-center text-cyan-400 text-[16px]">
                       ★★★★★
                     </div>
                     <span className="text-[10px] font-mono uppercase tracking-widest text-primary bg-primary/10 px-2 py-0.5 rounded border border-primary/20">

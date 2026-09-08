@@ -5,38 +5,38 @@ import { withBase } from '../lib/basePath';
 import { submitLead, fetchContent } from '../lib/content';
 
 // ============================================================
-// SLICEX FILMS — "Slice" chat concierge
+// SLICEX FILMS — "Chitra" chat concierge
 // Ported from the V Media Production "Vee" widget and re-skinned
-// for the SliceX black + gold palette. FAQ knowledge base, name /
+// for the SliceX black + white + aqua palette. FAQ knowledge base, name /
 // WhatsApp-number capture, quick replies, animated face bubble,
 // soft chime, WhatsApp handoff. No backend: leads go to WhatsApp
 // with the visitor's name pre-filled.
 // ============================================================
 
 const CFG = {
-  botName: 'Slice',
+  botName: 'Chitra',
   brandTitle: 'SliceX Films',
   whatsapp: '919827122620',
   whatsappDisplay: '+91 98271 22620',
-  waMessage: "Hi! I was chatting with Slice on your website and I'd like to talk about my wedding film.",
+  waMessage: "Hi! I was chatting with Chitra on your website and I'd like to talk about my wedding film.",
   autoOpenDelay: 7000,
   typingDelay: 900,
   // Free AI brain (Groq via a Supabase Edge Function). Falls back to the
   // keyword knowledge base below if unreachable. Empty string = keyword-only.
   aiEndpoint: 'https://kfylqdysvptnxfbklcru.supabase.co/functions/v1/slice-chat',
   aiTimeout: 15000,
-  gold: '#f2ca50',
-  goldDeep: '#d4af37',
-  goldInk: '#3c2f00',
-  black: '#0e0e0e',
-  surface: '#131313',
-  surfaceLow: '#1c1b1b',
-  surfaceHigh: '#2a2a2a',
-  surfaceHighest: '#353534',
-  text: '#e5e2e1',
-  textMuted: '#d0c5af',
-  outline: '#99907c',
-  peach: '#feb96c',
+  gold: '#3ee6f0',
+  goldDeep: '#00b8c8',
+  goldInk: '#00363b',
+  black: '#0a0a0a',
+  surface: '#0f0f0f',
+  surfaceLow: '#171717',
+  surfaceHigh: '#292929',
+  surfaceHighest: '#353535',
+  text: '#ffffff',
+  textMuted: '#c8d0d2',
+  outline: '#8a9496',
+  peach: '#67e8f9',
 };
 
 const QR = {
@@ -55,17 +55,21 @@ const QR = {
 };
 
 // ── Character: blank-faced camera emoji + animated SVG face ──────
-// public/assets/slice-cam.png is 483x364 (4:3). The SVG overlay uses the
-// same coordinate space (viewBox 0 0 966 728) so the eyes and mouth land on
-// the empty face area to the right of the camera at any render size.
+// public/assets/slice-cam.png is 966x728 (4:3, teal blob, transparent bg —
+// cropped from `Desktop\Chitra.png`). The SVG overlay
+// uses the same coordinate space (viewBox 0 0 966 728) so the eyes and mouth
+// land on the empty face area to the right of the camera at any render size.
+// FACE_SHIFT nudges the whole face to suit the current artwork's framing.
+const FACE_SHIFT = 'translate(64 50)';
 const CAM_URL = withBase('/assets/slice-cam.png');
 const EMOTIONS = ['curious', 'happy', 'laugh', 'wink', 'tongue', 'love', 'party', 'wave', 'idea', 'cool', 'thinking', 'surprised', 'sad', 'sleepy'];
-const INK = '#3c2f00';
+const INK = '#00363b';
 // Markup for one character (image + face). `ids` adds element ids so the
 // bubble's engine can find its eyes; avatars omit them.
 const charMarkup = (emo, ids) => `
   <img class="sx-char-img" src="${CAM_URL}" alt="" draggable="false">
   <svg class="sx-char-face" viewBox="0 0 966 728" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <g transform="${FACE_SHIFT}">
     <path class="sx-brow sx-brow-l" d="M 418 205 Q 466 185 514 205" stroke="${INK}" stroke-width="14" fill="none" stroke-linecap="round"/>
     <path class="sx-brow sx-brow-r" d="M 588 205 Q 636 185 684 205" stroke="${INK}" stroke-width="14" fill="none" stroke-linecap="round"/>
     <g class="sx-eye sx-eye-l" ${ids ? 'id="sx-eye-l"' : ''}>
@@ -91,6 +95,7 @@ const charMarkup = (emo, ids) => `
     <ellipse class="sx-cheek sx-cheek-l" cx="440" cy="352" rx="34" ry="20"/>
     <ellipse class="sx-cheek sx-cheek-r" cx="672" cy="352" rx="34" ry="20"/>
     <path class="sx-zz" d="M 700 150 h 40 l -40 40 h 40" stroke="${INK}" stroke-width="10" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
   </svg>`;
 
 // ── FAQ Knowledge Base ─────────────────────────────────────────
@@ -219,8 +224,8 @@ const KB = [
 
 const CSS = `
 #sx-widget{position:fixed;bottom:24px;right:24px;z-index:99999;font-family:Manrope,Inter,system-ui,sans-serif}
-#sx-bubble{width:104px;height:78px;cursor:pointer;position:relative;animation:sx-float 3.2s ease-in-out infinite;user-select:none;filter:drop-shadow(0 6px 14px rgba(242,202,80,.45)) drop-shadow(0 2px 4px rgba(0,0,0,.6));transition:filter .3s}
-#sx-bubble:hover{filter:drop-shadow(0 10px 22px rgba(242,202,80,.7)) drop-shadow(0 2px 4px rgba(0,0,0,.6))}
+#sx-bubble{width:104px;height:78px;cursor:pointer;position:relative;animation:sx-float 3.2s ease-in-out infinite;user-select:none;filter:drop-shadow(0 6px 14px rgba(62,230,240,.45)) drop-shadow(0 2px 4px rgba(0,0,0,.6));transition:filter .3s}
+#sx-bubble:hover{filter:drop-shadow(0 10px 22px rgba(62,230,240,.7)) drop-shadow(0 2px 4px rgba(0,0,0,.6))}
 #sx-bubble.sx-wiggle{animation:sx-float 3.2s ease-in-out infinite,sx-wiggle .5s ease}
 #sx-bubble.sx-excited{animation:sx-excited .6s ease}
 @keyframes sx-float{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(-8px) rotate(-1.5deg)}70%{transform:translateY(-5px) rotate(1deg)}}
@@ -291,10 +296,10 @@ const CSS = `
 @keyframes sx-flash{0%{opacity:0;transform:scale(.6)}15%{opacity:1;transform:scale(1.3)}100%{opacity:0;transform:scale(1.6)}}
 #sx-badge{position:absolute;top:-3px;right:-3px;background:${CFG.black};color:${CFG.gold};border:1px solid ${CFG.gold};border-radius:50%;width:20px;height:20px;font-size:.68rem;font-weight:800;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 8px rgba(0,0,0,.5);animation:sx-pulse 1.8s infinite;z-index:2}
 @keyframes sx-pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.2)}}
-#sx-window{position:absolute;bottom:76px;right:0;width:370px;height:560px;max-height:calc(100vh - 110px);background:${CFG.surface};border:1px solid rgba(212,175,55,.35);border-radius:14px;box-shadow:0 16px 56px rgba(0,0,0,.7),0 0 0 1px rgba(0,0,0,.6);display:flex;flex-direction:column;overflow:hidden;transform:scale(.85) translateY(20px);opacity:0;pointer-events:none;transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .25s}
+#sx-window{position:absolute;bottom:76px;right:0;width:370px;height:560px;max-height:calc(100vh - 110px);background:${CFG.surface};border:1px solid rgba(0,184,200,.35);border-radius:14px;box-shadow:0 16px 56px rgba(0,0,0,.7),0 0 0 1px rgba(0,0,0,.6);display:flex;flex-direction:column;overflow:hidden;transform:scale(.85) translateY(20px);opacity:0;pointer-events:none;transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .25s}
 #sx-window.sx-open{transform:scale(1) translateY(0);opacity:1;pointer-events:all}
 @media (max-width:420px){#sx-widget{bottom:16px;right:12px}#sx-window{width:calc(100vw - 24px);bottom:72px;height:min(520px,calc(100vh - 100px))}}
-.sx-header{background:${CFG.black};padding:14px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0;border-bottom:1px solid rgba(212,175,55,.3)}
+.sx-header{background:${CFG.black};padding:14px 16px;display:flex;align-items:center;gap:12px;flex-shrink:0;border-bottom:1px solid rgba(0,184,200,.3)}
 .sx-header-avatar{width:56px;height:42px;flex-shrink:0;filter:drop-shadow(0 2px 4px rgba(0,0,0,.6))}
 .sx-header-avatar .sx-char{width:100%;height:100%}
 .sx-header-info{flex:1;min-width:0}
@@ -302,10 +307,10 @@ const CSS = `
 .sx-header-status{color:${CFG.outline};font-size:.7rem;display:flex;align-items:center;gap:6px;margin-top:2px;text-transform:uppercase;letter-spacing:.12em}
 .sx-status-dot{width:7px;height:7px;border-radius:50%;background:${CFG.gold};display:inline-block;animation:sx-blink 2s infinite;box-shadow:0 0 6px ${CFG.gold}}
 @keyframes sx-blink{0%,100%{opacity:1}50%{opacity:.35}}
-.sx-close{background:rgba(255,255,255,.06);border:1px solid rgba(212,175,55,.25);cursor:pointer;width:32px;height:32px;border-radius:50%;color:${CFG.textMuted};display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s;padding:0}
-.sx-close:hover{background:rgba(242,202,80,.15);color:${CFG.gold}}
+.sx-close{background:rgba(255,255,255,.06);border:1px solid rgba(0,184,200,.25);cursor:pointer;width:32px;height:32px;border-radius:50%;color:${CFG.textMuted};display:flex;align-items:center;justify-content:center;transition:background .2s,color .2s;padding:0}
+.sx-close:hover{background:rgba(62,230,240,.15);color:${CFG.gold}}
 .sx-close .material-symbols-outlined{font-size:18px}
-.sx-messages{flex:1;overflow-y:auto;padding:16px 14px 8px;scroll-behavior:smooth;background:${CFG.surface};background-image:radial-gradient(ellipse at top,rgba(212,175,55,.06),transparent 60%)}
+.sx-messages{flex:1;overflow-y:auto;padding:16px 14px 8px;scroll-behavior:smooth;background:${CFG.surface};background-image:radial-gradient(ellipse at top,rgba(0,184,200,.06),transparent 60%)}
 .sx-messages::-webkit-scrollbar{width:4px}.sx-messages::-webkit-scrollbar-thumb{background:${CFG.surfaceHighest};border-radius:4px}
 .sx-row{display:flex;align-items:flex-end;gap:8px;margin-bottom:10px}
 .sx-row-user{flex-direction:row-reverse}
@@ -322,16 +327,16 @@ const CSS = `
 @keyframes sx-bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-6px)}}
 .sx-qr{display:flex;flex-wrap:wrap;gap:6px;padding:6px 14px 8px;background:${CFG.surface};flex-shrink:0}
 .sx-qr:empty{display:none}
-.sx-qr button{background:transparent;border:1px solid rgba(212,175,55,.6);color:${CFG.gold};border-radius:20px;padding:5px 13px;font-size:.76rem;font-weight:600;cursor:pointer;transition:background .2s,color .2s,border-color .2s;white-space:nowrap;font-family:inherit;letter-spacing:.02em}
+.sx-qr button{background:transparent;border:1px solid rgba(0,184,200,.6);color:${CFG.gold};border-radius:20px;padding:5px 13px;font-size:.76rem;font-weight:600;cursor:pointer;transition:background .2s,color .2s,border-color .2s;white-space:nowrap;font-family:inherit;letter-spacing:.02em}
 .sx-qr button:hover{background:${CFG.gold};color:${CFG.goldInk};border-color:${CFG.gold}}
-.sx-input-area{display:flex;align-items:center;gap:8px;padding:10px 12px;background:${CFG.black};border-top:1px solid rgba(212,175,55,.2);flex-shrink:0}
+.sx-input-area{display:flex;align-items:center;gap:8px;padding:10px 12px;background:${CFG.black};border-top:1px solid rgba(0,184,200,.2);flex-shrink:0}
 .sx-input{flex:1;min-width:0;border:1px solid ${CFG.surfaceHighest};border-radius:24px;padding:9px 16px;font-size:.855rem;outline:none;font-family:inherit;transition:border .2s;background:${CFG.surfaceLow};color:${CFG.text}}
 .sx-input::placeholder{color:${CFG.outline}}
 .sx-input:focus{border-color:${CFG.gold}}
 .sx-send{width:38px;height:38px;border-radius:50%;border:none;background:${CFG.gold};color:${CFG.goldInk};cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:background .2s,transform .2s;padding:0}
-.sx-send:hover{background:#ffe088;transform:scale(1.08)}
+.sx-send:hover{background:#a5f3fc;transform:scale(1.08)}
 .sx-send .material-symbols-outlined{font-size:18px}
-.sx-wa{display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 12px;background:${CFG.surfaceLow};border-top:1px solid rgba(212,175,55,.2);font-size:.74rem;color:${CFG.textMuted};font-weight:600;cursor:pointer;transition:background .2s,color .2s;flex-shrink:0;text-decoration:none;letter-spacing:.06em;text-transform:uppercase}
+.sx-wa{display:flex;align-items:center;justify-content:center;gap:8px;padding:9px 12px;background:${CFG.surfaceLow};border-top:1px solid rgba(0,184,200,.2);font-size:.74rem;color:${CFG.textMuted};font-weight:600;cursor:pointer;transition:background .2s,color .2s;flex-shrink:0;text-decoration:none;letter-spacing:.06em;text-transform:uppercase}
 .sx-wa:hover{background:${CFG.surfaceHigh};color:${CFG.gold}}
 .sx-wa svg{width:16px;height:16px;fill:#25d366;flex-shrink:0}
 `;
@@ -362,7 +367,7 @@ export default function SliceBot() {
 
     // ── State (persisted for the tab so navigation keeps the chat) ──
     const SS_KEY = 'sx_chat_v1';
-    let state = { open: false, step: 'welcome', userName: '', userPhone: '', autoOpened: false, history: [] };
+    let state = { open: false, step: 'welcome', userName: '', userPhone: '', userEmail: '', userService: '', leadSent: false, autoOpened: false, history: [] };
     let saved = null;
     try { saved = JSON.parse(sessionStorage.getItem(SS_KEY) || 'null'); } catch {}
     if (saved && saved.state) {
@@ -371,7 +376,7 @@ export default function SliceBot() {
     }
     const persist = () => {
       try {
-        sessionStorage.setItem(SS_KEY, JSON.stringify({ state: { step: state.step, userName: state.userName, userPhone: state.userPhone, autoOpened: state.autoOpened, history: (state.history || []).slice(-12) }, html: $msgs.innerHTML.slice(0, 60000), qr: [...$qr.querySelectorAll('button')].map((b) => b.textContent) }));
+        sessionStorage.setItem(SS_KEY, JSON.stringify({ state: { step: state.step, userName: state.userName, userPhone: state.userPhone, userEmail: state.userEmail, userService: state.userService, leadSent: state.leadSent, autoOpened: state.autoOpened, history: (state.history || []).slice(-12) }, html: $msgs.innerHTML.slice(0, 60000), qr: [...$qr.querySelectorAll('button')].map((b) => b.textContent) }));
       } catch {}
     };
 
@@ -416,13 +421,17 @@ export default function SliceBot() {
     }).catch(() => {});
     const openWhatsApp = (msg) => {
       const text = msg || CFG.waMessage;
-      const intro = state.userName ? `Hi! My name is ${state.userName}. ` : '';
+      const intro = (state.userName ? `Hi! My name is ${state.userName}. ` : '') + (state.userService ? `I'm interested in ${state.userService}. ` : '');
       window.open(`https://wa.me/${waNumber}?text=${encodeURIComponent(intro + text)}`, '_blank', 'noopener');
     };
-    // Save the visitor as a lead once we have a name + number (admin → Leads).
+    // Save the visitor as a lead once the intake is complete (admin → Leads).
+    // Needs a name plus at least one way to reach them; sent once per session.
     const recordLead = () => {
+      if (state.leadSent || !state.userName || (!state.userPhone && !state.userEmail)) return;
+      state.leadSent = true;
       const msgs = (state.history || []).filter((m) => m.role === 'user').map((m) => m.content).slice(-6).join(' | ');
-      submitLead({ name: state.userName, phone: state.userPhone, message: msgs, source: 'slice-chat' }).catch(() => {});
+      submitLead({ name: state.userName, phone: state.userPhone, email: state.userEmail, service: state.userService, message: msgs, source: 'chitra-chat' })
+        .catch(() => { state.leadSent = false; });
     };
     const matchKB = (text) => {
       const lower = text.toLowerCase();
@@ -477,6 +486,11 @@ export default function SliceBot() {
     const setPlaceholder = (t) => { $input.placeholder = t; };
 
     const DEFAULT_QR = [QR.services, QR.packages, QR.book, QR.films, QR.wa];
+    // Intake: name → phone → email → service, then the lead is saved.
+    const SERVICE_QR = ['🎬 Wedding Films', '📸 Wedding Photography', '🌅 Pre-Wedding Films', '💞 Engagement Stories', '📱 Cinematic Reels', '🚁 Drone Coverage', '✨ Something else'];
+    const INTAKE_STEPS = new Set(['getName', 'getPhone', 'getEmail', 'getService']);
+    const SKIP_RE = /^\s*(skip|no|nope|later|not now|na|n\/a|-)\s*[.!]?\s*$/i;
+    const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
     // ── Quick reply actions ───────────────────────────────────
     const QR_ACTIONS = {
@@ -500,6 +514,8 @@ export default function SliceBot() {
     }
     function onQuickReply(label) {
       clearQR();
+      // While collecting details, a tapped chip is just the visitor's answer.
+      if (INTAKE_STEPS.has(state.step)) { handleUserInput(label); return; }
       if (QR_ACTIONS[label]) QR_ACTIONS[label]();
       else { addUserMsg(label); answer(label); }
     }
@@ -559,11 +575,31 @@ export default function SliceBot() {
         persist();
       }, 300);
     };
-    const askForPhone = () => {
-      if (state.step !== 'chat' || state.userPhone) return;
+    const askPhone = () => {
       state.step = 'getPhone';
-      setPlaceholder('Enter your WhatsApp number…');
-      addBotMsg(`By the way ${sanitize(state.userName)} — may I have your <b>WhatsApp number</b> so the team can follow up with availability? 📱<br><i>(Optional — type anything to skip)</i>`, []);
+      setPlaceholder('Your phone / WhatsApp number…');
+      addBotMsg(`Lovely to meet you, <b>${sanitize(state.userName)}</b>. ✨<br><br>Could I have your <b>contact number</b> (WhatsApp preferred) so the team can reach you? 📱`, [], undefined, 'party', { flash: true });
+    };
+    const askEmail = (lead) => {
+      state.step = 'getEmail';
+      setPlaceholder('Your email address…');
+      addBotMsg(`${lead}And your <b>email address</b>? ✉️<br><i>(type <b>skip</b> if you'd rather not)</i>`, []);
+    };
+    const askService = (lead) => {
+      state.step = 'getService';
+      setPlaceholder('Pick a service or type it…');
+      addBotMsg(`${lead}Which of our <b>services</b> are you interested in? 🎬`, SERVICE_QR, undefined, 'idea');
+    };
+    const finishIntake = () => {
+      state.step = 'chat';
+      setPlaceholder('Ask me anything…');
+      recordLead();
+      const n = sanitize(state.userName);
+      const svc = sanitize(state.userService);
+      const reach = state.userPhone ? 'on WhatsApp' : state.userEmail ? 'by email' : '';
+      remember('user', `My name is ${state.userName}.${state.userPhone ? ` My phone number is ${state.userPhone}.` : ''}${state.userEmail ? ` My email is ${state.userEmail}.` : ''} I'm interested in ${state.userService}.`);
+      remember('assistant', `Thanks ${state.userName}, I've passed your details to the studio. What would you like to know about ${state.userService}?`);
+      addBotMsg(`Perfect, <b>${n}</b> — I've passed your details to the studio and they'll reach out ${reach} shortly. 🙌<br><br>Meanwhile, what would you like to know about <b>${svc}</b>? I can share packages, delivery timelines or sample films.`, [QR.packages, QR.films, QR.delivery, QR.wa], 700, 'party', { flash: true });
     };
     const handleUserInput = (text) => {
       if (!text.trim()) return;
@@ -574,28 +610,40 @@ export default function SliceBot() {
       if (state.step === 'welcome') { state.step = 'getName'; }
       if (state.step === 'getName') {
         state.userName = text.trim().split(/\s+/)[0].slice(0, 30);
-        state.step = 'chat';
-        setPlaceholder('Ask me anything…');
-        addBotMsg(`Lovely to meet you, <b>${sanitize(state.userName)}</b>. ✨<br><br>What are you planning? Here's what I can help with:`, DEFAULT_QR, undefined, 'party', { flash: true });
-        remember('user', `My name is ${state.userName}`);
-        remember('assistant', `Lovely to meet you, ${state.userName}. What are you planning?`);
-        later(askForPhone, 14000);
+        askPhone();
         persist();
         return;
       }
       if (state.step === 'getPhone') {
         const digits = text.replace(/\D/g, '');
-        state.step = 'chat';
-        setPlaceholder('Ask me anything…');
-        if (digits.length >= 10) {
+        if (digits.length >= 10 && digits.length <= 15) {
           state.userPhone = digits;
-          recordLead();
-          addBotMsg(`Thank you, ${sanitize(state.userName)} — noted. 🙌 Sending it to the studio now, so they can confirm your dates.`, [], 600, 'party', { flash: true });
-          later(() => openWhatsApp(`My WhatsApp number is ${digits}. Please share availability and a quote.`), 1400);
-          later(() => addBotMsg(`Meanwhile, anything else you'd like to know?`, DEFAULT_QR, 300), 1800);
+          askEmail(`Thank you! 🙌 `);
+        } else if (SKIP_RE.test(text)) {
+          askEmail(`No problem. `);
         } else {
-          addBotMsg(`No problem — we can do that later. What else can I help with?`, DEFAULT_QR);
+          addBotMsg(`Hmm, that doesn't look like a valid number. Please enter a <b>10-digit mobile number</b> (with country code if outside India), or type <b>skip</b>.`, [], 500, 'curious');
         }
+        persist();
+        return;
+      }
+      if (state.step === 'getEmail') {
+        const email = text.trim();
+        if (EMAIL_RE.test(email)) {
+          state.userEmail = email.slice(0, 200);
+          askService(`Got it. ✉️ `);
+        } else if (SKIP_RE.test(text)) {
+          askService(`That's fine. `);
+        } else {
+          addBotMsg(`That doesn't look like an email address. Please enter one like <i>name@example.com</i>, or type <b>skip</b>.`, [], 500, 'curious');
+        }
+        persist();
+        return;
+      }
+      if (state.step === 'getService') {
+        const label = text.trim().replace(/^[^\p{L}\p{N}]+/u, '').slice(0, 120); // drop the leading emoji
+        state.userService = /^something else$/i.test(label) ? 'Other' : label;
+        finishIntake();
         persist();
         return;
       }
@@ -784,11 +832,11 @@ export default function SliceBot() {
   return (
     <div id="sx-widget" ref={rootRef}>
       <style dangerouslySetInnerHTML={{ __html: CSS }} />
-      <div id="sx-window" role="dialog" aria-label="Chat with Slice">
+      <div id="sx-window" role="dialog" aria-label="Chat with Chitra">
         <div className="sx-header">
           <div className="sx-header-avatar"><div className="sx-char face-happy" id="sx-header-emo" dangerouslySetInnerHTML={{ __html: charMarkup('happy', false) }} /></div>
           <div className="sx-header-info">
-            <div className="sx-header-name">Slice · SliceX Films</div>
+            <div className="sx-header-name">Chitra · SliceX Films</div>
             <div className="sx-header-status"><span className="sx-status-dot" /> Studio concierge · online</div>
           </div>
           <button type="button" className="sx-close" id="sx-close" aria-label="Close chat">
@@ -809,7 +857,7 @@ export default function SliceBot() {
         </a>
       </div>
 
-      <div id="sx-bubble" role="button" aria-label="Open chat with Slice" tabIndex={0}>
+      <div id="sx-bubble" role="button" aria-label="Open chat with Chitra" tabIndex={0}>
         <div className="sx-char" id="sx-char" dangerouslySetInnerHTML={{ __html: charMarkup('curious', true) }} />
         <div className="sx-flash" id="sx-flash" />
         <div id="sx-badge">1</div>

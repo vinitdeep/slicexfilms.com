@@ -168,7 +168,7 @@ function LeadsTab({ toast }) {
     setRows((r) => r.filter((x) => x.id !== id));
   };
   const exportCsv = () => {
-    const cols = ['created_at', 'name', 'partner', 'email', 'phone', 'event_date', 'destination', 'package', 'budget', 'message', 'source', 'status', 'notes'];
+    const cols = ['created_at', 'name', 'partner', 'email', 'phone', 'service', 'event_date', 'destination', 'package', 'budget', 'message', 'source', 'status', 'notes'];
     const esc = (v) => `"${String(v ?? '').replace(/"/g, '""')}"`;
     const csv = [cols.join(','), ...filtered.map((r) => cols.map((c) => esc(r[c])).join(','))].join('\n');
     const a = document.createElement('a');
@@ -193,7 +193,7 @@ function LeadsTab({ toast }) {
         </div>
       </div>
       {loading ? <p className="text-outline font-body-sm">Loading leads…</p> : filtered.length === 0 ? (
-        <div className={cls.card + ' text-center text-outline font-body-md py-space-xl'}>No leads yet. Inquiries from the Contact form, the booking form and the Slice chat will appear here.</div>
+        <div className={cls.card + ' text-center text-outline font-body-md py-space-xl'}>No leads yet. Inquiries from the Contact form, the booking form and the Chitra chat will appear here.</div>
       ) : (
         <div className="flex flex-col gap-space-sm">
           {filtered.map((r) => (
@@ -206,6 +206,7 @@ function LeadsTab({ toast }) {
               <div className="lg:col-span-3 font-body-sm text-body-sm text-on-surface-variant flex flex-col gap-0.5">
                 {r.phone && <a className="text-primary hover:underline" href={`https://wa.me/${String(r.phone).replace(/\D/g, '')}`} target="_blank" rel="noopener">📱 {r.phone}</a>}
                 {r.email && <a className="hover:text-primary" href={`mailto:${r.email}`}>✉️ {r.email}</a>}
+                {r.service && <span>🎬 {r.service}</span>}
                 {r.event_date && <span>📅 {r.event_date}</span>}
                 {r.destination && <span>📍 {r.destination}</span>}
                 {(r.package || r.budget) && <span>💰 {[r.package, r.budget].filter(Boolean).join(' · ')}</span>}

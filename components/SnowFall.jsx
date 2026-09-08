@@ -2,14 +2,14 @@
 
 import { useEffect, useRef } from 'react';
 
-// Ambient golden dust: fine gold specks that slowly drift upward and twinkle
-// inside the hero (absolute inset-0), with a screen blend so it only adds a
-// warm shimmer and never darkens text. Moving the cursor pushes nearby specks
-// away (scatter) before they ease back to floating. Respects reduced-motion.
+// Ambient snowfall: soft white flakes that drift downward and sway inside the
+// hero (absolute inset-0), with a screen blend so they only add light and
+// never darken text. Moving the cursor pushes nearby flakes away (scatter)
+// before they ease back to falling. Respects reduced-motion.
 const REPEL_RADIUS = 140; // px around the cursor that scatters
 const REPEL_FORCE = 5.5; // push strength at the cursor
-const RETURN_DAMP = 0.87; // how fast scattered specks settle back
-export default function GoldenDust() {
+const RETURN_DAMP = 0.87; // how fast scattered flakes settle back
+export default function SnowFall() {
   const canvasRef = useRef(null);
 
   useEffect(() => {
@@ -18,18 +18,43 @@ export default function GoldenDust() {
     const ctx = canvas.getContext('2d');
     const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    // Soft golden dot sprite, drawn once and stamped per particle (fast).
-    const sprite = document.createElement('canvas');
+    // Two sprites drawn once and stamped per flake (fast):
+    // a soft round glow for small distant flakes, and a six-armed crystal
+    // for the larger foreground ones.
     const S = 64;
-    sprite.width = sprite.height = S;
-    const sg = sprite.getContext('2d');
+    const soft = document.createElement('canvas');
+    soft.width = soft.height = S;
+    const sg = soft.getContext('2d');
     const grad = sg.createRadialGradient(S / 2, S / 2, 0, S / 2, S / 2, S / 2);
-    grad.addColorStop(0, 'rgba(255, 244, 206, 1)');
-    grad.addColorStop(0.25, 'rgba(62,230,240, 0.75)');
-    grad.addColorStop(0.6, 'rgba(0,184,200, 0.2)');
-    grad.addColorStop(1, 'rgba(0,184,200, 0)');
+    grad.addColorStop(0, 'rgba(255,255,255,1)');
+    grad.addColorStop(0.3, 'rgba(255,255,255,0.85)');
+    grad.addColorStop(0.65, 'rgba(255,255,255,0.18)');
+    grad.addColorStop(1, 'rgba(255,255,255,0)');
     sg.fillStyle = grad;
     sg.fillRect(0, 0, S, S);
+
+    const crystal = document.createElement('canvas');
+    crystal.width = crystal.height = S;
+    const cg = crystal.getContext('2d');
+    cg.translate(S / 2, S / 2);
+    cg.strokeStyle = 'rgba(255,255,255,0.95)';
+    cg.lineCap = 'round';
+    cg.lineWidth = 2.2;
+    cg.shadowColor = 'rgba(255,255,255,0.9)';
+    cg.shadowBlur = 6;
+    const arm = S * 0.42;
+    for (let i = 0; i < 6; i++) {
+      cg.beginPath();
+      cg.moveTo(0, 0);
+      cg.lineTo(0, -arm);
+      // small side branches on each arm
+      cg.moveTo(0, -arm * 0.55);
+      cg.lineTo(arm * 0.22, -arm * 0.75);
+      cg.moveTo(0, -arm * 0.55);
+      cg.lineTo(-arm * 0.22, -arm * 0.75);
+      cg.stroke();
+      cg.rotate(Math.PI / 3);
+    }
 
     let width = 0;
     let height = 0;
@@ -41,24 +66,27 @@ export default function GoldenDust() {
 
     function makeParticles() {
       const area = width * height;
-      const count = Math.min(160, Math.max(50, Math.round(area / 9000)));
+      const count = Math.min(170, Math.max(60, Math.round(area / 8500)));
       particles = Array.from({ length: count }, () => spawn(true));
     }
 
     function spawn(anywhere) {
-      const size = 0.6 + Math.random() * 2.6;
+      const size = 0.7 + Math.random() * 2.8;
       return {
         x: Math.random() * width,
-        y: anywhere ? Math.random() * height : height + size * 5,
+        y: anywhere ? Math.random() * height : -size * 6,
         size,
+        crystal: size > 2.6 && Math.random() < 0.6,
         vx: 0,
         vy: 0,
-        driftX: (Math.random() - 0.5) * 0.18,
-        speedY: -(0.08 + Math.random() * 0.28),
-        baseAlpha: 0.18 + Math.random() * 0.5,
+        driftX: (Math.random() - 0.5) * 0.22,
+        speedY: 0.18 + Math.random() * 0.45 + size * 0.08, // bigger falls faster
+        baseAlpha: 0.25 + Math.random() * 0.55,
         phase: Math.random() * Math.PI * 2,
-        twinkle: 0.006 + Math.random() * 0.02,
-        sway: 0.2 + Math.random() * 0.8,
+        twinkle: 0.005 + Math.random() * 0.016,
+        sway: 0.3 + Math.random() * 0.9,
+        rot: Math.random() * Math.PI * 2,
+        spin: (Math.random() - 0.5) * 0.02,
       };
     }
 
@@ -73,14 +101,29 @@ export default function GoldenDust() {
       makeParticles();
     }
 
+    function stamp(p, alpha) {
+      const d = p.size * 5;
+      ctx.globalAlpha = alpha;
+      if (p.crystal) {
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot);
+        ctx.drawImage(crystal, -d / 2, -d / 2, d, d);
+        ctx.restore();
+      } else {
+        ctx.drawImage(soft, p.x - d / 2, p.y - d / 2, d, d);
+      }
+    }
+
     let raf = 0;
     function frame() {
       ctx.clearRect(0, 0, width, height);
       for (const p of particles) {
         p.phase += p.twinkle;
-        // base float + gentle horizontal sway
+        p.rot += p.spin;
+        // base fall + gentle horizontal sway
         p.y += p.speedY;
-        p.x += p.driftX + Math.sin(p.phase) * 0.12 * p.sway;
+        p.x += p.driftX + Math.sin(p.phase) * 0.14 * p.sway;
         // cursor repulsion: push away, stronger the closer to the cursor
         const dx = p.x - mx;
         const dy = p.y - my;
@@ -96,13 +139,11 @@ export default function GoldenDust() {
         p.y += p.vy;
         p.vx *= RETURN_DAMP;
         p.vy *= RETURN_DAMP;
-        if (p.y < -p.size * 5 || p.y > height + 40 || p.x < -20 || p.x > width + 20) {
+        if (p.y > height + p.size * 6 || p.y < -60 || p.x < -20 || p.x > width + 20) {
           Object.assign(p, spawn(false));
         }
-        const alpha = p.baseAlpha * (0.45 + 0.55 * (0.5 + 0.5 * Math.sin(p.phase)));
-        const d = p.size * 5;
-        ctx.globalAlpha = alpha;
-        ctx.drawImage(sprite, p.x - d / 2, p.y - d / 2, d, d);
+        const alpha = p.baseAlpha * (0.6 + 0.4 * (0.5 + 0.5 * Math.sin(p.phase)));
+        stamp(p, alpha);
       }
       ctx.globalAlpha = 1;
       raf = requestAnimationFrame(frame);
@@ -110,11 +151,7 @@ export default function GoldenDust() {
 
     function drawStatic() {
       ctx.clearRect(0, 0, width, height);
-      for (const p of particles) {
-        const d = p.size * 5;
-        ctx.globalAlpha = p.baseAlpha;
-        ctx.drawImage(sprite, p.x - d / 2, p.y - d / 2, d, d);
-      }
+      for (const p of particles) stamp(p, p.baseAlpha);
       ctx.globalAlpha = 1;
     }
 

@@ -746,7 +746,7 @@ export default function BookYourDatePage() {
                     <span className="material-symbols-outlined text-primary text-[18px]">verified_user</span>
                     <span>256-BIT ENCRYPTED STUDIO INTAKE TRANSMISSION</span>
                   </div>
-                  <button className="w-full sm:w-auto inline-flex items-center justify-center gap-space-sm px-space-xl py-space-md bg-gradient-to-r from-primary-fixed-dim via-primary to-primary-container text-on-primary font-label-lg text-label-lg uppercase tracking-widest rounded shadow-xl hover:shadow-[0_0_35px_rgba(212,175,55,0.4)] transition-all duration-300 group" type="submit">
+                  <button className="w-full sm:w-auto inline-flex items-center justify-center gap-space-sm px-space-xl py-space-md bg-gradient-to-r from-primary-fixed-dim via-primary to-primary-container text-on-primary font-label-lg text-label-lg uppercase tracking-widest rounded shadow-xl hover:shadow-[0_0_35px_rgba(0,184,200,0.4)] transition-all duration-300 group" type="submit">
                     <span>TRANSMIT BOOKING INTAKE</span>
                     <span className="material-symbols-outlined text-[18px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
                   </button>

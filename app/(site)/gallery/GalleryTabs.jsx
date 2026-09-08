@@ -67,7 +67,7 @@ function Chips({ items, value, onChange }) {
 function PlayBadge({ small }) {
   return (
     <span className={`absolute inset-0 flex items-center justify-center pointer-events-none`}>
-      <span className={`${small ? 'w-10 h-10' : 'w-16 h-16'} rounded-full bg-primary/90 text-on-primary flex items-center justify-center shadow-[0_0_30px_rgba(242,202,80,.45)] transition-transform duration-300 group-hover:scale-110`}>
+      <span className={`${small ? 'w-10 h-10' : 'w-16 h-16'} rounded-full bg-primary/90 text-on-primary flex items-center justify-center shadow-[0_0_30px_rgba(62,230,240,.45)] transition-transform duration-300 group-hover:scale-110`}>
         <span className="material-symbols-outlined" style={{ fontSize: small ? 22 : 32 }}>play_arrow</span>
       </span>
     </span>
@@ -253,7 +253,7 @@ export default function GalleryTabs({ videos: v0, images: i0, reels: r0 }) {
                   aria-selected={active}
                   onClick={() => setTab(t.key)}
                   className={`flex items-center gap-space-2xs px-space-sm md:px-space-md py-space-xs rounded-full font-label-md text-label-md uppercase tracking-widest whitespace-nowrap transition-all duration-300 ${
-                    active ? 'bg-primary text-on-primary shadow-[0_0_24px_rgba(242,202,80,.35)]' : 'text-on-surface-variant hover:text-primary'
+                    active ? 'bg-primary text-on-primary shadow-[0_0_24px_rgba(62,230,240,.35)]' : 'text-on-surface-variant hover:text-primary'
                   }`}
                 >
                   <span className="material-symbols-outlined" style={{ fontSize: 18 }}>{t.icon}</span>

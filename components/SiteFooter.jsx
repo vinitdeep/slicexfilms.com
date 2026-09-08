@@ -55,7 +55,7 @@ export default function SiteFooter({ showAdmin = false, compact = false }) {
             </div>
           </div>
         </div>
-        {/* Right padding keeps the legal links clear of the Slice chat bubble (fixed bottom-right). */}
+        {/* Right padding keeps the legal links clear of the Chitra chat bubble (fixed bottom-right). */}
         <div className="pt-space-xl pb-16 sm:pb-0 sm:pr-32 flex flex-col sm:flex-row items-center justify-between gap-space-md font-label-sm text-label-sm text-outline tracking-widest uppercase">
           <p>© {year} {c.studioName || 'SLICEX FILMS'}. ALL RIGHTS RESERVED.</p>
           <div className="flex items-center gap-space-md">

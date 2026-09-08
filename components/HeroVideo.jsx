@@ -16,7 +16,7 @@ import { useEffect, useRef, useState } from 'react';
 //   visible area. pointer-events are off so the player is never interactive.
 // - Shows the video's own poster frame until playback actually starts (and
 //   permanently when the user prefers reduced motion or the embed is blocked).
-// - Colour graded to the site's black + gold palette via CSS filters plus a
+// - Colour graded to the site's black + aqua palette via CSS filters plus a
 //   gold soft-light wash, so it sits under the existing gradient overlays
 //   without fighting the golden dust or the text.
 const OVERSCAN = 1.3; // 130% on landscape — hides YouTube chrome at the top/bottom edges
@@ -97,8 +97,8 @@ export default function HeroVideo({ videoId, mobileFocusX = 50, start = 0, end }
       el.style.pointerEvents = 'none';
       // The band is small and surrounded by black on phones, so let it breathe.
       el.parentElement.style.filter = portrait
-        ? 'grayscale(0.4) sepia(0.45) saturate(1.35) brightness(0.72) contrast(1.15)'
-        : 'grayscale(0.4) sepia(0.45) saturate(1.35) brightness(0.55) contrast(1.2)';
+        ? 'brightness(0.72) contrast(1.15)'
+        : 'brightness(0.55) contrast(1.2)';
     };
 
     fit();
@@ -170,9 +170,9 @@ export default function HeroVideo({ videoId, mobileFocusX = 50, start = 0, end }
         className="absolute inset-0 transition-opacity duration-[1500ms] ease-out"
         style={{
           opacity: playing ? 1 : 0,
-          // Black + gold grade: pull saturation, warm with sepia, crush the
-          // shadows so the text and golden dust stay readable.
-          filter: 'grayscale(0.4) sepia(0.45) saturate(1.35) brightness(0.55) contrast(1.2)',
+          // Natural colour; only darken and add contrast so the text and
+          // dust particles stay readable.
+          filter: 'brightness(0.55) contrast(1.2)',
         }}
       >
         <div ref={frameRef} className="absolute pointer-events-none select-none" />
@@ -185,13 +185,12 @@ export default function HeroVideo({ videoId, mobileFocusX = 50, start = 0, end }
           backgroundImage: `url('${poster}')`,
           backgroundPosition: `${mobileFocusX}% 50%`,
           opacity: playing && !reduced ? 0 : 1,
-          filter: 'grayscale(0.4) sepia(0.45) saturate(1.35) brightness(0.55) contrast(1.2)',
+          filter: 'brightness(0.55) contrast(1.2)',
           transform: 'scale(1.05)',
         }}
       />
 
-      {/* Gold wash + vignette so the footage matches the page palette */}
-      <div className="absolute inset-0 bg-[#d4af37] mix-blend-soft-light opacity-40" />
+      {/* Vignette so the edges fall off into the page background */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_35%,_rgba(14,14,14,0.85)_100%)]" />
     </div>
   );

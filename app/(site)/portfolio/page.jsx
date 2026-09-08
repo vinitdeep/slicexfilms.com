@@ -92,7 +92,7 @@ export default function PortfolioPage() {
         </section>
         <section className="w-full px-margin-mobile lg:px-margin-desktop py-space-md">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-gutter lg:gap-y-space-2xl">
-            <article data-yt="jEFML86Tk7g" className="portfolio-item md:col-span-12 group cursor-pointer relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-2xl transition-all duration-500 hover:shadow-[0_15px_45px_-10px_rgba(212,175,55,0.18)]" data-category="weddings films">
+            <article data-yt="jEFML86Tk7g" className="portfolio-item md:col-span-12 group cursor-pointer relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-2xl transition-all duration-500 hover:shadow-[0_15px_45px_-10px_rgba(0,184,200,0.18)]" data-category="weddings films">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
                 <div className="lg:col-span-8 relative aspect-[16/9] lg:aspect-[2.1/1] overflow-hidden bg-surface-container-high">
                   <img className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-95 contrast-105" alt="Gobinda & Mamuni wedding film still" src="https://i.ytimg.com/vi/jEFML86Tk7g/maxresdefault.jpg" />
@@ -131,7 +131,7 @@ export default function PortfolioPage() {
                 </div>
               </div>
             </article>
-            <article className="portfolio-item md:col-span-12 lg:col-span-5 group relative bg-surface-container rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_40px_-10px_rgba(212,175,55,0.14)] flex flex-col justify-between" data-category="weddings">
+            <article className="portfolio-item md:col-span-12 lg:col-span-5 group relative bg-surface-container rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_40px_-10px_rgba(0,184,200,0.14)] flex flex-col justify-between" data-category="weddings">
               <div className="relative aspect-[4/5] overflow-hidden bg-surface-container-high">
                 <img className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter contrast-110" data-alt="Chiaroscuro moody bride looking into an ornate antique golden mirror while wearing sheer vintage lace veil and couture wedding dress in an atmospheric dark stone room with soft window rim lighting, fine art editorial film still" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmIDKGxODGKwZka2xcZentvxUzH3ozk1JKnjhjVy4nB83Fbcpqnd8pUq-2MIK_m1jGXUlo43VwYlY4al_70UbGj_4QwPh_ttYGJcCjXVJLLMsUU9dEsi7POTr-uDWl3NmjRBsZm_TfLa163vhfmMsTrGcpOgE5UMngDjJPgl30UEg2SQ6I2w_wKkzrQkPReC0RyqG9v9gVtgWzIMN2UinNo68PbxMu-mkjyK-Ia3FaEdSYN_uwuZNeyw" />
                 <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-black/20"></div>
@@ -153,7 +153,7 @@ export default function PortfolioPage() {
             </p>
               </div>
             </article>
-            <article className="portfolio-item md:col-span-12 lg:col-span-7 group relative bg-surface-container rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_40px_-10px_rgba(212,175,55,0.14)] flex flex-col justify-between" data-category="weddings films">
+            <article className="portfolio-item md:col-span-12 lg:col-span-7 group relative bg-surface-container rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_40px_-10px_rgba(0,184,200,0.14)] flex flex-col justify-between" data-category="weddings films">
               <div className="relative aspect-[16/10] overflow-hidden bg-surface-container-high">
                 <img className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-95" data-alt="Indian bride and groom in opulent deep maroon velvet and antique gold zardozi sherwani embracing under majestic carved sandstone arches overlooking illuminated ancient Mehrangarh fort during blue hour twilight, ambient warm earthen oil lamps glowing around them" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOGyW9pc1EubyVnzhDQJetqOukbzc4yMaqizmOeYxR7qGgw7nOoYbCllaRapjSruhivlxG7C_F76ggL0iboys1lOY6H2uGj7unyp2iTBMylZyT2M4PpNhsuoy1GGY7FUU_sTuoPEIHnEx5O5cJnaAST1i3qWMr2JqiKWo-Y5sy_KTjFW46SiANW027UN3nDscsUH1zrvnqd3hyGi6HVKEsnPYsgpFuVDhCH7KfuqNaKcga-MZYh8yM3w" />
                 <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-black/20"></div>
@@ -179,7 +179,7 @@ export default function PortfolioPage() {
             </p>
               </div>
             </article>
-            <article className="portfolio-item md:col-span-12 lg:col-span-6 group relative bg-surface-container rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_40px_-10px_rgba(212,175,55,0.14)] flex flex-col justify-between" data-category="pre-weddings">
+            <article className="portfolio-item md:col-span-12 lg:col-span-6 group relative bg-surface-container rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_40px_-10px_rgba(0,184,200,0.14)] flex flex-col justify-between" data-category="pre-weddings">
               <div className="relative aspect-[16/10] overflow-hidden bg-surface-container-high">
                 <img className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-100" data-alt="Joyful bride radiant in bright yellow attire covered in golden turmeric haldi laughing euphorically surrounded by loving family members hands applying turmeric paste under cascaded marigold flower canopies in sunlit heritage courtyard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBne6J962TsrZTi3vS_ZlQJvesYvuNgtb1oXm-B0gHuqh91ErRBXLvsLza8RuQCtiG_Sq7MVgZqzOuXmcTDJt__QNQQDOR93G4N1_27iWfsn4x6rQxWp1y8HuFNo9NNfcvcP5z6NqQlY7IfzNf484ruxVNVPvyEbVvitPhoL10waz40j6pcVrh0jD5pI1Twoya1gFUQ02Od5rJ3XiNRQQhBudN2-pkPE54SjOfAhGjaKnZJreJGEsLzkg" />
                 <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-black/20"></div>
@@ -201,7 +201,7 @@ export default function PortfolioPage() {
             </p>
               </div>
             </article>
-            <article className="portfolio-item md:col-span-12 lg:col-span-6 group relative bg-surface-container rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_40px_-10px_rgba(212,175,55,0.14)] flex flex-col justify-between" data-category="weddings">
+            <article className="portfolio-item md:col-span-12 lg:col-span-6 group relative bg-surface-container rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_40px_-10px_rgba(0,184,200,0.14)] flex flex-col justify-between" data-category="weddings">
               <div className="relative aspect-[16/10] overflow-hidden bg-surface-container-high">
                 <img className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter contrast-105" data-alt="Deeply emotional moment of an Indian father shedding genuine tears holding his daughter bride tight during the emotional vidaai wedding farewell ceremony, authentic tears of joy and bittersweet warmth captured in cinematic natural backlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfxA6nU3FE1OzPKUCY63_Gy4opS7nUrvt10bcwF4TpVULb7RXBs4Ye4UwVaptCUIfve6LTLbBcasqf6PaiHRm6O9Xzd-5WfUg-KwnKB97flgXchSSaa8xP0b7lCF_URgX_5XoQWzHkEuhMTpTzUlAIF9IzGSMmBOjXycYyyWLMDq2WAzs-EXwfCkW4OU7EcnZJFp0qrgO3wxOgq3V4aMNPLDi9h4gF1eW6PFI4gBOxx4ifOnfNJQepVQ" />
                 <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-black/20"></div>
@@ -223,7 +223,7 @@ export default function PortfolioPage() {
             </p>
               </div>
             </article>
-            <article className="portfolio-item md:col-span-12 group relative bg-surface-container-low rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_45px_-10px_rgba(212,175,55,0.18)]" data-category="pre-weddings engagements">
+            <article className="portfolio-item md:col-span-12 group relative bg-surface-container-low rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_45px_-10px_rgba(0,184,200,0.18)]" data-category="pre-weddings engagements">
               <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-center">
                 <div className="lg:col-span-5 p-space-lg lg:p-space-xl flex flex-col justify-center order-2 lg:order-1">
                   <div className="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm uppercase tracking-widest mb-space-2xs">

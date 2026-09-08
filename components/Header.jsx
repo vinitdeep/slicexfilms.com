@@ -68,7 +68,7 @@ export default function Header() {
         </nav>
         <div className="flex items-center gap-space-md">
           <Link
-            className="hidden sm:inline-flex items-center justify-center bg-gradient-to-r from-[#D4AF37] via-[#f2ca50] to-[#E5C378] text-on-primary font-['Manrope'] text-[12px] uppercase font-semibold px-space-lg py-space-xs rounded-full shadow-[0_0_20px_rgba(212,175,55,0.25)] hover:shadow-[0_0_30px_rgba(212,175,55,0.45)] hover:brightness-110 transition-all tracking-widest"
+            className="hidden sm:inline-flex items-center justify-center bg-gradient-to-r from-[#00b8c8] via-[#3ee6f0] to-[#7eeaf5] text-on-primary font-['Manrope'] text-[12px] uppercase font-semibold px-space-lg py-space-xs rounded-full shadow-[0_0_20px_rgba(0,184,200,0.25)] hover:shadow-[0_0_30px_rgba(0,184,200,0.45)] hover:brightness-110 transition-all tracking-widest"
             data-path="book-your-date"
             href="/book-your-date"
           >
@@ -97,7 +97,7 @@ export default function Header() {
         </nav>
         <div className="pt-space-md">
           <Link
-            className="w-full flex items-center justify-center bg-gradient-to-r from-primary-container via-primary to-secondary text-on-primary font-['Manrope'] text-[12px] uppercase font-bold py-space-sm rounded-full shadow-[0_0_20px_rgba(212,175,55,0.3)] transition-all tracking-widest"
+            className="w-full flex items-center justify-center bg-gradient-to-r from-primary-container via-primary to-secondary text-on-primary font-['Manrope'] text-[12px] uppercase font-bold py-space-sm rounded-full shadow-[0_0_20px_rgba(0,184,200,0.3)] transition-all tracking-widest"
             data-path="book-your-date"
             href="/book-your-date"
             onClick={() => setMenuOpen(false)}

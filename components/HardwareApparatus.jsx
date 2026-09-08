@@ -175,7 +175,7 @@ export default function HardwareApparatus() {
                   {isActive && (
                     <div
                       key={activeIndex}
-                      className="absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b from-primary via-amber-300 to-primary animate-pulse"
+                      className="absolute top-0 left-0 bottom-0 w-1 bg-gradient-to-b from-primary via-cyan-300 to-primary animate-pulse"
                     />
                   )}
 
@@ -199,7 +199,7 @@ export default function HardwareApparatus() {
                         {item.id} // {item.title}
                       </span>
                       {isActive && (
-                        <span className="text-[9px] uppercase tracking-widest text-amber-200 bg-amber-400/10 border border-amber-400/30 px-2 py-0.5 rounded font-mono">
+                        <span className="text-[9px] uppercase tracking-widest text-cyan-200 bg-cyan-400/10 border border-cyan-400/30 px-2 py-0.5 rounded font-mono">
                           ACTIVE FOCUS
                         </span>
                       )}

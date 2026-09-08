@@ -3,7 +3,7 @@ import './globals.css';
 export const metadata = {
   title: 'SliceX Films | Luxury Wedding Cinematography',
   description:
-    'Cinematic wedding photography & films for couples who want their story to feel like a movie.',
+    'A creative production house crafting visual experiences across films, advertising, weddings, podcasts, brands, events and documentaries.',
 };
 
 export default function RootLayout({ children }) {

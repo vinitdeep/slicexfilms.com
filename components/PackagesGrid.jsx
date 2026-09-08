@@ -37,7 +37,7 @@ export default function PackagesGrid({ ctaHref = '/book-your-date/' }) {
             <a
               className={`w-full inline-block text-center py-space-sm font-label-uppercase text-label-uppercase uppercase rounded-full transition-all ${
                 p.popular
-                  ? 'bg-primary text-on-primary hover:bg-primary-fixed shadow-[0_0_24px_rgba(242,202,80,.35)]'
+                  ? 'bg-primary text-on-primary hover:bg-primary-fixed shadow-[0_0_24px_rgba(62,230,240,.35)]'
                   : 'bg-surface-container-highest border border-primary-container/40 text-primary hover:bg-primary hover:text-on-primary'
               }`}
               href={withBase(ctaHref)}

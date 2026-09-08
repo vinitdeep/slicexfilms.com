@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import VideoLightbox from '../../components/VideoLightbox';
 import GoldenDust from '../../components/GoldenDust';
+import SnowFall from '../../components/SnowFall';
 import HeroVideo from '../../components/HeroVideo';
 import HomeServices from '../../components/HomeServices';
 import PackagesGrid from '../../components/PackagesGrid';
@@ -13,7 +14,7 @@ import { withBase } from '../../lib/basePath';
 const thumb = (id) => `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
 
 // Ambient hero background film (muted, looped, graded to the gold palette).
-const HERO_VIDEO = { id: 'LbZdGXwFpg4', mobileFocusX: 50 };
+const HERO_VIDEO = { id: '96ztpzXcrlQ', mobileFocusX: 50 };
 
 const FEATURE_FILM = { id: 'MIBoIxNjfXM', title: 'Pratap & Supriya — The Wedding Film' };
 
@@ -111,16 +112,16 @@ export default function HomePage() {
         <div className="absolute inset-0 z-0">
           <HeroVideo videoId={HERO_VIDEO.id} mobileFocusX={HERO_VIDEO.mobileFocusX} />
           <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/50 to-surface-container-lowest/80"></div>
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.08)_0%,_transparent_60%,_rgba(14,14,14,0.9)_100%)]"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,184,200,0.08)_0%,_transparent_60%,_rgba(14,14,14,0.9)_100%)]"></div>
         </div>
-        <GoldenDust />
+        <SnowFall />
         <div className="relative z-10 w-full px-margin-mobile lg:px-margin-desktop pt-space-xl flex justify-between items-center text-outline">
           <div className="flex items-center gap-space-xs font-metadata-dense text-metadata-dense tracking-widest uppercase">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#f2ca50]"></span>
+            <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#3ee6f0]"></span>
             <span className="text-secondary font-medium">ARCHIVE EST. 2019 / WORLDWIDE COMMISSIONS</span>
           </div>
           <div className="font-metadata-dense text-metadata-dense tracking-widest uppercase hidden sm:block border border-primary-container/30 px-3 py-1 rounded-full bg-surface-container-lowest/60 text-secondary backdrop-blur-md">
-        35MM • ARRI RAW • ANAMORPHIC GOLD EDITION
+        35MM • ARRI RAW • ANAMORPHIC AQUA EDITION
       </div>
         </div>
         <div className="relative z-10 w-full px-margin-mobile lg:px-margin-desktop py-space-3xl flex flex-col justify-center">
@@ -132,19 +133,21 @@ export default function HomePage() {
         </p>
             <h1 className="font-display-hero text-display-hero-mobile md:text-display-hero uppercase tracking-tighter text-on-surface font-light leading-none">
           YOUR STORY.<br />
-<span className="italic font-normal bg-gradient-to-r from-[#ffe088] via-[#f2ca50] to-[#d4af37] bg-clip-text text-transparent drop-shadow-[0_2px_18px_rgba(212,175,55,0.25)]">OUR FRAME.</span>
+<span className="italic font-normal bg-gradient-to-r from-[#a5f3fc] via-[#3ee6f0] to-[#00b8c8] bg-clip-text text-transparent drop-shadow-[0_2px_18px_rgba(0,184,200,0.25)]">OUR FRAME.</span>
 </h1>
             <p className="mt-space-lg font-body-lg text-body-lg text-on-surface max-w-2xl font-light leading-relaxed">
-          Cinematic wedding photography &amp; films for couples who want their story to feel like a movie.
+          A creative production house crafting visual experiences across films, advertising, weddings, podcasts, brands, events and documentaries.
         </p>
             <div className="mt-space-sm font-editorial-quote text-editorial-quote text-on-surface-variant/90 italic max-w-2xl font-light border-l-2 border-primary-container/60 pl-space-md my-space-md">
-          “At SliceX Films, we don’t just capture couples—we cast them. Every couple is the lead character in their own story.”
+          From concept to final frame,<br />we turn ideas into visual stories.
+          <span className="block mt-space-sm not-italic font-label-uppercase text-label-uppercase uppercase tracking-[0.18em] text-primary">SliceX Films</span>
+          <span className="block text-on-surface">Where Stories Become Cinema.</span>
         </div>
             <div className="mt-space-2xl flex flex-wrap items-center gap-space-md">
-              <a className="px-space-xl py-space-sm bg-gradient-to-r from-[#d4af37] via-[#f2ca50] to-[#ffe088] text-[#241a00] font-label-uppercase text-label-uppercase uppercase font-bold rounded-full shadow-[0_0_25px_rgba(212,175,55,0.35)] hover:shadow-[0_0_35px_rgba(212,175,55,0.6)] hover:scale-[1.02] transition-all tracking-widest" href="#featured-work">
+              <a className="px-space-xl py-space-sm bg-gradient-to-r from-[#00b8c8] via-[#3ee6f0] to-[#a5f3fc] text-[#001f23] font-label-uppercase text-label-uppercase uppercase font-bold rounded-full shadow-[0_0_25px_rgba(0,184,200,0.35)] hover:shadow-[0_0_35px_rgba(0,184,200,0.6)] hover:scale-[1.02] transition-all tracking-widest" href="#featured-work">
             VIEW OUR WORK
           </a>
-              <a className="px-space-xl py-space-sm bg-surface-container-high/60 backdrop-blur-md text-primary border border-primary/40 font-label-uppercase text-label-uppercase uppercase rounded-full hover:bg-primary/10 hover:border-primary transition-all tracking-widest shadow-[0_0_15px_rgba(212,175,55,0.1)]" href="#commission">
+              <a className="px-space-xl py-space-sm bg-surface-container-high/60 backdrop-blur-md text-primary border border-primary/40 font-label-uppercase text-label-uppercase uppercase rounded-full hover:bg-primary/10 hover:border-primary transition-all tracking-widest shadow-[0_0_15px_rgba(0,184,200,0.1)]" href="#commission">
             BOOK YOUR DATE
           </a>
             </div>
@@ -167,7 +170,7 @@ export default function HomePage() {
             <span className="font-numerical-index text-numerical-index text-secondary tracking-widest uppercase font-semibold">01 / ABOUT SLICEX</span>
             <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg uppercase font-light text-on-surface tracking-tight leading-[1.05]">
           WE DON’T JUST CAPTURE MOMENTS.<br />
-<span className="italic font-normal bg-gradient-to-r from-[#ffe088] via-[#f2ca50] to-[#d4af37] bg-clip-text text-transparent">WE CREATE STORIES.</span>
+<span className="italic font-normal bg-gradient-to-r from-[#a5f3fc] via-[#3ee6f0] to-[#00b8c8] bg-clip-text text-transparent">WE CREATE STORIES.</span>
 </h2>
             <div className="pt-space-lg">
               <div className="w-16 h-[2px] bg-gradient-to-r from-primary to-transparent mb-space-md"></div>
@@ -199,7 +202,7 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-      <section className="w-full bg-surface-container-lowest py-space-2xl md:py-space-4xl overflow-hidden border-y border-amber-500/30 relative" id="film-roll-archive">
+      <section className="w-full bg-surface-container-lowest py-space-2xl md:py-space-4xl overflow-hidden border-y border-cyan-500/30 relative" id="film-roll-archive">
         <style dangerouslySetInnerHTML={{ __html: `
     @keyframes filmScroll {
       0% { transform: translateX(0); }
@@ -218,14 +221,14 @@ export default function HomePage() {
       height: 18px;
       border-radius: 2px;
       background: #090909;
-      border: 1px solid rgba(212,175,55,0.25);
+      border: 1px solid rgba(0,184,200,0.25);
       flex-shrink: 0;
     }
   ` }} />
         <div className="w-full px-margin-mobile lg:px-margin-desktop mb-space-lg md:mb-space-2xl flex flex-col md:flex-row md:items-end justify-between gap-space-sm md:gap-space-md">
           <div>
             <div className="flex items-center gap-space-xs mb-space-2xs font-metadata-dense text-metadata-dense uppercase tracking-widest text-secondary">
-              <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#f2ca50]"></span>
+              <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#3ee6f0]"></span>
               <span>ARCHIVAL NEGATIVE ROLL // KODAK VISION3 &amp; PORTRA 400 EMULSION</span>
             </div>
             <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase font-light text-primary tracking-tight">35MM CONTINUOUS FILM STRIP</h2>
@@ -236,13 +239,13 @@ export default function HomePage() {
             <span className="hidden sm:inline-block text-on-surface-variant">DIRECT CAMERA RAW ARCHIVE</span>
           </div>
         </div>
-        <div id="filmStrip" className="relative w-full bg-[#14120e] py-3 shadow-[0_0_50px_rgba(0,0,0,0.8)] border-y border-amber-500/25 select-none overflow-x-auto cursor-grab" style={{ scrollbarWidth: 'none' }}>
+        <div id="filmStrip" className="relative w-full bg-[#0e1314] py-3 shadow-[0_0_50px_rgba(0,0,0,0.8)] border-y border-cyan-500/25 select-none overflow-x-auto cursor-grab" style={{ scrollbarWidth: 'none' }}>
           <div className="flex items-stretch w-max">
             {[0, 1].map((g) => (
               <div key={g} className="flex items-stretch flex-shrink-0" aria-hidden={g === 1 ? 'true' : undefined}>
                 {FILM_STRIP.map((v, i) => (
-                  <div key={v.id + '-' + g} data-yt={v.id} className="w-[240px] sm:w-[320px] md:w-[420px] bg-[#12100d] border-x border-amber-900/30 flex flex-col px-3 py-2 flex-shrink-0 group cursor-pointer hover:bg-[#1a1712] transition-colors">
-                    <div className="flex items-center justify-between py-1 px-1 text-[10px] tracking-[0.2em] font-mono text-amber-500/80">
+                  <div key={v.id + '-' + g} data-yt={v.id} className="w-[240px] sm:w-[320px] md:w-[420px] bg-[#0c1112] border-x border-cyan-900/30 flex flex-col px-3 py-2 flex-shrink-0 group cursor-pointer hover:bg-[#141b1c] transition-colors">
+                    <div className="flex items-center justify-between py-1 px-1 text-[10px] tracking-[0.2em] font-mono text-cyan-500/80">
                       <span>{v.stock}</span>
                       <div className="flex items-center gap-2">
                         <span className="sprocket-hole"></span>
@@ -251,7 +254,7 @@ export default function HomePage() {
                       </div>
                       <span className="text-primary font-bold">▷ {21 + i}A</span>
                     </div>
-                    <div className="relative aspect-[3/2] overflow-hidden bg-black mt-1 mb-1 border border-amber-500/20 group-hover:border-primary/60 transition-colors shadow-inner">
+                    <div className="relative aspect-[3/2] overflow-hidden bg-black mt-1 mb-1 border border-cyan-500/20 group-hover:border-primary/60 transition-colors shadow-inner">
                       <img alt={v.title} className="w-full h-full object-cover grayscale-[25%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out" src={filmThumb(v.id)} />
                       <span className="absolute top-2 left-2 bg-black/85 border border-primary/40 px-1.5 py-0.5 font-metadata-dense text-[9px] tracking-widest text-primary uppercase">EXP {String(i + 1).padStart(2, '0')}</span>
                       <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
@@ -260,7 +263,7 @@ export default function HomePage() {
                         </span>
                       </div>
                     </div>
-                    <div className="flex items-center justify-between gap-2 py-1 px-1 text-[10px] tracking-[0.2em] font-mono text-amber-500/80">
+                    <div className="flex items-center justify-between gap-2 py-1 px-1 text-[10px] tracking-[0.2em] font-mono text-cyan-500/80">
                       <span className="text-secondary uppercase text-[9px] tracking-wider font-semibold truncate min-w-0">{v.title} // {v.tag}</span>
                       <div className="hidden sm:flex items-center gap-2">
                         <span className="sprocket-hole"></span>
@@ -277,7 +280,7 @@ export default function HomePage() {
         </div>
         <div className="w-full px-margin-mobile lg:px-margin-desktop mt-space-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs text-outline font-metadata-dense text-metadata-dense uppercase tracking-widest">
           <div className="flex items-center gap-space-sm">
-            <span className="inline-block w-2 h-2 rounded-full bg-primary shadow-[0_0_6px_#f2ca50]"></span>
+            <span className="inline-block w-2 h-2 rounded-full bg-primary shadow-[0_0_6px_#3ee6f0]"></span>
             <span>CANON RF 50MM F/1.2L • LEICA M11 ARCHIVE • ARRI ALEXA MINI LF EMULSION</span>
           </div>
           <div className="flex items-center gap-space-md text-secondary">
@@ -306,7 +309,7 @@ export default function HomePage() {
             <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg uppercase font-light text-primary tracking-tight mt-space-2xs">FEATURED WORK</h2>
           </div>
           <div className="flex flex-wrap items-center gap-space-xs font-metadata-dense text-metadata-dense tracking-widest uppercase">
-            <button className="px-space-md py-space-xs bg-gradient-to-r from-primary-container to-primary text-on-primary font-bold rounded-full shadow-[0_0_15px_rgba(212,175,55,0.3)] transition-all">ALL</button>
+            <button className="px-space-md py-space-xs bg-gradient-to-r from-primary-container to-primary text-on-primary font-bold rounded-full shadow-[0_0_15px_rgba(0,184,200,0.3)] transition-all">ALL</button>
             <button className="px-space-md py-space-xs bg-surface-container text-on-surface-variant hover:text-primary border border-primary-container/20 hover:border-primary/40 rounded-full transition-colors">WEDDINGS</button>
             <button className="px-space-md py-space-xs bg-surface-container text-on-surface-variant hover:text-primary border border-primary-container/20 hover:border-primary/40 rounded-full transition-colors">PRE-WEDDINGS</button>
             <button className="px-space-md py-space-xs bg-surface-container text-on-surface-variant hover:text-primary border border-primary-container/20 hover:border-primary/40 rounded-full transition-colors">ENGAGEMENTS</button>
@@ -376,7 +379,7 @@ export default function HomePage() {
           <div className="absolute inset-0 w-full h-full bg-cover bg-center group-hover:scale-102 transition-transform duration-700" style={{ backgroundImage: `url('${thumb(FEATURE_FILM.id)}')` }}></div>
           <div className="absolute inset-0 bg-surface-container-lowest/40 group-hover:bg-surface-container-lowest/20 transition-colors"></div>
           <div className="absolute inset-0 flex items-center justify-center">
-            <button aria-label="Play Master Film" className="w-24 h-24 rounded-full bg-gradient-to-tr from-[#d4af37] to-[#f2ca50] text-[#241a00] flex items-center justify-center shadow-[0_0_40px_rgba(212,175,55,0.6)] group-hover:scale-110 group-hover:shadow-[0_0_60px_rgba(212,175,55,0.9)] transition-all duration-300">
+            <button aria-label="Play Master Film" className="w-24 h-24 rounded-full bg-gradient-to-tr from-[#00b8c8] to-[#3ee6f0] text-[#001f23] flex items-center justify-center shadow-[0_0_40px_rgba(0,184,200,0.6)] group-hover:scale-110 group-hover:shadow-[0_0_60px_rgba(0,184,200,0.9)] transition-all duration-300">
               <span className="material-symbols-outlined text-[42px] translate-x-0.5">play_arrow</span>
             </button>
           </div>
@@ -386,7 +389,7 @@ export default function HomePage() {
               <span className="text-primary">WATCH ON YOUTUBE</span>
             </div>
             <div className="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden relative cursor-pointer border border-primary-container/20">
-              <div className="h-full bg-gradient-to-r from-primary-container to-primary w-1/4 rounded-full shadow-[0_0_8px_#f2ca50]"></div>
+              <div className="h-full bg-gradient-to-r from-primary-container to-primary w-1/4 rounded-full shadow-[0_0_8px_#3ee6f0]"></div>
             </div>
           </div>
         </div>
@@ -427,14 +430,14 @@ export default function HomePage() {
         </div>
       </section>
       <section className="w-full bg-surface-container-lowest py-space-5xl px-margin-mobile lg:px-margin-desktop flex flex-col justify-center items-center text-center overflow-hidden relative">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(212,175,55,0.08)_0%,_transparent_70%)] pointer-events-none"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,184,200,0.08)_0%,_transparent_70%)] pointer-events-none"></div>
         <GoldenDust />
         <div className="max-w-5xl relative z-10">
           <span className="font-label-uppercase text-label-uppercase text-secondary tracking-widest uppercase block mb-space-lg font-semibold">THE CORE CREED</span>
           <h2 className="font-display-hero text-display-hero-mobile md:text-display-hero uppercase tracking-tighter text-on-surface font-light leading-[0.95]">
         EVERY COUPLE<br />
         HAS A STORY.<br />
-<span className="bg-gradient-to-r from-[#ffe088] via-[#f2ca50] to-[#d4af37] bg-clip-text text-transparent italic font-normal">WE MAKE SURE</span><br />
+<span className="bg-gradient-to-r from-[#a5f3fc] via-[#3ee6f0] to-[#00b8c8] bg-clip-text text-transparent italic font-normal">WE MAKE SURE</span><br />
         IT FEELS LIKE<br />
 <span className="text-primary font-normal">A MOVIE.</span>
 </h2>
@@ -469,9 +472,9 @@ export default function HomePage() {
             </div>
             
             <div className="relative z-10 mt- space-y-1">
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-amber-200 transition-colors tracking-wide flex items-center justify-between">
+              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-cyan-200 transition-colors tracking-wide flex items-center justify-between">
                 MEET
-                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-amber-400 group-hover:animate-ping transition-all" />
+                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-cyan-400 group-hover:animate-ping transition-all" />
               </h4>
               <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
                 We meet over espresso or video link to understand your quirks, your tempo, and the personal dynamics you care about.
@@ -493,9 +496,9 @@ export default function HomePage() {
             </div>
             
             <div className="relative z-10 mt- space-y-1">
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-amber-200 transition-colors tracking-wide flex items-center justify-between">
+              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-cyan-200 transition-colors tracking-wide flex items-center justify-between">
                 PLAN
-                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-amber-400 group-hover:animate-ping transition-all" />
+                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-cyan-400 group-hover:animate-ping transition-all" />
               </h4>
               <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
                 Architecting camera angles, light timing, mood boards, wardrobe harmonies, and timeline synchronization.
@@ -517,9 +520,9 @@ export default function HomePage() {
             </div>
             
             <div className="relative z-10 mt- space-y-1">
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-amber-200 transition-colors tracking-wide flex items-center justify-between">
+              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-cyan-200 transition-colors tracking-wide flex items-center justify-between">
                 CAPTURE
-                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-amber-400 group-hover:animate-ping transition-all" />
+                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-cyan-400 group-hover:animate-ping transition-all" />
               </h4>
               <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
                 Discreet, non-invasive cinema coverage. We observe raw authenticity without intrusive studio orchestrations.
@@ -541,9 +544,9 @@ export default function HomePage() {
             </div>
             
             <div className="relative z-10 mt- space-y-1">
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-amber-200 transition-colors tracking-wide flex items-center justify-between">
+              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-cyan-200 transition-colors tracking-wide flex items-center justify-between">
                 CREATE
-                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-amber-400 group-hover:animate-ping transition-all" />
+                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-cyan-400 group-hover:animate-ping transition-all" />
               </h4>
               <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
                 Surgical editorial pacing, analog-feel color grading, bespoke film score licensing, and sound engineering.
@@ -565,9 +568,9 @@ export default function HomePage() {
             </div>
             
             <div className="relative z-10 mt- space-y-1">
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-amber-200 transition-colors tracking-wide flex items-center justify-between">
+              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-cyan-200 transition-colors tracking-wide flex items-center justify-between">
                 DELIVER
-                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-amber-400 group-hover:animate-ping transition-all" />
+                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-cyan-400 group-hover:animate-ping transition-all" />
               </h4>
               <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
                 Secure private streaming vault plus a luxury keepsake archive drive crafted for generations of viewing.
@@ -624,7 +627,7 @@ export default function HomePage() {
                 <span className="material-symbols-outlined text-[16px] text-primary">lock</span>
                 <span>DATA CONFIDENTIALITY GUARANTEED</span>
               </div>
-              <button className="w-full sm:w-auto px-space-2xl py-space-sm bg-gradient-to-r from-primary-container via-primary to-secondary text-[#241a00] font-label-uppercase text-label-uppercase uppercase font-bold rounded-full shadow-[0_0_20px_rgba(212,175,55,0.35)] hover:shadow-[0_0_30px_rgba(212,175,55,0.6)] hover:scale-[1.02] transition-all tracking-widest" type="submit">
+              <button className="w-full sm:w-auto px-space-2xl py-space-sm bg-gradient-to-r from-primary-container via-primary to-secondary text-[#001f23] font-label-uppercase text-label-uppercase uppercase font-bold rounded-full shadow-[0_0_20px_rgba(0,184,200,0.35)] hover:shadow-[0_0_30px_rgba(0,184,200,0.6)] hover:scale-[1.02] transition-all tracking-widest" type="submit">
             SUBMIT INQUIRY
           </button>
             </div>

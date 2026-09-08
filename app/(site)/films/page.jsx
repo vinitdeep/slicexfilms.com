@@ -89,7 +89,7 @@ export default function FilmsPage() {
                 </div>
               </div>
               <div className="absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-                <button aria-label="Play Featured Film" data-yt={HERO.id} className="pointer-events-auto group/btn relative w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-[0_0_50px_rgba(212,175,55,0.45)] hover:bg-primary transition-all duration-500 hover:scale-105" id="masterPlayBtn">
+                <button aria-label="Play Featured Film" data-yt={HERO.id} className="pointer-events-auto group/btn relative w-20 h-20 lg:w-24 lg:h-24 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center shadow-[0_0_50px_rgba(0,184,200,0.45)] hover:bg-primary transition-all duration-500 hover:scale-105" id="masterPlayBtn">
                   <span className="absolute inset-0 rounded-full bg-primary/30 animate-ping opacity-60"></span>
                   <span className="material-symbols-outlined text-[36px] lg:text-[42px] translate-x-0.5" style={{ fontVariationSettings: "'FILL' 1" }}>play_arrow</span>
                 </button>
@@ -122,7 +122,7 @@ export default function FilmsPage() {
                 <div className="pt-space-xs flex flex-col gap-1.5">
                   <div className="group/scrub relative w-full h-1.5 bg-surface-container-highest rounded-full cursor-pointer overflow-hidden flex items-center">
                     <div className="h-full bg-primary rounded-full transition-all duration-300 relative w-[28%]" id="playProgressBar">
-                      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-on-surface rounded-full shadow-[0_0_8px_rgba(242,202,80,0.8)] scale-0 group-hover/scrub:scale-100 transition-transform"></div>
+                      <div className="absolute right-0 top-1/2 -translate-y-1/2 w-3 h-3 bg-on-surface rounded-full shadow-[0_0_8px_rgba(62,230,240,0.8)] scale-0 group-hover/scrub:scale-100 transition-transform"></div>
                     </div>
                   </div>
                   <div className="flex items-center justify-between text-outline font-label-sm text-label-sm uppercase tracking-widest">
@@ -385,7 +385,7 @@ export default function FilmsPage() {
           We accept a strictly limited schedule of 12 wedding commissions worldwide annually to ensure obsessive attention to every cut and color grade.
         </p>
             <div className="flex flex-col sm:flex-row items-center gap-space-md w-full justify-center">
-              <a className="w-full sm:w-auto px-space-xl py-space-md bg-primary-container text-on-primary-container font-label-md text-label-md uppercase tracking-[0.14em] rounded shadow-[0_0_25px_rgba(212,175,55,0.3)] hover:bg-primary transition-all duration-300" data-path="contact" href={withBase("/contact/")}>
+              <a className="w-full sm:w-auto px-space-xl py-space-md bg-primary-container text-on-primary-container font-label-md text-label-md uppercase tracking-[0.14em] rounded shadow-[0_0_25px_rgba(0,184,200,0.3)] hover:bg-primary transition-all duration-300" data-path="contact" href={withBase("/contact/")}>
             COMMISSION A WEDDING FILM
           </a>
               <a className="w-full sm:w-auto px-space-xl py-space-md bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md uppercase tracking-[0.14em] rounded transition-all duration-300" data-path="packages" href={withBase("/book-your-date/")}>

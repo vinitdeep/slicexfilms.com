@@ -4,7 +4,7 @@ import { withBase } from '../../../lib/basePath';
 export const metadata = {
   title: 'SliceX Films | Privacy Policy',
   description:
-    'How SliceX Films collects, uses and protects the personal information you share with us through our website, inquiry forms, Slice chat assistant and WhatsApp.',
+    'How SliceX Films collects, uses and protects the personal information you share with us through our website, inquiry forms, Chitra chat assistant and WhatsApp.',
 };
 
 const EFFECTIVE = '8 September 2026';
@@ -36,7 +36,7 @@ const SECTIONS = [
         <p>We collect information only when you choose to share it with us, for example when you:</p>
         <ul>
           <li>Fill in the inquiry form on the Contact page or the booking form on the Packages page. Depending on what you enter, this can include your and your partner&rsquo;s names, email address, phone or WhatsApp number, celebration dates, venue or destination, guest count, approximate budget, and any notes or references you add.</li>
-          <li>Talk to <b>Slice</b>, the chat assistant on this site. Slice may ask for your first name and, optionally, a WhatsApp number so the studio can follow up.</li>
+          <li>Talk to <b>Chitra</b>, the chat assistant on this site. Chitra may ask for your first name and, optionally, a WhatsApp number so the studio can follow up.</li>
           <li>Message us on WhatsApp, email us, call us, or book a consultation.</li>
           <li>Become a client, in which case we also hold the details needed to plan, film, deliver and invoice your commission.</li>
         </ul>
@@ -67,11 +67,11 @@ const SECTIONS = [
   },
   {
     n: '04',
-    title: 'The Slice chat assistant',
+    title: 'The Chitra chat assistant',
     body: (
       <>
         <p>
-          Slice is an automated assistant that answers questions about our services, packages, availability and process. To
+          Chitra is an automated assistant that answers questions about our services, packages, availability and process. To
           generate its replies, the messages you type in the chat are sent to our chat service and processed by an artificial
           intelligence language model provided by a third-party AI provider. Only the current conversation is sent, together with
           the first name you give, so that replies can be personalised.
@@ -79,7 +79,7 @@ const SECTIONS = [
         <ul>
           <li>Chat messages are used solely to produce the reply you see and are not used to train AI models.</li>
           <li>Conversations are kept in your own browser for the duration of your visit so the chat survives moving between pages; they are not stored on our servers as a permanent record.</li>
-          <li>If you share a WhatsApp number with Slice, it is passed to the studio through WhatsApp so a team member can contact you. It is not shared with anyone else.</li>
+          <li>If you share a WhatsApp number with Chitra, it is passed to the studio through WhatsApp so a team member can contact you. It is not shared with anyone else.</li>
           <li>Please avoid typing sensitive information (such as financial details or identity documents) into the chat. A human is always available on WhatsApp or by phone.</li>
         </ul>
       </>
@@ -138,8 +138,8 @@ const SECTIONS = [
       <>
         <p>We share personal information only with service providers who help us run the studio, and only as needed:</p>
         <ul>
-          <li><b>WhatsApp (Meta)</b>, when you choose to contact us there or ask Slice to connect you.</li>
-          <li><b>Our chat infrastructure and AI provider</b>, to generate Slice&rsquo;s replies (section 04).</li>
+          <li><b>WhatsApp (Meta)</b>, when you choose to contact us there or ask Chitra to connect you.</li>
+          <li><b>Our chat infrastructure and AI provider</b>, to generate Chitra&rsquo;s replies (section 04).</li>
           <li><b>Google / YouTube</b>, for embedded maps, fonts and video players.</li>
           <li><b>Delivery and portal services</b> used to hand over your finished films and photographs.</li>
           <li><b>Professional advisers or authorities</b>, where the law requires it.</li>
@@ -300,8 +300,8 @@ export default function PrivacyPolicyPage() {
 
     <style>{`
       .sx-legal ul{list-style:disc;padding-left:1.25rem;display:flex;flex-direction:column;gap:.4rem}
-      .sx-legal a{color:#f2ca50;text-decoration:underline;text-underline-offset:3px}
-      .sx-legal a:hover{color:#ffe088}
+      .sx-legal a{color:#3ee6f0;text-decoration:underline;text-underline-offset:3px}
+      .sx-legal a:hover{color:#a5f3fc}
       .sx-legal b{color:#e5e2e1;font-weight:500}
     `}</style>
 

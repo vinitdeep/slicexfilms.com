@@ -58,7 +58,7 @@ export default function AboutPage() {
 
               {/* Center Play Button Overlay */}
               <div className="self-center flex flex-col items-center gap-3 transition-transform duration-500 group-hover:scale-110 pointer-events-none">
-                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/90 text-surface-container-lowest flex items-center justify-center shadow-[0_0_40px_rgba(212,175,55,0.6)] group-hover:bg-primary transition-all pointer-events-auto">
+                <div className="w-16 h-16 sm:w-20 sm:h-20 rounded-full bg-primary/90 text-surface-container-lowest flex items-center justify-center shadow-[0_0_40px_rgba(0,184,200,0.6)] group-hover:bg-primary transition-all pointer-events-auto">
                   <span className="material-symbols-outlined text-[36px] sm:text-[44px] translate-x-0.5">play_arrow</span>
                 </div>
                 <span className="font-label-sm text-label-sm tracking-widest uppercase text-primary bg-surface-container-lowest/90 backdrop-blur-md px-4 py-1.5 rounded-full border border-primary/40 shadow-lg">
@@ -339,7 +339,7 @@ export default function AboutPage() {
         To preserve our uncompromised level of craft and intimate attention, we accept strictly 18 commissions per season across India, Europe, and destinations worldwide.
       </p>
           <div className="flex flex-col sm:flex-row items-center gap-space-md w-full justify-center pt-space-sm">
-            <a className="w-full sm:w-auto px-space-2xl py-space-md bg-primary-container text-on-primary-container font-label-md text-label-md uppercase rounded tracking-[0.16em] hover:bg-primary transition-all duration-300 shadow-[0_0_30px_rgba(212,175,55,0.3)] text-center" data-path="contact" href={withBase("/contact/")}>
+            <a className="w-full sm:w-auto px-space-2xl py-space-md bg-primary-container text-on-primary-container font-label-md text-label-md uppercase rounded tracking-[0.16em] hover:bg-primary transition-all duration-300 shadow-[0_0_30px_rgba(0,184,200,0.3)] text-center" data-path="contact" href={withBase("/contact/")}>
           Secure Your Wedding Date
         </a>
             <a className="w-full sm:w-auto px-space-xl py-space-md bg-surface-container-low text-on-surface hover:text-primary font-label-md text-label-md uppercase rounded tracking-[0.16em] transition-all duration-300 text-center" data-path="portfolio" href={withBase("/portfolio/")}>
