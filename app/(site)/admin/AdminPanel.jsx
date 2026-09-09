@@ -16,6 +16,7 @@ const TABS = [
   { key: 'packages', label: 'Packages', icon: 'sell' },
   { key: 'services', label: 'Services', icon: 'movie_filter' },
   { key: 'portfolio', label: 'Portfolio', icon: 'collections_bookmark' },
+  { key: 'films', label: 'Films', icon: 'theaters' },
   { key: 'gallery', label: 'Gallery', icon: 'photo_library' },
   { key: 'contact', label: 'Contact', icon: 'contact_phone' },
 ];
@@ -406,6 +407,172 @@ function PortfolioTab({ value, onChange }) {
   );
 }
 
+// ── Films ─────────────────────────────────────────────────────
+const FILM_SECTIONS = [
+  ['teasers', 'Teasers'],
+  ['full', 'Full films'],
+  ['reels', 'Reels'],
+];
+
+// One video row: thumbnail + link/title/category/blurb.
+function FilmRow({ v, i, n, onSet, onMove, onRemove, showBlurb }) {
+  return (
+    <div className={cls.card + ' flex gap-space-sm'}>
+      <div className="w-28 aspect-video shrink-0 self-start rounded overflow-hidden bg-surface-container-lowest border border-primary-container/20">
+        {v.id ? <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" className="w-full h-full object-cover" /> : null}
+      </div>
+      <div className="flex-1 flex flex-col gap-space-2xs min-w-0">
+        <Field label="YouTube link or ID" value={v.id} onChange={(x) => onSet({ id: ytId(x) })} placeholder="https://www.youtube.com/watch?v=…" />
+        <div className="grid grid-cols-2 gap-space-2xs">
+          <Field label="Title" value={v.title} onChange={(x) => onSet({ title: x })} />
+          <Field label="Category" value={v.category} onChange={(x) => onSet({ category: x })} placeholder="Wedding Film" />
+        </div>
+        {showBlurb && <Field label="Blurb" textarea value={v.blurb} onChange={(x) => onSet({ blurb: x })} />}
+        <div className="flex justify-end"><ListControls i={i} n={n} onMove={onMove} onRemove={onRemove} /></div>
+      </div>
+    </div>
+  );
+}
+
+function FilmsTab({ value, onChange }) {
+  const [sub, setSub] = useState('hero');
+  const setPart = (key, patch) => onChange({ ...value, [key]: { ...(value[key] || {}), ...patch } });
+
+  const intro = value.intro || {};
+  const hero = value.hero || {};
+  const manifesto = value.manifesto || {};
+  const cta = value.cta || {};
+
+  const SUBS = [['hero', 'Hero & intro'], ...FILM_SECTIONS, ['manifesto', 'Manifesto'], ['cta', 'Call to action']];
+
+  const listFor = (key) => (value[key] || {}).items || [];
+  const setList = (key, items) => setPart(key, { items });
+
+  return (
+    <div className="flex flex-col gap-space-md">
+      <div className="inline-flex flex-wrap gap-1 p-1 rounded-full bg-surface-container-low border border-primary-container/20 self-start">
+        {SUBS.map(([k, l]) => (
+          <button key={k} type="button" onClick={() => setSub(k)} className={`${cls.btn} ${sub === k ? cls.btnGold : 'text-on-surface-variant hover:text-primary'}`}>
+            {l}{listFor(k).length ? <span className="opacity-70"> {listFor(k).length}</span> : null}
+          </button>
+        ))}
+      </div>
+
+      {sub === 'hero' && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
+          <div className={cls.card + ' flex flex-col gap-space-sm'}>
+            <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Page intro</span>
+            <Field label="Eyebrow" value={intro.eyebrow} onChange={(v) => setPart('intro', { eyebrow: v })} />
+            <Field label="Heading" value={intro.titleA} onChange={(v) => setPart('intro', { titleA: v })} />
+            <Field label="Heading (accent)" value={intro.titleB} onChange={(v) => setPart('intro', { titleB: v })} hint="Shown in italic aqua." />
+            <Field label="Subtitle" textarea value={intro.subtitle} onChange={(v) => setPart('intro', { subtitle: v })} />
+            <div className="grid grid-cols-3 gap-space-2xs">
+              <Field label="Pill 1" value={intro.pill1} onChange={(v) => setPart('intro', { pill1: v })} />
+              <Field label="Pill 2" value={intro.pill2} onChange={(v) => setPart('intro', { pill2: v })} />
+              <Field label="Pill 3" value={intro.pill3} onChange={(v) => setPart('intro', { pill3: v })} />
+            </div>
+          </div>
+          <div className={cls.card + ' flex flex-col gap-space-sm'}>
+            <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Featured film</span>
+            <div className="flex gap-space-sm">
+              <div className="w-28 aspect-video shrink-0 rounded overflow-hidden bg-surface-container-lowest border border-primary-container/20">
+                {hero.id ? <img src={`https://i.ytimg.com/vi/${hero.id}/hqdefault.jpg`} alt="" className="w-full h-full object-cover" /> : null}
+              </div>
+              <div className="flex-1"><Field label="YouTube link or ID" value={hero.id} onChange={(v) => setPart('hero', { id: ytId(v) })} /></div>
+            </div>
+            <Field label="Title" value={hero.title} onChange={(v) => setPart('hero', { title: v })} />
+            <Field label="Category" value={hero.category} onChange={(v) => setPart('hero', { category: v })} />
+            <div className="grid grid-cols-2 gap-space-sm">
+              <Field label="Tag (left)" value={hero.tagLeft} onChange={(v) => setPart('hero', { tagLeft: v })} />
+              <Field label="Tag (right)" value={hero.tagRight} onChange={(v) => setPart('hero', { tagRight: v })} />
+            </div>
+            <Field label="Spec chips (comma separated)" value={(hero.specs || []).join(', ')} onChange={(v) => setPart('hero', { specs: v.split(',').map((s) => s.trim()).filter(Boolean) })} />
+            <div className="grid grid-cols-2 gap-space-sm">
+              <Field label="Duration" value={hero.duration} onChange={(v) => setPart('hero', { duration: v })} placeholder="18:42" />
+              <Field label="Chapter caption" value={hero.chapter} onChange={(v) => setPart('hero', { chapter: v })} />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {FILM_SECTIONS.some(([k]) => k === sub) && (() => {
+        const sec = value[sub] || {};
+        const items = sec.items || [];
+        return (
+          <div className="flex flex-col gap-space-md">
+            <div className={cls.card + ' grid grid-cols-1 lg:grid-cols-2 gap-space-sm'}>
+              <Field label="Eyebrow" value={sec.eyebrow} onChange={(v) => setPart(sub, { eyebrow: v })} />
+              <Field label="Heading" value={sec.title} onChange={(v) => setPart(sub, { title: v })} />
+              <Field label="Heading note" value={sec.note} onChange={(v) => setPart(sub, { note: v })} placeholder="(3–5 min)" />
+              <Field label="Section blurb" textarea value={sec.blurb} onChange={(v) => setPart(sub, { blurb: v })} />
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-space-sm">
+              {items.map((v, i) => (
+                <FilmRow
+                  key={i} v={v} i={i} n={items.length} showBlurb={sub !== 'reels'}
+                  onSet={(patch) => setList(sub, items.map((x, j) => (j === i ? { ...x, ...patch } : x)))}
+                  onMove={(a, d) => setList(sub, moveItem(items, a, d))}
+                  onRemove={(a) => setList(sub, items.filter((_, j) => j !== a))}
+                />
+              ))}
+            </div>
+            <button type="button" onClick={() => setList(sub, [...items, { id: '', title: '', category: '', blurb: '' }])} className={`${cls.btn} ${cls.btnGhost} self-start`}>
+              <span className="material-symbols-outlined text-[16px]">add</span>Add video
+            </button>
+          </div>
+        );
+      })()}
+
+      {sub === 'manifesto' && (
+        <div className="flex flex-col gap-space-md">
+          <div className={cls.card + ' flex flex-col gap-space-sm'}>
+            <Field label="Eyebrow" value={manifesto.eyebrow} onChange={(v) => setPart('manifesto', { eyebrow: v })} />
+            <Field label="Quote" textarea value={manifesto.quote} onChange={(v) => setPart('manifesto', { quote: v })} />
+            <Field label="Body" textarea value={manifesto.body} onChange={(v) => setPart('manifesto', { body: v })} />
+            <div className="grid grid-cols-2 gap-space-sm">
+              <Field label="Author" value={manifesto.author} onChange={(v) => setPart('manifesto', { author: v })} />
+              <Field label="Role" value={manifesto.role} onChange={(v) => setPart('manifesto', { role: v })} />
+            </div>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-space-sm">
+            {(manifesto.cards || []).map((c, i) => {
+              const cards = manifesto.cards || [];
+              const setCards = (l) => setPart('manifesto', { cards: l });
+              return (
+                <div key={i} className={cls.card + ' flex flex-col gap-space-2xs'}>
+                  <div className="flex items-center justify-between">
+                    <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Card {i + 1}</span>
+                    <ListControls i={i} n={cards.length} onMove={(a, d) => setCards(moveItem(cards, a, d))} onRemove={(a) => setCards(cards.filter((_, j) => j !== a))} />
+                  </div>
+                  <Field label="Material icon name" value={c.icon} onChange={(v) => setCards(cards.map((x, j) => (j === i ? { ...x, icon: v } : x)))} hint="e.g. videocam, palette, graphic_eq" />
+                  <Field label="Title" value={c.title} onChange={(v) => setCards(cards.map((x, j) => (j === i ? { ...x, title: v } : x)))} />
+                  <Field label="Description" textarea value={c.desc} onChange={(v) => setCards(cards.map((x, j) => (j === i ? { ...x, desc: v } : x)))} />
+                </div>
+              );
+            })}
+          </div>
+          <button type="button" onClick={() => setPart('manifesto', { cards: [...(manifesto.cards || []), { icon: 'videocam', title: '', desc: '' }] })} className={`${cls.btn} ${cls.btnGhost} self-start`}>
+            <span className="material-symbols-outlined text-[16px]">add</span>Add card
+          </button>
+        </div>
+      )}
+
+      {sub === 'cta' && (
+        <div className={cls.card + ' flex flex-col gap-space-sm max-w-3xl'}>
+          <Field label="Eyebrow" value={cta.eyebrow} onChange={(v) => setPart('cta', { eyebrow: v })} />
+          <Field label="Heading" value={cta.titleA} onChange={(v) => setPart('cta', { titleA: v })} />
+          <Field label="Heading (accent)" value={cta.titleB} onChange={(v) => setPart('cta', { titleB: v })} hint="Shown in italic aqua." />
+          <Field label="Body" textarea value={cta.body} onChange={(v) => setPart('cta', { body: v })} />
+          <div className="grid grid-cols-2 gap-space-sm">
+            <Field label="Button 1" value={cta.btn1} onChange={(v) => setPart('cta', { btn1: v })} hint="Links to Contact." />
+            <Field label="Button 2" value={cta.btn2} onChange={(v) => setPart('cta', { btn2: v })} hint="Links to Book your date." />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Gallery ───────────────────────────────────────────────────
 function GalleryTab({ value, onChange }) {
   const [sub, setSub] = useState('videos');
@@ -581,6 +748,7 @@ export default function AdminPanel() {
           {tab === 'packages' && <PackagesTab value={draft.packages} onChange={(v) => setDraft({ ...draft, packages: v })} />}
           {tab === 'services' && <ServicesTab value={draft.services} onChange={(v) => setDraft({ ...draft, services: v })} />}
           {tab === 'portfolio' && <PortfolioTab value={draft.portfolio} onChange={(v) => setDraft({ ...draft, portfolio: v })} />}
+          {tab === 'films' && <FilmsTab value={draft.films} onChange={(v) => setDraft({ ...draft, films: v })} />}
           {tab === 'gallery' && <GalleryTab value={draft.gallery} onChange={(v) => setDraft({ ...draft, gallery: v })} />}
           {tab === 'contact' && <ContactTab value={draft.contact} onChange={(v) => setDraft({ ...draft, contact: v })} />}
           <SaveBar dirty={dirty} saving={saving} onSave={save} onReset={reset} updated={JSON.stringify(content[tab]) !== JSON.stringify(DEFAULTS[tab])} />

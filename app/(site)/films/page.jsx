@@ -3,36 +3,26 @@
 import SiteFooter from '../../../components/SiteFooter';
 import VideoLightbox from '../../../components/VideoLightbox';
 import { withBase } from '../../../lib/basePath';
+import { useContent } from '../../../lib/content';
 
 // Real films from youtube.com/@slicexfilms8741 — thumbnails and playback pull
 // straight from YouTube by video id.
 const thumb = (id) => `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
 
-const HERO = {
-  id: 'MIBoIxNjfXM',
-  title: 'Pratap & Supriya — The Wedding Film',
-  category: 'Feature Wedding Film',
-};
-
-const TEASERS = [
-  { id: 'tFyz_XO2naA', title: 'Subhashree', category: 'Wedding Teaser', blurb: 'A distilled cinematic teaser — rhythmic cuts scored to a custom soundtrack.' },
-  { id: '5LP3Ic7RVpw', title: 'So Called Cinematic Wedding', category: 'Wedding Film', blurb: 'A modern, story-first wedding film with a bold editorial edge.' },
-  { id: '8NngCj7b_uA', title: 'Alisha Dash', category: 'Wedding Film', blurb: 'Warm, candid, and unhurried — the day as it truly unfolded.' },
-];
-
-const FULL_FILMS = [
-  { id: 'BApJaloacXg', title: 'Sanjeeb & Asha — Full Wedding Film', category: 'Full Wedding Film', blurb: 'A complete three-act wedding film preserving every ritual, toast, and unscripted tear.' },
-  { id: 'jEFML86Tk7g', title: 'Gobinda & Mamuni — Wedding Film', category: 'Full Wedding Film', blurb: 'Grand celebration and quiet family moments woven into one cinematic narrative.' },
-];
-
-const REELS = [
-  { id: 'r4KTSRpp17s', title: 'Dillu & Dikshya', category: 'Pre-Wedding' },
-  { id: '6GrJci58sFQ', title: 'Abhishek & Neha', category: 'Engagement' },
-  { id: 'YomPpYhVIws', title: 'Niharika & Chandan', category: 'Pre-Wedding' },
-  { id: 'wJE3qiRBVyY', title: 'Manisha & Swagat', category: 'Engagement' },
-];
-
 export default function FilmsPage() {
+  const films = useContent('films');
+  const intro = films.intro || {};
+  const HERO = films.hero || {};
+  const teasers = films.teasers || {};
+  const full = films.full || {};
+  const reels = films.reels || {};
+  const manifesto = films.manifesto || {};
+  const cta = films.cta || {};
+  const TEASERS = teasers.items || [];
+  const FULL_FILMS = full.items || [];
+  const REELS = reels.items || [];
+  const totalFilms = TEASERS.length + FULL_FILMS.length + REELS.length;
+
   return (
     <>
     <VideoLightbox />
@@ -42,24 +32,24 @@ export default function FilmsPage() {
         <div className="relative z-10 max-w-6xl mx-auto flex flex-col items-center text-center">
           <div className="flex items-center gap-space-sm mb-space-sm">
             <span className="inline-block w-6 h-[1px] bg-primary"></span>
-            <span className="font-label-sm text-label-sm uppercase tracking-[0.25em] text-primary">04 / THE SCREENING ROOM</span>
+            <span className="font-label-sm text-label-sm uppercase tracking-[0.25em] text-primary">{intro.eyebrow}</span>
             <span className="inline-block w-6 h-[1px] bg-primary"></span>
           </div>
           <h1 className="font-display-hero-mobile lg:font-display-hero text-display-hero-mobile lg:text-display-hero uppercase tracking-tight text-on-surface max-w-4xl mb-space-sm">
-        CINEMATIC MASTERPIECES <span className="text-primary italic font-headline-lg lg:font-display-hero">IN 4K THEATRICAL.</span>
+        {intro.titleA} <span className="text-primary italic font-headline-lg lg:font-display-hero">{intro.titleB}</span>
 </h1>
           <p className="font-body-lg text-body-lg text-on-surface-variant max-w-2xl font-light">
-        Engineered with calibrated spatial soundscapes, authentic anamorphic glass, and DaVinci Resolve color science calibrated for 35mm film density.
+        {intro.subtitle}
       </p>
           <div className="mt-space-lg flex flex-wrap items-center justify-center gap-space-md py-space-xs px-space-md bg-surface-container-low/60 rounded-full backdrop-blur-md">
             <span className="flex items-center gap-space-2xs font-label-md text-label-md uppercase text-outline">
 <span className="w-1.5 h-1.5 rounded-full bg-primary animate-ping"></span>
-          Master Room Online
+          {intro.pill1}
         </span>
             <span className="text-outline-variant">•</span>
-            <span className="font-label-md text-label-md uppercase text-outline tracking-wider">Dolby Atmos Mastering</span>
+            <span className="font-label-md text-label-md uppercase text-outline tracking-wider">{intro.pill2}</span>
             <span className="text-outline-variant">•</span>
-            <span className="font-label-md text-label-md uppercase text-primary tracking-wider">2.39:1 Cinemascope</span>
+            <span className="font-label-md text-label-md uppercase text-primary tracking-wider">{intro.pill3}</span>
           </div>
         </div>
       </section>
@@ -73,10 +63,10 @@ export default function FilmsPage() {
               <div className="absolute top-0 inset-x-0 p-space-md lg:p-space-lg flex items-center justify-between z-20">
                 <div className="flex items-center gap-space-xs">
                   <span className="px-space-xs py-space-2xs bg-surface-container-highest/80 backdrop-blur-md rounded text-primary font-label-sm text-label-sm uppercase tracking-widest">
-                PREMIERE SELECTION
+                {HERO.tagLeft}
               </span>
                   <span className="px-space-xs py-space-2xs bg-tertiary-container/20 text-tertiary font-label-sm text-label-sm uppercase tracking-widest rounded">
-                DCI-4K DCI-P3
+                {HERO.tagRight}
               </span>
                 </div>
                 <div className="flex items-center gap-space-xs">
@@ -108,15 +98,12 @@ export default function FilmsPage() {
                 </h2>
                   </div>
                   <div className="flex items-center gap-space-xs">
-                    <span className="px-space-xs py-space-2xs bg-surface-container-high rounded text-on-surface-variant font-label-sm text-label-sm tracking-widest uppercase">
-                  ARRI ALEXA 35
-                </span>
-                    <span className="px-space-xs py-space-2xs bg-surface-container-high rounded text-on-surface-variant font-label-sm text-label-sm tracking-widest uppercase">
-                  HAWK V-LITE 2X
-                </span>
-                    <span className="px-space-xs py-space-2xs bg-surface-container-high rounded text-on-surface-variant font-label-sm text-label-sm tracking-widest uppercase flex items-center gap-1">
-<span className="material-symbols-outlined text-[14px] text-primary">surround_sound</span> ATMOS 7.1.4
-                </span>
+                    {(HERO.specs || []).map((s, i) => (
+                      <span key={i} className="px-space-xs py-space-2xs bg-surface-container-high rounded text-on-surface-variant font-label-sm text-label-sm tracking-widest uppercase flex items-center gap-1">
+                        {i === (HERO.specs || []).length - 1 && <span className="material-symbols-outlined text-[14px] text-primary">surround_sound</span>}
+                        {s}
+                      </span>
+                    ))}
                   </div>
                 </div>
                 <div className="pt-space-xs flex flex-col gap-1.5">
@@ -132,10 +119,10 @@ export default function FilmsPage() {
                         <span>Watch on YouTube</span>
                       </button>
                       <span className="text-outline-variant">/</span>
-                      <span>18:42</span>
+                      <span>{HERO.duration}</span>
                     </div>
                     <div className="flex items-center gap-space-sm">
-                      <span className="hover:text-primary cursor-pointer transition-colors">CHAPTER 02: THE NIGHT PROCESSION</span>
+                      <span className="hover:text-primary cursor-pointer transition-colors">{HERO.chapter}</span>
                       <button aria-label="Fullscreen" className="hover:text-primary transition-colors">
                         <span className="material-symbols-outlined text-[18px]">fullscreen</span>
                       </button>
@@ -151,7 +138,7 @@ export default function FilmsPage() {
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-start md:items-center justify-between gap-space-md pb-space-md bg-surface-container-low/40 p-space-md rounded-lg">
           <div className="flex flex-wrap items-center gap-space-xs">
             <button className="px-space-md py-space-xs rounded bg-primary text-on-primary font-label-md text-label-md uppercase tracking-wider transition-all">
-          All Collections (18)
+          All Collections ({totalFilms})
         </button>
             <button className="px-space-md py-space-xs rounded bg-surface-container hover:bg-surface-container-high text-on-surface-variant hover:text-primary font-label-md text-label-md uppercase tracking-wider transition-all">
           Teasers (3–5 Min)
@@ -173,13 +160,13 @@ export default function FilmsPage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-space-xl gap-space-xs">
             <div>
-              <span className="font-label-sm text-label-sm uppercase tracking-[0.25em] text-primary block mb-space-2xs">SERIES I • SHORT EDITS</span>
+              <span className="font-label-sm text-label-sm uppercase tracking-[0.25em] text-primary block mb-space-2xs">{teasers.eyebrow}</span>
               <h2 className="font-headline-md lg:font-headline-lg text-headline-md lg:text-headline-lg text-on-surface uppercase tracking-tight">
-            FEATURE TEASERS <span className="font-headline-sm text-outline italic font-light lowercase">(3–5 min)</span>
+            {teasers.title} <span className="font-headline-sm text-outline italic font-light lowercase">{teasers.note}</span>
 </h2>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant max-w-md">
-          Distilled theatrical adrenaline. Rhythmic cuts timed strictly to customized string orchestrations and analog voice recordings.
+          {teasers.blurb}
         </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-space-lg">
@@ -223,13 +210,13 @@ export default function FilmsPage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-space-xl gap-space-xs">
             <div>
-              <span className="font-label-sm text-label-sm uppercase tracking-[0.25em] text-primary block mb-space-2xs">SERIES II • ARCHIVAL FEATURE LENGTH</span>
+              <span className="font-label-sm text-label-sm uppercase tracking-[0.25em] text-primary block mb-space-2xs">{full.eyebrow}</span>
               <h2 className="font-headline-md lg:font-headline-lg text-headline-md lg:text-headline-lg text-on-surface uppercase tracking-tight">
-            FULL-LENGTH MASTERPIECES <span className="font-headline-sm text-outline italic font-light lowercase">(45–60 min previews)</span>
+            {full.title} <span className="font-headline-sm text-outline italic font-light lowercase">{full.note}</span>
 </h2>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant max-w-md">
-          Comprehensive three-act docu-dramas preserving multigenerational vows, familial toasts, unscripted tears, and full ritual sanctity.
+          {full.blurb}
         </p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-space-xl">
@@ -283,13 +270,13 @@ export default function FilmsPage() {
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-space-xl gap-space-xs">
             <div>
-              <span className="font-label-sm text-label-sm uppercase tracking-[0.25em] text-primary block mb-space-2xs">SERIES III • MOBILE NATIVE</span>
+              <span className="font-label-sm text-label-sm uppercase tracking-[0.25em] text-primary block mb-space-2xs">{reels.eyebrow}</span>
               <h2 className="font-headline-md lg:font-headline-lg text-headline-md lg:text-headline-lg text-on-surface uppercase tracking-tight">
-            VERTICAL EDITORIAL REELS <span className="font-headline-sm text-outline italic font-light lowercase">(9:16 high-velocity)</span>
+            {reels.title} <span className="font-headline-sm text-outline italic font-light lowercase">{reels.note}</span>
 </h2>
             </div>
             <p className="font-body-sm text-body-sm text-on-surface-variant max-w-md">
-          High-impact social formats crafted without compromising optical richness. Pure cinematic pacing for hand-held curation.
+          {reels.blurb}
         </p>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-space-md lg:gap-space-lg">
@@ -318,57 +305,30 @@ export default function FilmsPage() {
           <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-xl items-center relative z-10">
             <div className="lg:col-span-5 flex flex-col">
-              <span className="font-label-sm text-label-sm uppercase tracking-[0.25em] text-primary block mb-space-xs">THE ATELIER MANIFESTO</span>
+              <span className="font-label-sm text-label-sm uppercase tracking-[0.25em] text-primary block mb-space-xs">{manifesto.eyebrow}</span>
               <h3 className="font-headline-lg-mobile lg:font-headline-lg text-headline-lg-mobile lg:text-headline-lg text-on-surface mb-space-sm leading-tight">
-            "We reject digital sharpness in favor of analog soul."
+            {manifesto.quote}
           </h3>
               <p className="font-body-md text-body-md text-on-surface-variant mb-space-md font-light">
-            Every frame curated by SLICEX FILMS undergoes custom film-stock emulation. We intentionally soften sensor edges, bloom golden highlight halations, and engineer soundscapes using real Foley recorded on location—capturing silk rustling, temple bells ringing, and tearful sighs.
+            {manifesto.body}
           </p>
               <div className="flex items-center gap-space-md">
                 <div>
-                  <p className="font-headline-sm text-headline-sm text-on-surface">Abhishek Anand</p>
-                  <p className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Founder &amp; Principal Cinematographer</p>
+                  <p className="font-headline-sm text-headline-sm text-on-surface">{manifesto.author}</p>
+                  <p className="font-label-sm text-label-sm uppercase tracking-widest text-primary">{manifesto.role}</p>
                 </div>
               </div>
             </div>
             <div className="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-space-md">
-              <div className="bg-surface-container p-space-md rounded-lg">
-                <div className="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center text-primary mb-space-xs">
-                  <span className="material-symbols-outlined text-[22px]">videocam</span>
+              {(manifesto.cards || []).map((c, i) => (
+                <div key={i} className="bg-surface-container p-space-md rounded-lg">
+                  <div className="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center text-primary mb-space-xs">
+                    <span className="material-symbols-outlined text-[22px]">{c.icon}</span>
+                  </div>
+                  <h4 className="font-label-lg text-label-lg uppercase tracking-wider text-on-surface mb-1">{c.title}</h4>
+                  <p className="font-body-sm text-body-sm text-on-surface-variant">{c.desc}</p>
                 </div>
-                <h4 className="font-label-lg text-label-lg uppercase tracking-wider text-on-surface mb-1">True Anamorphic Optics</h4>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">
-              Captured using cylindrical 2x glass giving authentic oval bokeh and horizontal amber lens flares without digital filters.
-            </p>
-              </div>
-              <div className="bg-surface-container p-space-md rounded-lg">
-                <div className="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center text-primary mb-space-xs">
-                  <span className="material-symbols-outlined text-[22px]">palette</span>
-                </div>
-                <h4 className="font-label-lg text-label-lg uppercase tracking-wider text-on-surface mb-1">Kodak 250D Color Science</h4>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">
-              In-house DaVinci node trees that protect true skin undertones under erratic night chandelier and haldi turmeric lighting.
-            </p>
-              </div>
-              <div className="bg-surface-container p-space-md rounded-lg">
-                <div className="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center text-primary mb-space-xs">
-                  <span className="material-symbols-outlined text-[22px]">graphic_eq</span>
-                </div>
-                <h4 className="font-label-lg text-label-lg uppercase tracking-wider text-on-surface mb-1">Bespoke String Scores</h4>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">
-              Original compositions recorded with live sarangi, sitar, and cello ensembles—avoiding overused royalty-free library audio.
-            </p>
-              </div>
-              <div className="bg-surface-container p-space-md rounded-lg">
-                <div className="w-10 h-10 rounded bg-surface-container-high flex items-center justify-center text-primary mb-space-xs">
-                  <span className="material-symbols-outlined text-[22px]">cloud_sync</span>
-                </div>
-                <h4 className="font-label-lg text-label-lg uppercase tracking-wider text-on-surface mb-1">Heirloom Cold Storage</h4>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">
-              All RAW multi-cam rushes preserved in redundant dual-location LTO tape backups with guaranteed 10-year retrieval.
-            </p>
-              </div>
+              ))}
             </div>
           </div>
         </div>
@@ -377,19 +337,19 @@ export default function FilmsPage() {
         <div className="max-w-7xl mx-auto rounded-xl bg-surface-container-lowest p-space-xl lg:p-space-3xl text-center relative overflow-hidden shadow-2xl">
           <div className="absolute inset-0 bg-radial from-primary/10 via-transparent to-transparent pointer-events-none"></div>
           <div className="relative z-10 max-w-3xl mx-auto flex flex-col items-center">
-            <span className="font-label-sm text-label-sm uppercase tracking-[0.3em] text-primary mb-space-xs">NOW ACCEPTING 2025/2026 CALENDARS</span>
+            <span className="font-label-sm text-label-sm uppercase tracking-[0.3em] text-primary mb-space-xs">{cta.eyebrow}</span>
             <h2 className="font-display-hero-mobile lg:font-display-hero text-display-hero-mobile lg:text-display-hero uppercase tracking-tight text-on-surface mb-space-md">
-          WANT YOUR WEDDING FILM TO FEEL LIKE AN <span className="text-primary italic">INDIE CINEMATIC RELEASE?</span>
+          {cta.titleA} <span className="text-primary italic">{cta.titleB}</span>
 </h2>
             <p className="font-body-lg text-body-lg text-on-surface-variant mb-space-xl font-light">
-          We accept a strictly limited schedule of 12 wedding commissions worldwide annually to ensure obsessive attention to every cut and color grade.
+          {cta.body}
         </p>
             <div className="flex flex-col sm:flex-row items-center gap-space-md w-full justify-center">
               <a className="w-full sm:w-auto px-space-xl py-space-md bg-primary-container text-on-primary-container font-label-md text-label-md uppercase tracking-[0.14em] rounded shadow-[0_0_25px_rgba(0,184,200,0.3)] hover:bg-primary transition-all duration-300" data-path="contact" href={withBase("/contact/")}>
-            COMMISSION A WEDDING FILM
+            {cta.btn1}
           </a>
               <a className="w-full sm:w-auto px-space-xl py-space-md bg-surface-container-high hover:bg-surface-bright text-on-surface font-label-md text-label-md uppercase tracking-[0.14em] rounded transition-all duration-300" data-path="packages" href={withBase("/book-your-date/")}>
-            VIEW EDITORIAL PACKAGES
+            {cta.btn2}
           </a>
             </div>
           </div>
