@@ -287,30 +287,78 @@ function PackagesTab({ value, onChange }) {
 function ServicesTab({ value, onChange }) {
   const items = value.items || [];
   const set = (i, patch) => onChange({ ...value, items: items.map((p, j) => (j === i ? { ...p, ...patch } : p)) });
+  const add = () => onChange({
+    ...value,
+    items: [...items, {
+      id: `svc-${Date.now()}-${Math.random().toString(36).slice(2, 7)}`,
+      title: 'NEW SERVICE', desc: '', tag1: '', tag2: '', image: '/assets/service-wedding-films.jpg',
+      collection: '', badge: '', badge2: '', pageTitle: '', pageDesc: '', pageImage: '',
+      deliverablesLabel: 'OUTPUT', deliverables: [], optics: '', cta: 'INQUIRE', note: '',
+    }],
+  });
+  const addBtn = (ghost) => (
+    <button type="button" onClick={add} className={`${cls.btn} ${ghost ? cls.btnGhost : cls.btnGold}`}>
+      <span className="material-symbols-outlined text-[16px]">add</span>Add service
+    </button>
+  );
+
   return (
-    <div className="grid grid-cols-1 xl:grid-cols-2 gap-space-md">
-      {items.map((s, i) => (
-        <div key={i} className={cls.card + ' flex flex-col gap-space-sm'}>
-          <div className="flex items-center justify-between">
-            <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Service {i + 1}</span>
-            <ListControls i={i} n={items.length} onMove={(a, d) => onChange({ ...value, items: moveItem(items, a, d) })} onRemove={(a) => onChange({ ...value, items: items.filter((_, j) => j !== a) })} />
-          </div>
-          <div className="flex gap-space-sm">
-            <img src={/^https?:/.test(s.image || '') ? s.image : withBase(s.image || '')} alt="" className="w-24 h-24 object-cover rounded border border-primary-container/20 bg-surface-container-lowest" />
-            <div className="flex-1 flex flex-col gap-space-2xs">
-              <Field label="Image URL or /assets/… path" value={s.image} onChange={(v) => set(i, { image: v })} />
-              <UploadButton onDone={(url) => set(i, { image: url })} />
+    <div className="flex flex-col gap-space-md">
+      <div className="flex items-center justify-between gap-space-sm flex-wrap">
+        <span className="font-label-sm text-label-sm uppercase tracking-widest text-outline">
+          {items.length} service{items.length === 1 ? '' : 's'} — add as many as you like
+        </span>
+        {addBtn(false)}
+      </div>
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-space-md">
+        {items.map((s, i) => (
+          <div key={i} className={cls.card + ' flex flex-col gap-space-sm'}>
+            <div className="flex items-center justify-between">
+              <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Service {i + 1}</span>
+              <ListControls i={i} n={items.length} onMove={(a, d) => onChange({ ...value, items: moveItem(items, a, d) })} onRemove={(a) => onChange({ ...value, items: items.filter((_, j) => j !== a) })} />
             </div>
+            <div className="flex gap-space-sm">
+              <img src={/^https?:/.test(s.image || '') ? s.image : withBase(s.image || '')} alt="" className="w-24 h-24 object-cover rounded border border-primary-container/20 bg-surface-container-lowest" />
+              <div className="flex-1 flex flex-col gap-space-2xs">
+                <Field label="Image URL or /assets/… path" value={s.image} onChange={(v) => set(i, { image: v })} />
+                <UploadButton onDone={(url) => set(i, { image: url })} />
+              </div>
+            </div>
+            <Field label="Title" value={s.title} onChange={(v) => set(i, { title: v })} />
+            <Field label="Description" textarea value={s.desc} onChange={(v) => set(i, { desc: v })} />
+            <div className="grid grid-cols-2 gap-space-sm">
+              <Field label="Tag (highlighted)" value={s.tag1} onChange={(v) => set(i, { tag1: v })} />
+              <Field label="Tag (secondary)" value={s.tag2} onChange={(v) => set(i, { tag2: v })} />
+            </div>
+            <details className="rounded border border-primary-container/20 p-space-sm">
+              <summary className="cursor-pointer font-label-sm text-label-sm uppercase tracking-widest text-secondary">Services page details</summary>
+              <div className="flex flex-col gap-space-sm pt-space-sm">
+                <p className="font-body-sm text-body-sm text-outline">Blank fields fall back to the title, description and image above.</p>
+                <div className="flex gap-space-sm">
+                  <img src={s.pageImage ? (/^https?:/.test(s.pageImage) ? s.pageImage : withBase(s.pageImage)) : ''} alt="" className="w-24 h-24 object-cover rounded border border-primary-container/20 bg-surface-container-lowest" />
+                  <div className="flex-1 flex flex-col gap-space-2xs">
+                    <Field label="Page image" value={s.pageImage} onChange={(v) => set(i, { pageImage: v })} />
+                    <UploadButton onDone={(url) => set(i, { pageImage: url })} />
+                  </div>
+                </div>
+                <Field label="Page title" value={s.pageTitle} onChange={(v) => set(i, { pageTitle: v })} />
+                <Field label="Page description" textarea value={s.pageDesc} onChange={(v) => set(i, { pageDesc: v })} />
+                <div className="grid grid-cols-2 gap-space-sm">
+                  <Field label="Collection label" value={s.collection} onChange={(v) => set(i, { collection: v })} placeholder="COLLECTION I" />
+                  <Field label="Badge over image" value={s.badge} onChange={(v) => set(i, { badge: v })} />
+                </div>
+                <div className="grid grid-cols-2 gap-space-sm">
+                  <Field label="Deliverables label" value={s.deliverablesLabel} onChange={(v) => set(i, { deliverablesLabel: v })} placeholder="OUTPUT" />
+                  <Field label="Link label" value={s.cta} onChange={(v) => set(i, { cta: v })} placeholder="INQUIRE" />
+                </div>
+                <Field label="Deliverables (one per line)" textarea value={(s.deliverables || []).join('\n')} onChange={(v) => set(i, { deliverables: v.split('\n').map((x) => x.trim()).filter(Boolean) })} />
+                <Field label="Optics / equipment" textarea value={s.optics} onChange={(v) => set(i, { optics: v })} />
+              </div>
+            </details>
           </div>
-          <Field label="Title" value={s.title} onChange={(v) => set(i, { title: v })} />
-          <Field label="Description" textarea value={s.desc} onChange={(v) => set(i, { desc: v })} />
-          <div className="grid grid-cols-2 gap-space-sm">
-            <Field label="Tag (highlighted)" value={s.tag1} onChange={(v) => set(i, { tag1: v })} />
-            <Field label="Tag (secondary)" value={s.tag2} onChange={(v) => set(i, { tag2: v })} />
-          </div>
-        </div>
-      ))}
-      <button type="button" onClick={() => onChange({ ...value, items: [...items, { id: `svc-${Date.now()}`, title: 'NEW SERVICE', desc: '', tag1: '', tag2: '', image: '/assets/service-wedding-films.jpg' }] })} className={`${cls.btn} ${cls.btnGhost} self-start`}><span className="material-symbols-outlined text-[16px]">add</span>Add service</button>
+        ))}
+      </div>
+      {addBtn(true)}
     </div>
   );
 }
@@ -1035,13 +1083,13 @@ export default function AdminPanel() {
       {tab === 'leads' && <LeadsTab toast={toast} />}
       {tab !== 'leads' && draft && (
         <div className="flex flex-col gap-space-md">
-          {tab === 'home' && <HomeTab value={draft.home} onChange={(v) => setDraft({ ...draft, home: v })} services={draft.services} onServicesChange={(v) => setDraft({ ...draft, services: v })} />}
-          {tab === 'packages' && <PackagesTab value={draft.packages} onChange={(v) => setDraft({ ...draft, packages: v })} />}
-          {tab === 'services' && <ServicesTab value={draft.services} onChange={(v) => setDraft({ ...draft, services: v })} />}
-          {tab === 'portfolio' && <PortfolioTab value={draft.portfolio} onChange={(v) => setDraft({ ...draft, portfolio: v })} />}
-          {tab === 'films' && <FilmsTab value={draft.films} onChange={(v) => setDraft({ ...draft, films: v })} />}
-          {tab === 'gallery' && <GalleryTab value={draft.gallery} onChange={(v) => setDraft({ ...draft, gallery: v })} />}
-          {tab === 'contact' && <ContactTab value={draft.contact} onChange={(v) => setDraft({ ...draft, contact: v })} />}
+          {tab === 'home' && <HomeTab value={draft.home} onChange={(v) => setDraft((d) => ({ ...d, home: v }))} services={draft.services} onServicesChange={(v) => setDraft((d) => ({ ...d, services: v }))} />}
+          {tab === 'packages' && <PackagesTab value={draft.packages} onChange={(v) => setDraft((d) => ({ ...d, packages: v }))} />}
+          {tab === 'services' && <ServicesTab value={draft.services} onChange={(v) => setDraft((d) => ({ ...d, services: v }))} />}
+          {tab === 'portfolio' && <PortfolioTab value={draft.portfolio} onChange={(v) => setDraft((d) => ({ ...d, portfolio: v }))} />}
+          {tab === 'films' && <FilmsTab value={draft.films} onChange={(v) => setDraft((d) => ({ ...d, films: v }))} />}
+          {tab === 'gallery' && <GalleryTab value={draft.gallery} onChange={(v) => setDraft((d) => ({ ...d, gallery: v }))} />}
+          {tab === 'contact' && <ContactTab value={draft.contact} onChange={(v) => setDraft((d) => ({ ...d, contact: v }))} />}
           <SaveBar dirty={dirty} saving={saving} onSave={save} onReset={reset} updated={keysFor(tab).some((k) => JSON.stringify(content[k]) !== JSON.stringify(DEFAULTS[k]))} />
         </div>
       )}
