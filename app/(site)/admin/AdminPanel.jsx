@@ -13,6 +13,7 @@ import { withBase } from '../../../lib/basePath';
 
 const TABS = [
   { key: 'leads', label: 'Leads', icon: 'inbox' },
+  { key: 'home', label: 'Home', icon: 'home' },
   { key: 'packages', label: 'Packages', icon: 'sell' },
   { key: 'services', label: 'Services', icon: 'movie_filter' },
   { key: 'portfolio', label: 'Portfolio', icon: 'collections_bookmark' },
@@ -407,6 +408,276 @@ function PortfolioTab({ value, onChange }) {
   );
 }
 
+// ── Home ──────────────────────────────────────────────────────
+const HOME_SUBS = [
+  ['hero', 'Hero'],
+  ['about', 'About'],
+  ['filmStrip', 'Film strip'],
+  ['services', 'Services heading'],
+  ['featured', 'Featured work'],
+  ['screening', 'Screening room'],
+  ['creed', 'Creed'],
+  ['method', 'Method'],
+  ['commission', 'Commission & inquiry'],
+];
+
+function HomeTab({ value, onChange }) {
+  const [sub, setSub] = useState('hero');
+  const part = value[sub] || {};
+  const set = (patch) => onChange({ ...value, [sub]: { ...part, ...patch } });
+  const f = (k) => (v) => set({ [k]: v });
+  const setList = (k, l) => set({ [k]: l });
+
+  return (
+    <div className="flex flex-col gap-space-md">
+      <div className="inline-flex flex-wrap gap-1 p-1 rounded-full bg-surface-container-low border border-primary-container/20 self-start">
+        {HOME_SUBS.map(([k, l]) => (
+          <button key={k} type="button" onClick={() => setSub(k)} className={`${cls.btn} ${sub === k ? cls.btnGold : 'text-on-surface-variant hover:text-primary'}`}>{l}</button>
+        ))}
+      </div>
+
+      {sub === 'hero' && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
+          <div className={cls.card + ' flex flex-col gap-space-sm'}>
+            <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Headline</span>
+            <Field label="Eyebrow" value={part.eyebrow} onChange={f('eyebrow')} />
+            <Field label="Heading line 1" value={part.titleA} onChange={f('titleA')} />
+            <Field label="Heading line 2 (accent)" value={part.titleB} onChange={f('titleB')} hint="Shown in the aqua gradient." />
+            <Field label="Subtitle" textarea value={part.subtitle} onChange={f('subtitle')} />
+            <Field label="Pull quote" textarea value={part.quote} onChange={f('quote')} hint="Line breaks are preserved." />
+            <div className="grid grid-cols-2 gap-space-sm">
+              <Field label="Quote brand" value={part.quoteBrand} onChange={f('quoteBrand')} />
+              <Field label="Quote tagline" value={part.quoteTag} onChange={f('quoteTag')} />
+            </div>
+          </div>
+          <div className={cls.card + ' flex flex-col gap-space-sm'}>
+            <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Background & chrome</span>
+            <div className="flex gap-space-sm">
+              <div className="w-28 aspect-video shrink-0 rounded overflow-hidden bg-surface-container-lowest border border-primary-container/20">
+                {part.videoId ? <img src={`https://i.ytimg.com/vi/${part.videoId}/hqdefault.jpg`} alt="" className="w-full h-full object-cover" /> : null}
+              </div>
+              <div className="flex-1"><Field label="Background film (YouTube link or ID)" value={part.videoId} onChange={(v) => set({ videoId: ytId(v) })} /></div>
+            </div>
+            <Field label="Badge (top left)" value={part.badgeLeft} onChange={f('badgeLeft')} />
+            <Field label="Badge (top right)" value={part.badgeRight} onChange={f('badgeRight')} />
+            <div className="grid grid-cols-2 gap-space-sm">
+              <Field label="Button 1" value={part.btn1} onChange={f('btn1')} />
+              <Field label="Button 2" value={part.btn2} onChange={f('btn2')} />
+            </div>
+            <Field label="Footer strip" value={part.strip} onChange={f('strip')} />
+            <Field label="Scroll label" value={part.scrollLabel} onChange={f('scrollLabel')} />
+          </div>
+        </div>
+      )}
+
+      {sub === 'about' && (
+        <div className={cls.card + ' flex flex-col gap-space-sm max-w-3xl'}>
+          <Field label="Index label" value={part.index} onChange={f('index')} />
+          <Field label="Heading line 1" value={part.titleA} onChange={f('titleA')} />
+          <Field label="Heading line 2 (accent)" value={part.titleB} onChange={f('titleB')} />
+          <Field label="Statement caption" value={part.statement} onChange={f('statement')} />
+          <Field label="Pull quote" textarea value={part.quote} onChange={f('quote')} />
+          <Field label="Body" textarea value={part.body} onChange={f('body')} />
+          <Field label="Link label" value={part.cta} onChange={f('cta')} />
+          <Field label="Locations (comma separated)" value={(part.locations || []).join(', ')} onChange={(v) => set({ locations: v.split(',').map((s) => s.trim()).filter(Boolean) })} />
+        </div>
+      )}
+
+      {sub === 'filmStrip' && (
+        <div className="flex flex-col gap-space-md">
+          <div className={cls.card + ' grid grid-cols-1 lg:grid-cols-2 gap-space-sm'}>
+            <Field label="Eyebrow" value={part.eyebrow} onChange={f('eyebrow')} />
+            <Field label="Heading" value={part.title} onChange={f('title')} />
+            <Field label="Hint (left)" value={part.hint} onChange={f('hint')} />
+            <Field label="Hint (right)" value={part.hintRight} onChange={f('hintRight')} />
+            <Field label="Footer (left)" value={part.footLeft} onChange={f('footLeft')} />
+            <Field label="Footer (right)" value={part.footRight} onChange={f('footRight')} />
+            <Field label="Footer link label" value={part.footLink} onChange={f('footLink')} />
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-space-sm">
+            {(part.items || []).map((v, i) => {
+              const items = part.items || [];
+              return (
+                <div key={i} className={cls.card + ' flex gap-space-sm'}>
+                  <div className="w-24 aspect-video shrink-0 self-start rounded overflow-hidden bg-surface-container-lowest border border-primary-container/20">
+                    {v.id ? <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" className="w-full h-full object-cover" /> : null}
+                  </div>
+                  <div className="flex-1 flex flex-col gap-space-2xs min-w-0">
+                    <Field label="YouTube link or ID" value={v.id} onChange={(x) => setList('items', items.map((y, j) => (j === i ? { ...y, id: ytId(x) } : y)))} />
+                    <div className="grid grid-cols-2 gap-space-2xs">
+                      <Field label="Title" value={v.title} onChange={(x) => setList('items', items.map((y, j) => (j === i ? { ...y, title: x } : y)))} />
+                      <Field label="Tag" value={v.tag} onChange={(x) => setList('items', items.map((y, j) => (j === i ? { ...y, tag: x } : y)))} />
+                    </div>
+                    <Field label="Film stock caption" value={v.stock} onChange={(x) => setList('items', items.map((y, j) => (j === i ? { ...y, stock: x } : y)))} />
+                    <div className="flex justify-end"><ListControls i={i} n={items.length} onMove={(a, d) => setList('items', moveItem(items, a, d))} onRemove={(a) => setList('items', items.filter((_, j) => j !== a))} /></div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <button type="button" onClick={() => setList('items', [...(part.items || []), { id: '', title: '', tag: '', stock: '' }])} className={`${cls.btn} ${cls.btnGhost} self-start`}><span className="material-symbols-outlined text-[16px]">add</span>Add frame</button>
+        </div>
+      )}
+
+      {sub === 'services' && (
+        <div className={cls.card + ' flex flex-col gap-space-sm max-w-2xl'}>
+          <p className="font-body-sm text-body-sm text-outline">The service cards themselves are edited in the Services tab.</p>
+          <Field label="Index label" value={part.index} onChange={f('index')} />
+          <Field label="Heading" value={part.title} onChange={f('title')} />
+          <Field label="Blurb" textarea value={part.blurb} onChange={f('blurb')} />
+        </div>
+      )}
+
+      {sub === 'featured' && (
+        <div className="flex flex-col gap-space-md">
+          <div className={cls.card + ' grid grid-cols-1 lg:grid-cols-2 gap-space-sm'}>
+            <Field label="Index label" value={part.index} onChange={f('index')} />
+            <Field label="Heading" value={part.title} onChange={f('title')} />
+          </div>
+          <p className="font-body-sm text-body-sm text-outline">The first card renders large, the second tall, the rest half-width.</p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-space-sm">
+            {(part.items || []).map((v, i) => {
+              const items = part.items || [];
+              const upd = (patch) => setList('items', items.map((y, j) => (j === i ? { ...y, ...patch } : y)));
+              return (
+                <div key={i} className={cls.card + ' flex gap-space-sm'}>
+                  <div className="w-28 aspect-video shrink-0 self-start rounded overflow-hidden bg-surface-container-lowest border border-primary-container/20">
+                    {v.id ? <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" className="w-full h-full object-cover" /> : null}
+                  </div>
+                  <div className="flex-1 flex flex-col gap-space-2xs min-w-0">
+                    <Field label="YouTube link or ID" value={v.id} onChange={(x) => upd({ id: ytId(x) })} />
+                    <Field label="Label" value={v.label} onChange={(x) => upd({ label: x })} placeholder="01 / FEATURED FILM" />
+                    <Field label="Title" value={v.title} onChange={(x) => upd({ title: x })} />
+                    <Field label="Description" textarea value={v.desc} onChange={(x) => upd({ desc: x })} />
+                    <Field label="Link label" value={v.cta} onChange={(x) => upd({ cta: x })} />
+                    <div className="flex justify-end"><ListControls i={i} n={items.length} onMove={(a, d) => setList('items', moveItem(items, a, d))} onRemove={(a) => setList('items', items.filter((_, j) => j !== a))} /></div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <button type="button" onClick={() => setList('items', [...(part.items || []), { id: '', label: '', title: '', desc: '', cta: 'WATCH FILM →' }])} className={`${cls.btn} ${cls.btnGhost} self-start`}><span className="material-symbols-outlined text-[16px]">add</span>Add card</button>
+        </div>
+      )}
+
+      {sub === 'screening' && (
+        <div className="flex flex-col gap-space-md">
+          <div className={cls.card + ' flex flex-col gap-space-sm'}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-space-sm">
+              <Field label="Index label" value={part.index} onChange={f('index')} />
+              <Field label="Heading" value={part.title} onChange={f('title')} />
+            </div>
+            <Field label="Blurb" textarea value={part.blurb} onChange={f('blurb')} />
+            <div className="flex gap-space-sm">
+              <div className="w-28 aspect-video shrink-0 self-start rounded overflow-hidden bg-surface-container-lowest border border-primary-container/20">
+                {part.featureId ? <img src={`https://i.ytimg.com/vi/${part.featureId}/hqdefault.jpg`} alt="" className="w-full h-full object-cover" /> : null}
+              </div>
+              <div className="flex-1 flex flex-col gap-space-2xs">
+                <Field label="Feature film (YouTube link or ID)" value={part.featureId} onChange={(v) => set({ featureId: ytId(v) })} />
+                <Field label="Feature title" value={part.featureTitle} onChange={f('featureTitle')} />
+                <Field label="Watch label" value={part.watchLabel} onChange={f('watchLabel')} />
+              </div>
+            </div>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-space-sm">
+            {(part.cards || []).map((c, i) => {
+              const cards = part.cards || [];
+              const upd = (patch) => setList('cards', cards.map((y, j) => (j === i ? { ...y, ...patch } : y)));
+              return (
+                <div key={i} className={cls.card + ' flex flex-col gap-space-2xs'}>
+                  <div className="flex items-center justify-between">
+                    <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Card {i + 1}</span>
+                    <ListControls i={i} n={cards.length} onMove={(a, d) => setList('cards', moveItem(cards, a, d))} onRemove={(a) => setList('cards', cards.filter((_, j) => j !== a))} />
+                  </div>
+                  <Field label="Meta" value={c.meta} onChange={(x) => upd({ meta: x })} placeholder="FILM #104 • 14 MIN" />
+                  <Field label="Title" value={c.title} onChange={(x) => upd({ title: x })} />
+                  <Field label="Description" value={c.desc} onChange={(x) => upd({ desc: x })} />
+                  <Field label="Link label" value={c.cta} onChange={(x) => upd({ cta: x })} />
+                </div>
+              );
+            })}
+          </div>
+          <button type="button" onClick={() => setList('cards', [...(part.cards || []), { meta: '', title: '', desc: '', cta: 'VIEW TEASER' }])} className={`${cls.btn} ${cls.btnGhost} self-start`}><span className="material-symbols-outlined text-[16px]">add</span>Add card</button>
+        </div>
+      )}
+
+      {sub === 'creed' && (
+        <div className={cls.card + ' flex flex-col gap-space-sm max-w-2xl'}>
+          <Field label="Eyebrow" value={part.eyebrow} onChange={f('eyebrow')} />
+          <Field label="Line 1" value={part.line1} onChange={f('line1')} />
+          <Field label="Line 2" value={part.line2} onChange={f('line2')} />
+          <Field label="Line 3 (accent)" value={part.line3} onChange={f('line3')} hint="Shown in the aqua gradient." />
+          <Field label="Line 4" value={part.line4} onChange={f('line4')} />
+          <Field label="Line 5 (accent)" value={part.line5} onChange={f('line5')} />
+          <Field label="Footer" value={part.foot} onChange={f('foot')} />
+        </div>
+      )}
+
+      {sub === 'method' && (
+        <div className="flex flex-col gap-space-md">
+          <div className={cls.card + ' flex flex-col gap-space-sm'}>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-space-sm">
+              <Field label="Index label" value={part.index} onChange={f('index')} />
+              <Field label="Heading" value={part.title} onChange={f('title')} />
+            </div>
+            <Field label="Blurb" textarea value={part.blurb} onChange={f('blurb')} />
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-space-sm">
+            {(part.steps || []).map((s, i) => {
+              const steps = part.steps || [];
+              const upd = (patch) => setList('steps', steps.map((y, j) => (j === i ? { ...y, ...patch } : y)));
+              return (
+                <div key={i} className={cls.card + ' flex flex-col gap-space-2xs'}>
+                  <div className="flex items-center justify-between">
+                    <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Step {i + 1}</span>
+                    <ListControls i={i} n={steps.length} onMove={(a, d) => setList('steps', moveItem(steps, a, d))} onRemove={(a) => setList('steps', steps.filter((_, j) => j !== a))} />
+                  </div>
+                  <div className="flex gap-space-sm">
+                    <img src={s.image ? (/^https?:/.test(s.image) ? s.image : withBase(s.image)) : ''} alt="" className="w-20 h-20 object-cover rounded border border-primary-container/20 bg-surface-container-lowest shrink-0" />
+                    <div className="flex-1 flex flex-col gap-space-2xs min-w-0">
+                      <Field label="Image URL" value={s.image} onChange={(x) => upd({ image: x })} />
+                      <UploadButton onDone={(url) => upd({ image: url })} />
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-space-2xs">
+                    <Field label="Number" value={s.num} onChange={(x) => upd({ num: x })} placeholder="01" />
+                    <Field label="Badge" value={s.badge} onChange={(x) => upd({ badge: x })} placeholder="DISCOVERY" />
+                  </div>
+                  <Field label="Title" value={s.title} onChange={(x) => upd({ title: x })} />
+                  <Field label="Description" textarea value={s.desc} onChange={(x) => upd({ desc: x })} />
+                </div>
+              );
+            })}
+          </div>
+          <button type="button" onClick={() => setList('steps', [...(part.steps || []), { num: String((part.steps || []).length + 1).padStart(2, '0'), badge: '', title: '', image: '', desc: '' }])} className={`${cls.btn} ${cls.btnGhost} self-start`}><span className="material-symbols-outlined text-[16px]">add</span>Add step</button>
+        </div>
+      )}
+
+      {sub === 'commission' && (
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-space-md">
+          <div className={cls.card + ' flex flex-col gap-space-sm'}>
+            <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Section</span>
+            <p className="font-body-sm text-body-sm text-outline">The package cards are edited in the Packages tab.</p>
+            <Field label="Index label" value={part.index} onChange={f('index')} />
+            <Field label="Heading" value={part.title} onChange={f('title')} />
+            <Field label="Blurb" textarea value={part.blurb} onChange={f('blurb')} />
+          </div>
+          <div className={cls.card + ' flex flex-col gap-space-sm'}>
+            <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Inquiry form</span>
+            <p className="font-body-sm text-body-sm text-outline">Submissions land in the Leads tab, tagged <span className="text-secondary">home-inquiry</span>.</p>
+            <Field label="Eyebrow" value={part.formEyebrow} onChange={f('formEyebrow')} />
+            <Field label="Heading" value={part.formTitle} onChange={f('formTitle')} />
+            <Field label="Blurb" textarea value={part.formBlurb} onChange={f('formBlurb')} />
+            <Field label="Privacy note" value={part.formNote} onChange={f('formNote')} />
+            <Field label="Submit button label" value={part.submitLabel} onChange={f('submitLabel')} />
+            <Field label="Thank-you message" textarea value={part.successMessage} onChange={f('successMessage')} />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Films ─────────────────────────────────────────────────────
 const FILM_SECTIONS = [
   ['teasers', 'Teasers'],
@@ -745,6 +1016,7 @@ export default function AdminPanel() {
       {tab === 'leads' && <LeadsTab toast={toast} />}
       {tab !== 'leads' && draft && (
         <div className="flex flex-col gap-space-md">
+          {tab === 'home' && <HomeTab value={draft.home} onChange={(v) => setDraft({ ...draft, home: v })} />}
           {tab === 'packages' && <PackagesTab value={draft.packages} onChange={(v) => setDraft({ ...draft, packages: v })} />}
           {tab === 'services' && <ServicesTab value={draft.services} onChange={(v) => setDraft({ ...draft, services: v })} />}
           {tab === 'portfolio' && <PortfolioTab value={draft.portfolio} onChange={(v) => setDraft({ ...draft, portfolio: v })} />}

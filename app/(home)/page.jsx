@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import VideoLightbox from '../../components/VideoLightbox';
 import GoldenDust from '../../components/GoldenDust';
 import SnowFall from '../../components/SnowFall';
@@ -9,30 +9,103 @@ import HomeServices from '../../components/HomeServices';
 import PackagesGrid from '../../components/PackagesGrid';
 import SiteFooter from '../../components/SiteFooter';
 import { withBase } from '../../lib/basePath';
+import { useContent, submitLead } from '../../lib/content';
 
 // Real films from youtube.com/@slicexfilms8741
 const thumb = (id) => `https://i.ytimg.com/vi/${id}/maxresdefault.jpg`;
-
-// Ambient hero background film (muted, looped, graded to the gold palette).
-const HERO_VIDEO = { id: '96ztpzXcrlQ', mobileFocusX: 50 };
-
-const FEATURE_FILM = { id: 'MIBoIxNjfXM', title: 'Pratap & Supriya — The Wedding Film' };
-
-// 35mm film-strip reel — real films from youtube.com/@slicexfilms8741.
 const filmThumb = (id) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
-const FILM_STRIP = [
-  { id: 'YomPpYhVIws', title: 'Niharika & Chandan', tag: 'Pre-Wedding', stock: 'KODAK 5219' },
-  { id: 'EUB8I5jshbI', title: 'Swarup & Soumya', tag: 'Wedding Film', stock: 'SAFETY FILM' },
-  { id: '8NngCj7b_uA', title: 'Alisha Dash', tag: 'Wedding Film', stock: 'EASTMAN 400' },
-  { id: 'ELOK2RXqbuc', title: 'Bikash & Akanksha', tag: 'Safar · Part 2', stock: 'PORTRA 400' },
-  { id: 'k5D1tdXx4rE', title: 'Sibhani as Apsara', tag: 'Concept Film', stock: 'KODAK VISION3' },
-  { id: 'ywVU5sfR5Ao', title: 'Piyush & Dipti', tag: 'Wedding Film', stock: 'VOGUE SPOSA' },
-  { id: 'NI94Lry-Llo', title: 'Pratyush & Mitali', tag: 'Wedding Film', stock: 'CINESTILL 800T' },
-  { id: 'LbZdGXwFpg4', title: 'Pratyush & Mitali', tag: 'Pre-Wedding Teaser', stock: 'KODAK 500T' },
-  { id: '71sezFct5YQ', title: 'Sulagna', tag: "A Bride's Perspective", stock: 'FUJI ETERNA' },
-];
+
+// The commission form writes straight into slicex_leads, so inquiries show up
+// in the admin Leads tab alongside the contact-page dossiers.
+function InquiryForm({ copy }) {
+  const empty = { names: '', email: '', event: '', phone: '', vision: '' };
+  const [form, setForm] = useState(empty);
+  const [state, setState] = useState('idle'); // idle | sending | done | error
+  const set = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+  const field = 'w-full bg-transparent border-b border-primary-container/30 py-space-sm text-on-surface font-body-md focus:border-primary focus:outline-none transition-colors';
+  const label = 'block font-label-uppercase text-label-uppercase text-secondary uppercase tracking-widest mb-space-2xs font-semibold';
+
+  const submit = async (e) => {
+    e.preventDefault();
+    if (state === 'sending') return;
+    setState('sending');
+    try {
+      await submitLead({
+        name: form.names,
+        email: form.email,
+        phone: form.phone,
+        event_date: form.event,
+        message: form.vision,
+        source: 'home-inquiry',
+      });
+      setState('done');
+      setForm(empty);
+    } catch {
+      setState('error');
+    }
+  };
+
+  return (
+    <form className="max-w-3xl mx-auto space-y-space-lg relative z-10" onSubmit={submit}>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+        <div>
+          <label className={label}>PARTNER ONE &amp; TWO NAMES</label>
+          <input className={field} placeholder="e.g. Rhea & Aditya" required type="text" value={form.names} onChange={set('names')} />
+        </div>
+        <div>
+          <label className={label}>EMAIL ADDRESS</label>
+          <input className={field} placeholder="client@domain.com" required type="email" value={form.email} onChange={set('email')} />
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
+        <div>
+          <label className={label}>EVENT DATES &amp; DESTINATION</label>
+          <input className={field} placeholder="e.g. Nov 2025 • Udaipur" required type="text" value={form.event} onChange={set('event')} />
+        </div>
+        <div>
+          <label className={label}>DIRECT PHONE / WHATSAPP</label>
+          <input className={field} placeholder="+91 98271 22620" required type="tel" value={form.phone} onChange={set('phone')} />
+        </div>
+      </div>
+      <div>
+        <label className={label}>YOUR VISION OR STORY</label>
+        <input className={field} placeholder="Tell us a little bit about the celebrations you are curating..." type="text" value={form.vision} onChange={set('vision')} />
+      </div>
+      <div className="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-md">
+        <div className="flex items-center gap-space-xs text-secondary font-metadata-dense text-metadata-dense uppercase tracking-widest">
+          <span className="material-symbols-outlined text-[16px] text-primary">lock</span>
+          <span>{copy.formNote}</span>
+        </div>
+        <button disabled={state === 'sending'} className="w-full sm:w-auto px-space-2xl py-space-sm bg-gradient-to-r from-primary-container via-primary to-secondary text-[#001f23] font-label-uppercase text-label-uppercase uppercase font-bold rounded-full shadow-[0_0_20px_rgba(0,184,200,0.35)] hover:shadow-[0_0_30px_rgba(0,184,200,0.6)] hover:scale-[1.02] transition-all tracking-widest disabled:opacity-60" type="submit">
+          {state === 'sending' ? 'SENDING…' : state === 'done' ? 'INQUIRY SENT ✓' : copy.submitLabel}
+        </button>
+      </div>
+      {state === 'done' && (
+        <p role="status" className="text-center font-body-sm text-body-sm text-primary">{copy.successMessage}</p>
+      )}
+      {state === 'error' && (
+        <p role="alert" className="text-center font-body-sm text-body-sm text-error">
+          We couldn’t send that just now. Please email us directly and we’ll pick it up straight away.
+        </p>
+      )}
+    </form>
+  );
+}
 
 export default function HomePage() {
+  const home = useContent('home');
+  const hero = home.hero || {};
+  const about = home.about || {};
+  const strip = home.filmStrip || {};
+  const servicesCopy = home.services || {};
+  const featured = home.featured || {};
+  const screening = home.screening || {};
+  const creed = home.creed || {};
+  const method = home.method || {};
+  const commission = home.commission || {};
+  const FILM_STRIP = strip.items || [];
+  const FEATURE_FILM = { id: screening.featureId, title: screening.featureTitle || '' };
+
   // Film-strip reel: auto-scrolls, pauses on hover, and can be dragged /
   // wheel-scrolled to slide through the films. A drag suppresses the click so
   // it doesn't accidentally open a video.
@@ -110,7 +183,7 @@ export default function HomePage() {
     <div className="flex flex-col w-full selection:bg-primary selection:text-on-primary">
       <section className="relative w-full min-h-[calc(100vh-5rem)] flex flex-col justify-between overflow-hidden bg-surface-container-lowest">
         <div className="absolute inset-0 z-0">
-          <HeroVideo videoId={HERO_VIDEO.id} mobileFocusX={HERO_VIDEO.mobileFocusX} />
+          <HeroVideo videoId={hero.videoId} mobileFocusX={50} />
           <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/50 to-surface-container-lowest/80"></div>
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,184,200,0.08)_0%,_transparent_60%,_rgba(14,14,14,0.9)_100%)]"></div>
         </div>
@@ -118,10 +191,10 @@ export default function HomePage() {
         <div className="relative z-10 w-full px-margin-mobile lg:px-margin-desktop pt-space-xl flex justify-between items-center text-outline">
           <div className="flex items-center gap-space-xs font-metadata-dense text-metadata-dense tracking-widest uppercase">
             <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#3ee6f0]"></span>
-            <span className="text-secondary font-medium">ARCHIVE EST. 2019 / WORLDWIDE COMMISSIONS</span>
+            <span className="text-secondary font-medium">{hero.badgeLeft}</span>
           </div>
           <div className="font-metadata-dense text-metadata-dense tracking-widest uppercase hidden sm:block border border-primary-container/30 px-3 py-1 rounded-full bg-surface-container-lowest/60 text-secondary backdrop-blur-md">
-        35MM • ARRI RAW • ANAMORPHIC AQUA EDITION
+        {hero.badgeRight}
       </div>
         </div>
         <div className="relative z-10 w-full px-margin-mobile lg:px-margin-desktop py-space-3xl flex flex-col justify-center">
@@ -129,36 +202,36 @@ export default function HomePage() {
             <div className="absolute -top-16 -left-16 w-96 h-96 bg-primary/10 rounded-full blur-3xl pointer-events-none"></div>
             <p className="font-label-uppercase text-label-uppercase tracking-widest text-secondary uppercase mb-space-sm flex items-center gap-space-sm font-semibold">
 <span className="w-8 h-[1.5px] bg-gradient-to-r from-primary to-transparent inline-block"></span>
-          FINE ART CINEMATOGRAPHY
+          {hero.eyebrow}
         </p>
             <h1 className="font-display-hero text-display-hero-mobile md:text-display-hero uppercase tracking-tighter text-on-surface font-light leading-none">
-          YOUR STORY.<br />
-<span className="italic font-normal bg-gradient-to-r from-[#a5f3fc] via-[#3ee6f0] to-[#00b8c8] bg-clip-text text-transparent drop-shadow-[0_2px_18px_rgba(0,184,200,0.25)]">OUR FRAME.</span>
+          {hero.titleA}<br />
+<span className="italic font-normal bg-gradient-to-r from-[#a5f3fc] via-[#3ee6f0] to-[#00b8c8] bg-clip-text text-transparent drop-shadow-[0_2px_18px_rgba(0,184,200,0.25)]">{hero.titleB}</span>
 </h1>
             <p className="mt-space-lg font-body-lg text-body-lg text-on-surface max-w-2xl font-light leading-relaxed">
-          A creative production house crafting visual experiences across films, advertising, weddings, podcasts, brands, events and documentaries.
+          {hero.subtitle}
         </p>
             <div className="mt-space-sm font-editorial-quote text-editorial-quote text-on-surface-variant/90 italic max-w-2xl font-light border-l-2 border-primary-container/60 pl-space-md my-space-md">
-          From concept to final frame,<br />we turn ideas into visual stories.
-          <span className="block mt-space-sm not-italic font-label-uppercase text-label-uppercase uppercase tracking-[0.18em] text-primary">SliceX Films</span>
-          <span className="block text-on-surface">Where Stories Become Cinema.</span>
+          <span className="whitespace-pre-line">{hero.quote}</span>
+          <span className="block mt-space-sm not-italic font-label-uppercase text-label-uppercase uppercase tracking-[0.18em] text-primary">{hero.quoteBrand}</span>
+          <span className="block text-on-surface">{hero.quoteTag}</span>
         </div>
             <div className="mt-space-2xl flex flex-wrap items-center gap-space-md">
               <a className="px-space-xl py-space-sm bg-gradient-to-r from-[#00b8c8] via-[#3ee6f0] to-[#a5f3fc] text-[#001f23] font-label-uppercase text-label-uppercase uppercase font-bold rounded-full shadow-[0_0_25px_rgba(0,184,200,0.35)] hover:shadow-[0_0_35px_rgba(0,184,200,0.6)] hover:scale-[1.02] transition-all tracking-widest" href="#featured-work">
-            VIEW OUR WORK
+            {hero.btn1}
           </a>
               <a className="px-space-xl py-space-sm bg-surface-container-high/60 backdrop-blur-md text-primary border border-primary/40 font-label-uppercase text-label-uppercase uppercase rounded-full hover:bg-primary/10 hover:border-primary transition-all tracking-widest shadow-[0_0_15px_rgba(0,184,200,0.1)]" href="#commission">
-            BOOK YOUR DATE
+            {hero.btn2}
           </a>
             </div>
           </div>
         </div>
         <div className="relative z-10 w-full px-margin-mobile lg:px-margin-desktop pb-space-lg flex justify-between items-end border-t border-primary-container/20 pt-space-md">
           <div className="font-metadata-dense text-metadata-dense uppercase text-outline tracking-widest flex items-center gap-2">
-        SLICEX FILMS <span className="text-primary">•</span> CAPTURE <span className="text-primary">•</span> CREATE <span className="text-primary">•</span> INSPIRE
+        {hero.strip}
       </div>
           <a className="flex items-center gap-space-xs font-metadata-dense text-metadata-dense uppercase text-primary tracking-widest hover:text-secondary transition-colors" href="#about-slicex">
-            <span>SCROLL TO EXPLORE</span>
+            <span>{hero.scrollLabel}</span>
             <span className="material-symbols-outlined text-[14px] animate-bounce text-primary">south</span>
           </a>
         </div>
@@ -167,36 +240,37 @@ export default function HomePage() {
         <div className="absolute right-0 top-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-gutter-desktop items-start">
           <div className="lg:col-span-5 flex flex-col space-y-space-md">
-            <span className="font-numerical-index text-numerical-index text-secondary tracking-widest uppercase font-semibold">01 / ABOUT SLICEX</span>
+            <span className="font-numerical-index text-numerical-index text-secondary tracking-widest uppercase font-semibold">{about.index}</span>
             <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg uppercase font-light text-on-surface tracking-tight leading-[1.05]">
-          WE DON’T JUST CAPTURE MOMENTS.<br />
-<span className="italic font-normal bg-gradient-to-r from-[#a5f3fc] via-[#3ee6f0] to-[#00b8c8] bg-clip-text text-transparent">WE CREATE STORIES.</span>
+          {about.titleA}<br />
+<span className="italic font-normal bg-gradient-to-r from-[#a5f3fc] via-[#3ee6f0] to-[#00b8c8] bg-clip-text text-transparent">{about.titleB}</span>
 </h2>
             <div className="pt-space-lg">
               <div className="w-16 h-[2px] bg-gradient-to-r from-primary to-transparent mb-space-md"></div>
-              <span className="font-label-uppercase text-label-uppercase text-outline tracking-widest uppercase">DIRECTOR’S STATEMENT • CUT 2025</span>
+              <span className="font-label-uppercase text-label-uppercase text-outline tracking-widest uppercase">{about.statement}</span>
             </div>
           </div>
           <div className="lg:col-span-7 flex flex-col justify-between space-y-space-xl lg:pl-space-xl">
             <div className="space-y-space-lg">
               <blockquote className="font-editorial-quote text-body-lg md:text-editorial-quote text-on-surface font-light leading-relaxed bg-surface-container/30 border-l-2 border-primary p-space-md md:p-space-lg rounded-r-lg">
-            “At SliceX Films, we don’t just capture couples—we cast them. Whether it’s a shy smile or an inside joke, we see every couple as the lead characters in their own story. It’s never about how they look, dress, or pose. To us, every couple is a hero and heroine—worthy of their own movie.”
+            {about.quote}
           </blockquote>
               <p className="font-body-lg text-body-lg text-on-surface-variant font-light leading-relaxed">
-            SliceX Films is about turning ordinary love stories into timeless visuals. Because in our lens, everyone deserves to feel like they’re on the big screen. We combine the pacing of indie cinema with the grandeur of high-fashion print editorial.
+            {about.body}
           </p>
             </div>
             <div className="pt-space-md flex items-center justify-between">
               <a className="inline-flex items-center gap-space-sm font-label-uppercase text-label-uppercase uppercase text-primary border-b border-primary pb-1 hover:text-secondary hover:border-secondary transition-colors tracking-widest group" href="#services">
-            EXPLORE OUR CRAFT
+            {about.cta}
             <span className="material-symbols-outlined text-[14px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
 </a>
               <div className="flex items-center gap-space-md font-metadata-dense text-metadata-dense text-secondary uppercase tracking-widest">
-                <span>BHUBANESWAR</span>
-                <span className="text-primary">•</span>
-                <span>UDAIPUR</span>
-                <span className="text-primary">•</span>
-                <span>GLOBAL</span>
+                {(about.locations || []).map((l, i) => (
+                  <span key={i} className="flex items-center gap-space-md">
+                    {i > 0 && <span className="text-primary">•</span>}
+                    <span>{l}</span>
+                  </span>
+                ))}
               </div>
             </div>
           </div>
@@ -229,14 +303,14 @@ export default function HomePage() {
           <div>
             <div className="flex items-center gap-space-xs mb-space-2xs font-metadata-dense text-metadata-dense uppercase tracking-widest text-secondary">
               <span className="w-2 h-2 rounded-full bg-primary animate-pulse shadow-[0_0_8px_#3ee6f0]"></span>
-              <span>ARCHIVAL NEGATIVE ROLL // KODAK VISION3 &amp; PORTRA 400 EMULSION</span>
+              <span>{strip.eyebrow}</span>
             </div>
-            <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase font-light text-primary tracking-tight">35MM CONTINUOUS FILM STRIP</h2>
+            <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase font-light text-primary tracking-tight">{strip.title}</h2>
           </div>
           <div className="flex items-center gap-space-lg font-metadata-dense text-metadata-dense uppercase tracking-widest text-outline">
-            <span className="flex items-center gap-space-xs text-secondary font-medium"><span className="material-symbols-outlined text-[14px] text-primary">drag_indicator</span> DRAG TO EXPLORE · CLICK TO PLAY</span>
+            <span className="flex items-center gap-space-xs text-secondary font-medium"><span className="material-symbols-outlined text-[14px] text-primary">drag_indicator</span> {strip.hint}</span>
             <span className="hidden sm:inline-block text-primary-container/40">•</span>
-            <span className="hidden sm:inline-block text-on-surface-variant">DIRECT CAMERA RAW ARCHIVE</span>
+            <span className="hidden sm:inline-block text-on-surface-variant">{strip.hintRight}</span>
           </div>
         </div>
         <div id="filmStrip" className="relative w-full bg-[#0e1314] py-3 shadow-[0_0_50px_rgba(0,0,0,0.8)] border-y border-cyan-500/25 select-none overflow-x-auto cursor-grab" style={{ scrollbarWidth: 'none' }}>
@@ -281,22 +355,22 @@ export default function HomePage() {
         <div className="w-full px-margin-mobile lg:px-margin-desktop mt-space-lg flex flex-col sm:flex-row sm:items-center justify-between gap-space-xs text-outline font-metadata-dense text-metadata-dense uppercase tracking-widest">
           <div className="flex items-center gap-space-sm">
             <span className="inline-block w-2 h-2 rounded-full bg-primary shadow-[0_0_6px_#3ee6f0]"></span>
-            <span>CANON RF 50MM F/1.2L • LEICA M11 ARCHIVE • ARRI ALEXA MINI LF EMULSION</span>
+            <span>{strip.footLeft}</span>
           </div>
           <div className="flex items-center gap-space-md text-secondary">
-            <span>DYNAMIC CMS CURATION ENABLED</span>
-            <a className="text-primary hover:text-secondary transition-colors underline decoration-primary/40 underline-offset-4 font-semibold" href="#contact">INQUIRE NEGATIVES ACCESS →</a>
+            <span>{strip.footRight}</span>
+            <a className="text-primary hover:text-secondary transition-colors underline decoration-primary/40 underline-offset-4 font-semibold" href="#commission">{strip.footLink}</a>
           </div>
         </div>
       </section>
       <section className="w-full bg-surface-container-low py-space-2xl md:py-space-4xl px-margin-mobile lg:px-margin-desktop border-b border-primary-container/20" id="services">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-space-xl md:mb-space-3xl pb-space-md border-b border-primary-container/20 gap-space-md">
           <div>
-            <span className="font-numerical-index text-numerical-index text-secondary uppercase font-semibold">02 / SERVICES</span>
-            <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase font-light text-primary tracking-tight mt-space-2xs">WHAT WE CREATE</h2>
+            <span className="font-numerical-index text-numerical-index text-secondary uppercase font-semibold">{servicesCopy.index}</span>
+            <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase font-light text-primary tracking-tight mt-space-2xs">{servicesCopy.title}</h2>
           </div>
           <p className="font-body-sm text-body-sm text-on-surface-variant max-w-sm">
-        Curated cinematic modalities executed on cinema prime lenses and calibrated archival grade finishing.
+        {servicesCopy.blurb}
       </p>
         </div>
         <HomeServices />
@@ -305,8 +379,8 @@ export default function HomePage() {
         <div className="absolute left-1/3 top-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl pointer-events-none -translate-y-1/2"></div>
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-space-2xl gap-space-md relative z-10">
           <div>
-            <span className="font-numerical-index text-numerical-index text-secondary uppercase font-semibold">03 / EXHIBITION</span>
-            <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg uppercase font-light text-primary tracking-tight mt-space-2xs">FEATURED WORK</h2>
+            <span className="font-numerical-index text-numerical-index text-secondary uppercase font-semibold">{featured.index}</span>
+            <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg uppercase font-light text-primary tracking-tight mt-space-2xs">{featured.title}</h2>
           </div>
           <div className="flex flex-wrap items-center gap-space-xs font-metadata-dense text-metadata-dense tracking-widest uppercase">
             <button className="px-space-md py-space-xs bg-gradient-to-r from-primary-container to-primary text-on-primary font-bold rounded-full shadow-[0_0_15px_rgba(0,184,200,0.3)] transition-all">ALL</button>
@@ -317,63 +391,46 @@ export default function HomePage() {
           </div>
         </div>
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-stretch relative z-10">
-          <div data-yt="BApJaloacXg" className="lg:col-span-8 group relative overflow-hidden bg-surface-container min-h-[480px] lg:min-h-[560px] flex flex-col justify-end p-space-xl border border-primary-container/20 hover:border-primary/50 transition-all rounded-sm shadow-xl cursor-pointer">
-            <img alt="Sanjeeb & Asha wedding film still" className="absolute inset-0 w-full h-full object-cover grayscale-[25%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out" src="https://i.ytimg.com/vi/BApJaloacXg/maxresdefault.jpg" />
-            <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/40 to-transparent"></div>
-            <div className="relative z-10 flex flex-col sm:flex-row sm:items-end justify-between gap-space-md">
-              <div>
-                <span className="font-metadata-dense text-metadata-dense text-primary font-bold tracking-widest uppercase block mb-space-2xs">01 / FEATURED FILM</span>
-                <h3 className="font-headline-lg text-headline-lg uppercase text-primary-fixed font-light tracking-tight group-hover:text-primary transition-colors">SANJEEB &amp; ASHA — FULL WEDDING FILM</h3>
-                <p className="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">A full three-act wedding film — every ritual, toast, and unscripted tear.</p>
+          {(featured.items || []).map((v, i) => {
+            const big = i === 0;
+            const box = big ? 'lg:col-span-8 min-h-[480px] lg:min-h-[560px]'
+              : i === 1 ? 'lg:col-span-4 min-h-[480px] lg:min-h-[560px]'
+              : 'lg:col-span-6 min-h-[380px]';
+            return (
+              <div key={i} data-yt={v.id} className={`${box} group relative overflow-hidden bg-surface-container flex flex-col justify-end p-space-xl border border-primary-container/20 hover:border-primary/50 transition-all rounded-sm shadow-xl cursor-pointer`}>
+                <div className="absolute inset-0 w-full h-full bg-cover bg-center grayscale-[25%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out" style={{ backgroundImage: `url('${thumb(v.id)}')` }}></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/40 to-transparent"></div>
+                {big ? (
+                  <div className="relative z-10 flex flex-col sm:flex-row sm:items-end justify-between gap-space-md">
+                    <div>
+                      <span className="font-metadata-dense text-metadata-dense text-primary font-bold tracking-widest uppercase block mb-space-2xs">{v.label}</span>
+                      <h3 className="font-headline-lg text-headline-lg uppercase text-primary-fixed font-light tracking-tight group-hover:text-primary transition-colors">{v.title}</h3>
+                      <p className="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">{v.desc}</p>
+                    </div>
+                    <span className="shrink-0 inline-flex items-center gap-space-xs font-label-uppercase text-label-uppercase uppercase text-primary border-b border-primary pb-1 group-hover:text-secondary group-hover:border-secondary transition-colors tracking-widest font-semibold">
+                      {v.cta} <span className="material-symbols-outlined text-[14px]">play_arrow</span>
+                    </span>
+                  </div>
+                ) : (
+                  <div className="relative z-10">
+                    <span className="font-metadata-dense text-metadata-dense text-primary font-bold tracking-widest uppercase block mb-space-2xs">{v.label}</span>
+                    <h3 className="font-headline-md text-headline-md uppercase text-primary-fixed font-light tracking-tight group-hover:text-primary transition-colors">{v.title}</h3>
+                    <p className="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">{v.desc}</p>
+                    <div className="mt-space-md">
+                      <span className="font-label-uppercase text-label-uppercase text-secondary tracking-widest uppercase group-hover:text-primary transition-colors font-semibold">{v.cta}</span>
+                    </div>
+                  </div>
+                )}
               </div>
-              <a className="shrink-0 inline-flex items-center gap-space-xs font-label-uppercase text-label-uppercase uppercase text-primary border-b border-primary pb-1 group-hover:text-secondary group-hover:border-secondary transition-colors tracking-widest font-semibold" href="#">
-            VIEW FILM <span className="material-symbols-outlined text-[14px]">play_arrow</span>
-</a>
-            </div>
-          </div>
-          <div data-yt="8NngCj7b_uA" className="lg:col-span-4 group relative overflow-hidden bg-surface-container min-h-[480px] lg:min-h-[560px] flex flex-col justify-end p-space-xl border border-primary-container/20 hover:border-primary/50 transition-all rounded-sm shadow-xl cursor-pointer">
-            <div className="absolute inset-0 w-full h-full bg-cover bg-center grayscale-[30%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out" style={{ backgroundImage: "url('https://i.ytimg.com/vi/8NngCj7b_uA/maxresdefault.jpg')" }}></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/50 to-transparent"></div>
-            <div className="relative z-10">
-              <span className="font-metadata-dense text-metadata-dense text-primary font-bold tracking-widest uppercase block mb-space-2xs">02 / WEDDING FILM</span>
-              <h3 className="font-headline-md text-headline-md uppercase text-primary-fixed font-light tracking-tight group-hover:text-primary transition-colors">ALISHA DASH</h3>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">Warm, candid storytelling — the day exactly as it unfolded.</p>
-              <div className="mt-space-md">
-                <span className="font-label-uppercase text-label-uppercase text-secondary tracking-widest uppercase group-hover:text-primary transition-colors font-semibold">WATCH FILM →</span>
-              </div>
-            </div>
-          </div>
-          <div data-yt="r4KTSRpp17s" className="lg:col-span-6 group relative overflow-hidden bg-surface-container min-h-[380px] flex flex-col justify-end p-space-xl border border-primary-container/20 hover:border-primary/50 transition-all rounded-sm shadow-xl cursor-pointer">
-            <div className="absolute inset-0 w-full h-full bg-cover bg-center grayscale-[35%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out" style={{ backgroundImage: "url('https://i.ytimg.com/vi/r4KTSRpp17s/maxresdefault.jpg')" }}></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/40 to-transparent"></div>
-            <div className="relative z-10">
-              <span className="font-metadata-dense text-metadata-dense text-primary font-bold tracking-widest uppercase block mb-space-2xs">03 / PRE-WEDDING</span>
-              <h3 className="font-headline-md text-headline-md uppercase text-primary-fixed font-light tracking-tight group-hover:text-primary transition-colors">DILLU &amp; DIKSHYA</h3>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">A cinematic pre-wedding love story shot on location.</p>
-              <div className="mt-space-md">
-                <span className="font-label-uppercase text-label-uppercase text-secondary tracking-widest uppercase group-hover:text-primary transition-colors font-semibold">WATCH TEASER →</span>
-              </div>
-            </div>
-          </div>
-          <div data-yt="6GrJci58sFQ" className="lg:col-span-6 group relative overflow-hidden bg-surface-container min-h-[380px] flex flex-col justify-end p-space-xl border border-primary-container/20 hover:border-primary/50 transition-all rounded-sm shadow-xl cursor-pointer">
-            <div className="absolute inset-0 w-full h-full bg-cover bg-center grayscale-[20%] group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out" style={{ backgroundImage: "url('https://i.ytimg.com/vi/6GrJci58sFQ/maxresdefault.jpg')" }}></div>
-            <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/40 to-transparent"></div>
-            <div className="relative z-10">
-              <span className="font-metadata-dense text-metadata-dense text-primary font-bold tracking-widest uppercase block mb-space-2xs">04 / ENGAGEMENT</span>
-              <h3 className="font-headline-md text-headline-md uppercase text-primary-fixed font-light tracking-tight group-hover:text-primary transition-colors">ABHISHEK &amp; NEHA</h3>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">An intimate engagement celebration captured with a filmmaker’s eye.</p>
-              <div className="mt-space-md">
-                <span className="font-label-uppercase text-label-uppercase text-secondary tracking-widest uppercase group-hover:text-primary transition-colors font-semibold">WATCH FILM →</span>
-              </div>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </section>
       <section className="w-full bg-surface-container-lowest py-space-5xl px-margin-mobile lg:px-margin-desktop border-y border-primary-container/20 relative">
         <div className="max-w-4xl mx-auto text-center mb-space-3xl">
-          <span className="font-numerical-index text-numerical-index text-secondary uppercase tracking-widest font-semibold">04 / THE SCREENING ROOM</span>
-          <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg uppercase font-light text-primary tracking-tight mt-space-2xs">CINEMATIC MASTERPIECES</h2>
-          <p className="font-body-md text-body-md text-on-surface-variant mt-space-sm">Experience our bespoke 4K theatrical edits calibrated for acoustic precision and high-dynamic-range color artistry.</p>
+          <span className="font-numerical-index text-numerical-index text-secondary uppercase tracking-widest font-semibold">{screening.index}</span>
+          <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg uppercase font-light text-primary tracking-tight mt-space-2xs">{screening.title}</h2>
+          <p className="font-body-md text-body-md text-on-surface-variant mt-space-sm">{screening.blurb}</p>
         </div>
         <div data-yt={FEATURE_FILM.id} className="relative w-full aspect-video md:max-h-[700px] bg-surface-container overflow-hidden group cursor-pointer shadow-[0_10px_50px_rgba(0,0,0,0.8)] border border-primary-container/25">
           <div className="absolute inset-0 w-full h-full bg-cover bg-center group-hover:scale-102 transition-transform duration-700" style={{ backgroundImage: `url('${thumb(FEATURE_FILM.id)}')` }}></div>
@@ -385,8 +442,8 @@ export default function HomePage() {
           </div>
           <div className="absolute bottom-0 left-0 right-0 p-space-md lg:p-space-lg bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/80 to-transparent flex flex-col gap-space-xs">
             <div className="flex items-center justify-between text-secondary font-metadata-dense text-metadata-dense uppercase tracking-widest font-semibold">
-              <span className="text-primary-fixed">{FEATURE_FILM.title.toUpperCase()}</span>
-              <span className="text-primary">WATCH ON YOUTUBE</span>
+              <span className="text-primary-fixed">{(FEATURE_FILM.title || '').toUpperCase()}</span>
+              <span className="text-primary">{screening.watchLabel}</span>
             </div>
             <div className="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden relative cursor-pointer border border-primary-container/20">
               <div className="h-full bg-gradient-to-r from-primary-container to-primary w-1/4 rounded-full shadow-[0_0_8px_#3ee6f0]"></div>
@@ -394,244 +451,93 @@ export default function HomePage() {
           </div>
         </div>
         <div className="mt-space-2xl grid grid-cols-1 md:grid-cols-3 gap-space-lg">
-          <div className="p-space-lg bg-surface-container/50 hover:bg-surface-container border border-primary-container/15 hover:border-primary/40 transition-all flex flex-col justify-between group">
-            <div>
-              <span className="font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">FILM #104 • 14 MIN</span>
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary group-hover:text-secondary transition-colors font-light mt-space-2xs">SHREYA &amp; ROHAN</h4>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">The Grand Bikaner Fort Extravaganza</p>
+          {(screening.cards || []).map((c, i) => (
+            <div key={i} className="p-space-lg bg-surface-container/50 hover:bg-surface-container border border-primary-container/15 hover:border-primary/40 transition-all flex flex-col justify-between group">
+              <div>
+                <span className="font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">{c.meta}</span>
+                <h4 className="font-headline-sm text-headline-sm uppercase text-primary group-hover:text-secondary transition-colors font-light mt-space-2xs">{c.title}</h4>
+                <p className="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">{c.desc}</p>
+              </div>
+              <div className="mt-space-lg flex items-center justify-between font-label-uppercase text-label-uppercase text-primary tracking-widest font-semibold">
+                <span>{c.cta}</span>
+                <span className="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
+              </div>
             </div>
-            <div className="mt-space-lg flex items-center justify-between font-label-uppercase text-label-uppercase text-primary tracking-widest font-semibold">
-              <span>VIEW TEASER</span>
-              <span className="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
-            </div>
-          </div>
-          <div className="p-space-lg bg-surface-container/50 hover:bg-surface-container border border-primary-container/15 hover:border-primary/40 transition-all flex flex-col justify-between group">
-            <div>
-              <span className="font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">FILM #105 • 19 MIN</span>
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary group-hover:text-secondary transition-colors font-light mt-space-2xs">ARJUN &amp; NIKITA</h4>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">Intimate Forest Sanctuary &amp; Vows</p>
-            </div>
-            <div className="mt-space-lg flex items-center justify-between font-label-uppercase text-label-uppercase text-primary tracking-widest font-semibold">
-              <span>VIEW TEASER</span>
-              <span className="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
-            </div>
-          </div>
-          <div className="p-space-lg bg-surface-container/50 hover:bg-surface-container border border-primary-container/15 hover:border-primary/40 transition-all flex flex-col justify-between group">
-            <div>
-              <span className="font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">FILM #106 • 22 MIN</span>
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary group-hover:text-secondary transition-colors font-light mt-space-2xs">VARUN &amp; SIMRAN</h4>
-              <p className="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">Royal Haveli Celebration &amp; Baraat</p>
-            </div>
-            <div className="mt-space-lg flex items-center justify-between font-label-uppercase text-label-uppercase text-primary tracking-widest font-semibold">
-              <span>VIEW TEASER</span>
-              <span className="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
       <section className="w-full bg-surface-container-lowest py-space-5xl px-margin-mobile lg:px-margin-desktop flex flex-col justify-center items-center text-center overflow-hidden relative">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,184,200,0.08)_0%,_transparent_70%)] pointer-events-none"></div>
         <GoldenDust />
         <div className="max-w-5xl relative z-10">
-          <span className="font-label-uppercase text-label-uppercase text-secondary tracking-widest uppercase block mb-space-lg font-semibold">THE CORE CREED</span>
+          <span className="font-label-uppercase text-label-uppercase text-secondary tracking-widest uppercase block mb-space-lg font-semibold">{creed.eyebrow}</span>
           <h2 className="font-display-hero text-display-hero-mobile md:text-display-hero uppercase tracking-tighter text-on-surface font-light leading-[0.95]">
-        EVERY COUPLE<br />
-        HAS A STORY.<br />
-<span className="bg-gradient-to-r from-[#a5f3fc] via-[#3ee6f0] to-[#00b8c8] bg-clip-text text-transparent italic font-normal">WE MAKE SURE</span><br />
-        IT FEELS LIKE<br />
-<span className="text-primary font-normal">A MOVIE.</span>
+        {creed.line1}<br />
+        {creed.line2}<br />
+<span className="bg-gradient-to-r from-[#a5f3fc] via-[#3ee6f0] to-[#00b8c8] bg-clip-text text-transparent italic font-normal">{creed.line3}</span><br />
+        {creed.line4}<br />
+<span className="text-primary font-normal">{creed.line5}</span>
 </h2>
           <div className="mt-space-2xl w-24 h-[2px] bg-gradient-to-r from-transparent via-primary to-transparent mx-auto"></div>
           <p className="mt-space-lg font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">
-        SLICEX FILMS PRODUCTION HOUSE • FINE CINEMATOGRAPHY
+        {creed.foot}
       </p>
         </div>
       </section>
       <section className="w-full bg-surface py-space-5xl px-margin-mobile lg:px-margin-desktop border-t border-primary-container/20">
         <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-space-3xl pb-space-md border-b border-primary-container/20 gap-space-md">
           <div>
-            <span className="font-numerical-index text-numerical-index text-secondary uppercase font-semibold">05 / THE METHOD</span>
-            <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase font-light text-primary tracking-tight mt-space-2xs">HOW WE ARCHIVE YOUR DAY</h2>
+            <span className="font-numerical-index text-numerical-index text-secondary uppercase font-semibold">{method.index}</span>
+            <h2 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase font-light text-primary tracking-tight mt-space-2xs">{method.title}</h2>
           </div>
           <p className="font-body-sm text-body-sm text-on-surface-variant max-w-sm">
-        From the initial script session to the hand-delivered 4K master archive box.
+        {method.blurb}
       </p>
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-space-md">
-          {/* 01 MEET */}
-          <div className="group relative overflow-hidden bg-surface-container flex flex-col justify-between min-h-[300px] p-space-lg border border-primary-container/20 hover:border-primary/60 transition-all rounded-sm shadow-xl">
-            <div 
-              className="absolute inset-0 bg-cover bg-center opacity-35 group-hover:opacity-65 group-hover:scale-110 transition-all duration-700 ease-out"
-              style={{ backgroundImage: `url(${withBase('/assets/step-meet.jpg')})` }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/25 group-hover:via-background/55 transition-all duration-500" />
-            
-            <div className="relative z-10 flex items-center justify-between">
-              <span className="font-display-lg text-display-lg uppercase text-primary/40 font-light leading-none group-hover:text-primary transition-colors">01</span>
-              <span className="text-[9px] tracking-widest uppercase font-mono text-secondary bg-surface-container-high/80 px-2 py-0.5 rounded border border-primary-container/30">DISCOVERY</span>
+          {(method.steps || []).map((s, i) => (
+            <div key={i} className="group relative overflow-hidden bg-surface-container flex flex-col justify-between min-h-[300px] p-space-lg border border-primary-container/20 hover:border-primary/60 transition-all rounded-sm shadow-xl">
+              <div
+                className="absolute inset-0 bg-cover bg-center opacity-35 group-hover:opacity-65 group-hover:scale-110 transition-all duration-700 ease-out"
+                style={{ backgroundImage: `url(${/^https?:/.test(s.image || '') ? s.image : withBase(s.image || '')})` }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/25 group-hover:via-background/55 transition-all duration-500" />
+              <div className="relative z-10 flex items-center justify-between">
+                <span className="font-display-lg text-display-lg uppercase text-primary/40 font-light leading-none group-hover:text-primary transition-colors">{s.num}</span>
+                <span className="text-[9px] tracking-widest uppercase font-mono text-secondary bg-surface-container-high/80 px-2 py-0.5 rounded border border-primary-container/30">{s.badge}</span>
+              </div>
+              <div className="relative z-10 mt- space-y-1">
+                <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-cyan-200 transition-colors tracking-wide flex items-center justify-between">
+                  {s.title}
+                  <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-cyan-400 group-hover:animate-ping transition-all" />
+                </h4>
+                <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
+                  {s.desc}
+                </p>
+              </div>
             </div>
-            
-            <div className="relative z-10 mt- space-y-1">
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-cyan-200 transition-colors tracking-wide flex items-center justify-between">
-                MEET
-                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-cyan-400 group-hover:animate-ping transition-all" />
-              </h4>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
-                We meet over espresso or video link to understand your quirks, your tempo, and the personal dynamics you care about.
-              </p>
-            </div>
-          </div>
-
-          {/* 02 PLAN */}
-          <div className="group relative overflow-hidden bg-surface-container flex flex-col justify-between min-h-[300px] p-space-lg border border-primary-container/20 hover:border-primary/60 transition-all rounded-sm shadow-xl">
-            <div 
-              className="absolute inset-0 bg-cover bg-center opacity-35 group-hover:opacity-65 group-hover:scale-110 transition-all duration-700 ease-out"
-              style={{ backgroundImage: `url(${withBase('/assets/step-plan.jpg')})` }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/25 group-hover:via-background/55 transition-all duration-500" />
-            
-            <div className="relative z-10 flex items-center justify-between">
-              <span className="font-display-lg text-display-lg uppercase text-primary/40 font-light leading-none group-hover:text-primary transition-colors">02</span>
-              <span className="text-[9px] tracking-widest uppercase font-mono text-secondary bg-surface-container-high/80 px-2 py-0.5 rounded border border-primary-container/30">DESIGN</span>
-            </div>
-            
-            <div className="relative z-10 mt- space-y-1">
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-cyan-200 transition-colors tracking-wide flex items-center justify-between">
-                PLAN
-                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-cyan-400 group-hover:animate-ping transition-all" />
-              </h4>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
-                Architecting camera angles, light timing, mood boards, wardrobe harmonies, and timeline synchronization.
-              </p>
-            </div>
-          </div>
-
-          {/* 03 CAPTURE */}
-          <div className="group relative overflow-hidden bg-surface-container flex flex-col justify-between min-h-[300px] p-space-lg border border-primary-container/20 hover:border-primary/60 transition-all rounded-sm shadow-xl">
-            <div 
-              className="absolute inset-0 bg-cover bg-center opacity-35 group-hover:opacity-65 group-hover:scale-110 transition-all duration-700 ease-out"
-              style={{ backgroundImage: `url(${withBase('/assets/step-capture.jpg')})` }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/25 group-hover:via-background/55 transition-all duration-500" />
-            
-            <div className="relative z-10 flex items-center justify-between">
-              <span className="font-display-lg text-display-lg uppercase text-primary/40 font-light leading-none group-hover:text-primary transition-colors">03</span>
-              <span className="text-[9px] tracking-widest uppercase font-mono text-secondary bg-surface-container-high/80 px-2 py-0.5 rounded border border-primary-container/30">CINEMA</span>
-            </div>
-            
-            <div className="relative z-10 mt- space-y-1">
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-cyan-200 transition-colors tracking-wide flex items-center justify-between">
-                CAPTURE
-                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-cyan-400 group-hover:animate-ping transition-all" />
-              </h4>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
-                Discreet, non-invasive cinema coverage. We observe raw authenticity without intrusive studio orchestrations.
-              </p>
-            </div>
-          </div>
-
-          {/* 04 CREATE */}
-          <div className="group relative overflow-hidden bg-surface-container flex flex-col justify-between min-h-[300px] p-space-lg border border-primary-container/20 hover:border-primary/60 transition-all rounded-sm shadow-xl">
-            <div 
-              className="absolute inset-0 bg-cover bg-center opacity-35 group-hover:opacity-65 group-hover:scale-110 transition-all duration-700 ease-out"
-              style={{ backgroundImage: `url(${withBase('/assets/step-create.jpg')})` }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/25 group-hover:via-background/55 transition-all duration-500" />
-            
-            <div className="relative z-10 flex items-center justify-between">
-              <span className="font-display-lg text-display-lg uppercase text-primary/40 font-light leading-none group-hover:text-primary transition-colors">04</span>
-              <span className="text-[9px] tracking-widest uppercase font-mono text-secondary bg-surface-container-high/80 px-2 py-0.5 rounded border border-primary-container/30">POST</span>
-            </div>
-            
-            <div className="relative z-10 mt- space-y-1">
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-cyan-200 transition-colors tracking-wide flex items-center justify-between">
-                CREATE
-                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-cyan-400 group-hover:animate-ping transition-all" />
-              </h4>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
-                Surgical editorial pacing, analog-feel color grading, bespoke film score licensing, and sound engineering.
-              </p>
-            </div>
-          </div>
-
-          {/* 05 DELIVER */}
-          <div className="group relative overflow-hidden bg-surface-container flex flex-col justify-between min-h-[300px] p-space-lg border border-primary-container/20 hover:border-primary/60 transition-all rounded-sm shadow-xl">
-            <div 
-              className="absolute inset-0 bg-cover bg-center opacity-35 group-hover:opacity-65 group-hover:scale-110 transition-all duration-700 ease-out"
-              style={{ backgroundImage: `url(${withBase('/assets/step-deliver.jpg')})` }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/75 to-background/25 group-hover:via-background/55 transition-all duration-500" />
-            
-            <div className="relative z-10 flex items-center justify-between">
-              <span className="font-display-lg text-display-lg uppercase text-primary/40 font-light leading-none group-hover:text-primary transition-colors">05</span>
-              <span className="text-[9px] tracking-widest uppercase font-mono text-secondary bg-surface-container-high/80 px-2 py-0.5 rounded border border-primary-container/30">ARCHIVE</span>
-            </div>
-            
-            <div className="relative z-10 mt- space-y-1">
-              <h4 className="font-headline-sm text-headline-sm uppercase text-primary font-medium group-hover:text-cyan-200 transition-colors tracking-wide flex items-center justify-between">
-                DELIVER
-                <span className="w-2 h-2 rounded-full bg-primary/40 group-hover:bg-cyan-400 group-hover:animate-ping transition-all" />
-              </h4>
-              <p className="font-body-sm text-body-sm text-on-surface-variant font-light group-hover:text-primary transition-colors leading-relaxed">
-                Secure private streaming vault plus a luxury keepsake archive drive crafted for generations of viewing.
-              </p>
-            </div>
-          </div>
+          ))}
         </div>
       </section>
       <section className="w-full bg-surface-container-low py-space-5xl px-margin-mobile lg:px-margin-desktop border-t border-primary-container/20" id="commission">
         <div className="max-w-4xl mb-space-3xl">
-          <span className="font-numerical-index text-numerical-index text-secondary uppercase tracking-widest font-semibold">06 / INVESTMENT COMMISSIONS</span>
-          <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg uppercase font-light text-primary tracking-tight mt-space-2xs">CURATED OFFERINGS</h2>
+          <span className="font-numerical-index text-numerical-index text-secondary uppercase tracking-widest font-semibold">{commission.index}</span>
+          <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg uppercase font-light text-primary tracking-tight mt-space-2xs">{commission.title}</h2>
           <p className="font-body-md text-body-md text-on-surface-variant mt-space-sm">
-        Transparent commission structures tailored for intimate gatherings to grand royal multi-day destination events.
+        {commission.blurb}
       </p>
         </div>
         <PackagesGrid />
         <div className="bg-surface-container-lowest p-space-xl lg:p-space-3xl rounded-lg border border-primary-container/20 shadow-2xl relative overflow-hidden">
           <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-primary/5 rounded-full blur-3xl pointer-events-none"></div>
           <div className="max-w-2xl mx-auto text-center mb-space-2xl">
-            <span className="font-label-uppercase text-label-uppercase text-secondary tracking-widest uppercase block mb-space-2xs font-semibold">CALENDAR INQUIRY</span>
-            <h3 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase text-primary font-light">SECURE YOUR DATES</h3>
+            <span className="font-label-uppercase text-label-uppercase text-secondary tracking-widest uppercase block mb-space-2xs font-semibold">{commission.formEyebrow}</span>
+            <h3 className="font-headline-lg text-headline-lg-mobile md:text-headline-lg uppercase text-primary font-light">{commission.formTitle}</h3>
             <p className="font-body-md text-body-md text-on-surface-variant mt-space-2xs font-light">
-          We accept a strictly limited number of commissions per season to ensure unwavering director involvement.
+          {commission.formBlurb}
         </p>
           </div>
-          <form className="max-w-3xl mx-auto space-y-space-lg relative z-10" onSubmit={(e) => { e.preventDefault(); window.alert('Inquiry received. The SliceX directorial team will reach out within 24 hours.'); }}>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
-              <div>
-                <label className="block font-label-uppercase text-label-uppercase text-secondary uppercase tracking-widest mb-space-2xs font-semibold">PARTNER ONE &amp; TWO NAMES</label>
-                <input className="w-full bg-transparent border-b border-primary-container/30 py-space-sm text-on-surface font-body-md focus:border-primary focus:outline-none transition-colors" placeholder="e.g. Rhea & Aditya" required type="text" />
-              </div>
-              <div>
-                <label className="block font-label-uppercase text-label-uppercase text-secondary uppercase tracking-widest mb-space-2xs font-semibold">EMAIL ADDRESS</label>
-                <input className="w-full bg-transparent border-b border-primary-container/30 py-space-sm text-on-surface font-body-md focus:border-primary focus:outline-none transition-colors" placeholder="client@domain.com" required type="email" />
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-space-lg">
-              <div>
-                <label className="block font-label-uppercase text-label-uppercase text-secondary uppercase tracking-widest mb-space-2xs font-semibold">EVENT DATES &amp; DESTINATION</label>
-                <input className="w-full bg-transparent border-b border-primary-container/30 py-space-sm text-on-surface font-body-md focus:border-primary focus:outline-none transition-colors" placeholder="e.g. Nov 2025 • Udaipur" required type="text" />
-              </div>
-              <div>
-                <label className="block font-label-uppercase text-label-uppercase text-secondary uppercase tracking-widest mb-space-2xs font-semibold">DIRECT PHONE / WHATSAPP</label>
-                <input className="w-full bg-transparent border-b border-primary-container/30 py-space-sm text-on-surface font-body-md focus:border-primary focus:outline-none transition-colors" placeholder="+91 98271 22620" required type="tel" />
-              </div>
-            </div>
-            <div>
-              <label className="block font-label-uppercase text-label-uppercase text-secondary uppercase tracking-widest mb-space-2xs font-semibold">YOUR VISION OR STORY</label>
-              <input className="w-full bg-transparent border-b border-primary-container/30 py-space-sm text-on-surface font-body-md focus:border-primary focus:outline-none transition-colors" placeholder="Tell us a little bit about the celebrations you are curating..." type="text" />
-            </div>
-            <div className="pt-space-md flex flex-col sm:flex-row items-center justify-between gap-space-md">
-              <div className="flex items-center gap-space-xs text-secondary font-metadata-dense text-metadata-dense uppercase tracking-widest">
-                <span className="material-symbols-outlined text-[16px] text-primary">lock</span>
-                <span>DATA CONFIDENTIALITY GUARANTEED</span>
-              </div>
-              <button className="w-full sm:w-auto px-space-2xl py-space-sm bg-gradient-to-r from-primary-container via-primary to-secondary text-[#001f23] font-label-uppercase text-label-uppercase uppercase font-bold rounded-full shadow-[0_0_20px_rgba(0,184,200,0.35)] hover:shadow-[0_0_30px_rgba(0,184,200,0.6)] hover:scale-[1.02] transition-all tracking-widest" type="submit">
-            SUBMIT INQUIRY
-          </button>
-            </div>
-          </form>
+          <InquiryForm copy={commission} />
         </div>
       </section>
     </div>
