@@ -1,40 +1,160 @@
 'use client';
 
 import SiteFooter from '../../../components/SiteFooter';
-import { useEffect } from 'react';
+import { useState } from 'react';
 import VideoLightbox from '../../../components/VideoLightbox';
 import { withBase } from '../../../lib/basePath';
+import { useContent } from '../../../lib/content';
+
+// Tailwind needs whole class names, so spans/aspects are looked up, not built.
+const SPAN_CLS = {
+  '5': 'md:col-span-12 lg:col-span-5',
+  '6': 'md:col-span-12 lg:col-span-6',
+  '7': 'md:col-span-12 lg:col-span-7',
+  '12': 'md:col-span-12',
+};
+const ASPECT_CLS = {
+  '4/5': 'aspect-[4/5]',
+  '16/9': 'aspect-[16/9]',
+  '16/10': 'aspect-[16/10]',
+};
+const src = (v) => (/^https?:/.test(v || '') ? v : withBase(v || ''));
+const chip = 'px-space-xs py-space-2xs rounded bg-surface-container-lowest/80 backdrop-blur-sm font-label-sm text-label-sm tracking-wider uppercase';
+
+function PortfolioCard({ item }) {
+  const span = SPAN_CLS[String(item.span)] || SPAN_CLS['6'];
+  const aspect = ASPECT_CLS[item.aspect] || ASPECT_CLS['16/10'];
+  const tags = item.tags || [];
+  const yt = item.youtubeId || undefined;
+
+  if (item.layout === 'feature') {
+    return (
+      <article data-yt={yt} className={`portfolio-item ${span} group cursor-pointer relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-2xl transition-all duration-500 hover:shadow-[0_15px_45px_-10px_rgba(0,184,200,0.18)]`}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
+          <div className="lg:col-span-8 relative aspect-[16/9] lg:aspect-[2.1/1] overflow-hidden bg-surface-container-high">
+            <img className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-95 contrast-105" alt={item.title} src={src(item.image)} />
+            <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-black/30 lg:hidden"></div>
+            {item.eyebrow && (
+              <div className="absolute top-space-md left-space-md flex items-center gap-space-xs bg-surface-container-lowest/80 backdrop-blur-md px-space-sm py-space-2xs rounded-full">
+                <span className="material-symbols-outlined text-primary text-[16px]">play_circle</span>
+                <span className="font-label-sm text-label-sm tracking-[0.2em] text-primary uppercase">{item.eyebrow}</span>
+              </div>
+            )}
+            {item.note && (
+              <div className="absolute bottom-space-md right-space-md font-label-sm text-label-sm text-on-surface-variant bg-surface-container-lowest/80 backdrop-blur-md px-space-sm py-space-2xs rounded tracking-widest uppercase">{item.note}</div>
+            )}
+          </div>
+          <div className="lg:col-span-4 p-space-lg lg:p-space-xl flex flex-col justify-between bg-surface-container">
+            <div className="flex flex-col gap-space-sm">
+              {tags.length > 0 && (
+                <div className="flex flex-wrap gap-space-2xs">
+                  {tags.map((t, k) => (
+                    <span key={k} className={`px-space-xs py-space-2xs rounded bg-surface-container-highest font-label-sm text-label-sm tracking-widest uppercase ${k === 0 ? 'text-primary' : 'text-on-surface-variant'}`}>{t}</span>
+                  ))}
+                </div>
+              )}
+              <h2 className="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors duration-300 pt-space-2xs">{item.title}</h2>
+              <p className="font-body-sm text-body-sm text-on-surface-variant">{item.desc}</p>
+            </div>
+            <div className="pt-space-md flex items-center justify-between">
+              <div className="flex flex-col">
+                <span className="font-label-sm text-label-sm text-outline uppercase tracking-wider">Cinematography</span>
+                <span className="font-body-sm text-body-sm text-on-surface font-medium">SliceX Films</span>
+              </div>
+              <span className="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center group-hover:bg-primary transition-all duration-300 group-hover:scale-110 shadow-md">
+                <span className="material-symbols-outlined text-[20px]">arrow_outward</span>
+              </span>
+            </div>
+          </div>
+        </div>
+      </article>
+    );
+  }
+
+  if (item.layout === 'split') {
+    return (
+      <article data-yt={yt} className={`portfolio-item ${span} group relative bg-surface-container-low rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_45px_-10px_rgba(0,184,200,0.18)] ${yt ? 'cursor-pointer' : ''}`}>
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-center">
+          <div className="lg:col-span-5 p-space-lg lg:p-space-xl flex flex-col justify-center order-2 lg:order-1">
+            {item.eyebrow && (
+              <div className="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm uppercase tracking-widest mb-space-2xs">
+                <span className="material-symbols-outlined text-[15px]">diamond</span>
+                <span>{item.eyebrow}</span>
+              </div>
+            )}
+            <h3 className="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors duration-300 mb-space-xs">{item.title}</h3>
+            <p className="font-body-sm text-body-sm text-on-surface-variant mb-space-md">{item.desc}</p>
+            <div className="flex flex-wrap items-center gap-space-md font-label-sm text-label-sm text-outline uppercase tracking-wider">
+              {item.metaLeft && (
+                <div className="flex items-center gap-space-2xs">
+                  <span className="material-symbols-outlined text-primary text-[16px]">location_on</span>
+                  <span>{item.metaLeft}</span>
+                </div>
+              )}
+              {item.metaRight && (
+                <div className="flex items-center gap-space-2xs">
+                  <span className="material-symbols-outlined text-primary text-[16px]">schedule</span>
+                  <span>{item.metaRight}</span>
+                </div>
+              )}
+            </div>
+          </div>
+          <div className={`lg:col-span-7 relative ${aspect} overflow-hidden bg-surface-container-high order-1 lg:order-2`}>
+            <img className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-95" alt={item.title} src={src(item.image)} />
+            <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent lg:hidden"></div>
+            {item.note && (
+              <div className="absolute top-space-md right-space-md bg-surface-container-lowest/80 backdrop-blur-md px-space-sm py-space-2xs rounded text-primary font-label-sm text-label-sm tracking-widest uppercase">{item.note}</div>
+            )}
+          </div>
+        </div>
+      </article>
+    );
+  }
+
+  return (
+    <article data-yt={yt} className={`portfolio-item ${span} group relative bg-surface-container rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_40px_-10px_rgba(0,184,200,0.14)] flex flex-col justify-between ${yt ? 'cursor-pointer' : ''}`}>
+      <div className={`relative ${aspect} overflow-hidden bg-surface-container-high`}>
+        <img className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter contrast-105" alt={item.title} src={src(item.image)} />
+        <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-black/20"></div>
+        {tags.length > 0 && (
+          <div className="absolute top-space-md left-space-md flex gap-space-2xs">
+            {tags.map((t, k) => (
+              <span key={k} className={`${chip} ${k === 0 ? 'text-primary' : 'text-on-surface'}`}>{t}</span>
+            ))}
+          </div>
+        )}
+        {item.note && (
+          <div className="absolute bottom-space-md left-space-md flex items-center gap-space-2xs bg-surface-container-lowest/80 backdrop-blur-sm px-space-xs py-space-2xs rounded font-label-sm text-label-sm text-on-surface uppercase tracking-wider">
+            <span className="material-symbols-outlined text-primary text-[14px]">hd</span>
+            <span>{item.note}</span>
+          </div>
+        )}
+      </div>
+      <div className="p-space-lg flex flex-col gap-space-xs">
+        {(item.metaLeft || item.metaRight) && (
+          <div className="flex items-center justify-between text-outline font-label-sm text-label-sm tracking-widest uppercase">
+            <span>{item.metaLeft}</span>
+            <span className="text-primary font-medium">{item.metaRight}</span>
+          </div>
+        )}
+        <h3 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors duration-300">{item.title}</h3>
+        <p className="font-body-sm text-body-sm text-on-surface-variant">{item.desc}</p>
+      </div>
+    </article>
+  );
+}
 
 export default function PortfolioPage() {
-  useEffect(() => {
-    const filterButtons = document.querySelectorAll('.portfolio-filter-btn');
-    const portfolioItems = document.querySelectorAll('.portfolio-item');
-    const bound = [];
-    filterButtons.forEach((btn) => {
-      const handler = () => {
-        const filter = btn.getAttribute('data-filter');
-        filterButtons.forEach((b) => {
-          b.classList.remove('bg-primary-container', 'text-on-primary-container', 'font-semibold');
-          b.classList.add('text-on-surface-variant');
-        });
-        btn.classList.add('bg-primary-container', 'text-on-primary-container', 'font-semibold');
-        btn.classList.remove('text-on-surface-variant');
-        portfolioItems.forEach((item) => {
-          const categories = item.getAttribute('data-category') || '';
-          if (filter === 'all' || categories.includes(filter)) {
-            item.style.display = '';
-            item.style.opacity = '1';
-          } else {
-            item.style.display = 'none';
-            item.style.opacity = '0';
-          }
-        });
-      };
-      btn.addEventListener('click', handler);
-      bound.push([btn, handler]);
-    });
-    return () => bound.forEach(([b, h]) => b.removeEventListener('click', h));
-  }, []);
+  const portfolio = useContent('portfolio');
+  const items = portfolio.items || [];
+  const categories = portfolio.categories || [];
+  const [filter, setFilter] = useState('all');
+
+  // Token match, not substring — "pre-weddings" must not count as "weddings".
+  const hasCat = (it, key) => (it.categories || '').split(' ').filter(Boolean).includes(key);
+  const countFor = (key) => (key === 'all' ? items.length : items.filter((it) => hasCat(it, key)).length);
+  const shown = filter === 'all' ? items : items.filter((it) => hasCat(it, filter));
+  const filters = [{ key: 'all', label: 'All' }, ...categories];
 
   return (
     <>
@@ -66,21 +186,16 @@ export default function PortfolioPage() {
             <div className="w-full h-px bg-gradient-to-r from-primary/40 via-outline-variant to-transparent my-space-xs"></div>
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-space-md pt-space-xs" id="portfolio-filters">
               <div className="flex flex-wrap items-center gap-space-xs bg-surface-container-low p-space-2xs rounded-lg shadow-sm">
-                <button className="portfolio-filter-btn px-space-md py-space-xs rounded font-label-md text-label-md tracking-wider uppercase transition-all duration-300 bg-primary-container text-on-primary-container font-semibold shadow-sm" data-filter="all" type="button">
-              All (18)
-            </button>
-                <button className="portfolio-filter-btn px-space-md py-space-xs rounded font-label-md text-label-md tracking-wider uppercase transition-all duration-300 text-on-surface-variant hover:text-primary" data-filter="weddings" type="button">
-              Weddings (8)
-            </button>
-                <button className="portfolio-filter-btn px-space-md py-space-xs rounded font-label-md text-label-md tracking-wider uppercase transition-all duration-300 text-on-surface-variant hover:text-primary" data-filter="pre-weddings" type="button">
-              Pre-Weddings (4)
-            </button>
-                <button className="portfolio-filter-btn px-space-md py-space-xs rounded font-label-md text-label-md tracking-wider uppercase transition-all duration-300 text-on-surface-variant hover:text-primary" data-filter="engagements" type="button">
-              Engagements (3)
-            </button>
-                <button className="portfolio-filter-btn px-space-md py-space-xs rounded font-label-md text-label-md tracking-wider uppercase transition-all duration-300 text-on-surface-variant hover:text-primary" data-filter="films" type="button">
-              Films (3)
-            </button>
+                {filters.map((f) => (
+                  <button
+                    key={f.key}
+                    type="button"
+                    onClick={() => setFilter(f.key)}
+                    className={`portfolio-filter-btn px-space-md py-space-xs rounded font-label-md text-label-md tracking-wider uppercase transition-all duration-300 ${filter === f.key ? 'bg-primary-container text-on-primary-container font-semibold shadow-sm' : 'text-on-surface-variant hover:text-primary'}`}
+                  >
+                    {f.label} ({countFor(f.key)})
+                  </button>
+                ))}
               </div>
               <div className="hidden md:flex items-center gap-space-sm font-label-sm text-label-sm text-outline uppercase tracking-widest">
                 <span className="">SORT: CHRONOLOGICAL</span>
@@ -92,170 +207,9 @@ export default function PortfolioPage() {
         </section>
         <section className="w-full px-margin-mobile lg:px-margin-desktop py-space-md">
           <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-12 gap-gutter lg:gap-y-space-2xl">
-            <article data-yt="jEFML86Tk7g" className="portfolio-item md:col-span-12 group cursor-pointer relative bg-surface-container-lowest rounded-xl overflow-hidden shadow-2xl transition-all duration-500 hover:shadow-[0_15px_45px_-10px_rgba(0,184,200,0.18)]" data-category="weddings films">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-0">
-                <div className="lg:col-span-8 relative aspect-[16/9] lg:aspect-[2.1/1] overflow-hidden bg-surface-container-high">
-                  <img className="w-full h-full object-cover object-center transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-95 contrast-105" alt="Gobinda & Mamuni wedding film still" src="https://i.ytimg.com/vi/jEFML86Tk7g/maxresdefault.jpg" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-surface-container-lowest via-transparent to-black/30 lg:hidden"></div>
-                  <div className="absolute top-space-md left-space-md flex items-center gap-space-xs bg-surface-container-lowest/80 backdrop-blur-md px-space-sm py-space-2xs rounded-full">
-                    <span className="material-symbols-outlined text-primary text-[16px]">play_circle</span>
-                    <span className="font-label-sm text-label-sm tracking-[0.2em] text-primary uppercase">FEATURE FILM EXCLUSIVE</span>
-                  </div>
-                  <div className="absolute bottom-space-md right-space-md font-label-sm text-label-sm text-on-surface-variant bg-surface-container-lowest/80 backdrop-blur-md px-space-sm py-space-2xs rounded tracking-widest uppercase">
-                4K DCI • 2.39:1 ANAMORPHIC
-              </div>
-                </div>
-                <div className="lg:col-span-4 p-space-lg lg:p-space-xl flex flex-col justify-between bg-surface-container">
-                  <div className="flex flex-col gap-space-sm">
-                    <div className="flex flex-wrap gap-space-2xs">
-                      <span className="px-space-xs py-space-2xs rounded bg-surface-container-highest text-primary font-label-sm text-label-sm tracking-widest uppercase">4K Anamorphic</span>
-                      <span className="px-space-xs py-space-2xs rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm tracking-widest uppercase">Royal Palace</span>
-                      <span className="px-space-xs py-space-2xs rounded bg-surface-container-highest text-on-surface-variant font-label-sm text-label-sm tracking-widest uppercase">3-Day</span>
-                    </div>
-                    <h2 className="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors duration-300 pt-space-2xs">
-                  Gobinda &amp; Mamuni — Wedding Film
-                </h2>
-                    <p className="font-body-sm text-body-sm text-on-surface-variant">
-                  A full cinematic wedding film blending grand celebration with quiet, intimate family moments. Tap to watch on YouTube.
-                </p>
-                  </div>
-                  <div className="pt-space-md flex items-center justify-between">
-                    <div className="flex flex-col">
-                      <span className="font-label-sm text-label-sm text-outline uppercase tracking-wider">Cinematography</span>
-                      <span className="font-body-sm text-body-sm text-on-surface font-medium">SliceX Films</span>
-                    </div>
-                    <button className="w-10 h-10 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center group-hover:bg-primary transition-all duration-300 group-hover:scale-110 shadow-md" type="button">
-                      <span className="material-symbols-outlined text-[20px]">arrow_outward</span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </article>
-            <article className="portfolio-item md:col-span-12 lg:col-span-5 group relative bg-surface-container rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_40px_-10px_rgba(0,184,200,0.14)] flex flex-col justify-between" data-category="weddings">
-              <div className="relative aspect-[4/5] overflow-hidden bg-surface-container-high">
-                <img className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter contrast-110" data-alt="Chiaroscuro moody bride looking into an ornate antique golden mirror while wearing sheer vintage lace veil and couture wedding dress in an atmospheric dark stone room with soft window rim lighting, fine art editorial film still" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmIDKGxODGKwZka2xcZentvxUzH3ozk1JKnjhjVy4nB83Fbcpqnd8pUq-2MIK_m1jGXUlo43VwYlY4al_70UbGj_4QwPh_ttYGJcCjXVJLLMsUU9dEsi7POTr-uDWl3NmjRBsZm_TfLa163vhfmMsTrGcpOgE5UMngDjJPgl30UEg2SQ6I2w_wKkzrQkPReC0RyqG9v9gVtgWzIMN2UinNo68PbxMu-mkjyK-Ia3FaEdSYN_uwuZNeyw" />
-                <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-black/20"></div>
-                <div className="absolute top-space-md left-space-md flex gap-space-2xs">
-                  <span className="px-space-xs py-space-2xs rounded bg-surface-container-lowest/80 backdrop-blur-sm text-primary font-label-sm text-label-sm tracking-wider uppercase">Chiaroscuro</span>
-                  <span className="px-space-xs py-space-2xs rounded bg-surface-container-lowest/80 backdrop-blur-sm text-on-surface font-label-sm text-label-sm tracking-wider uppercase">Portra 400</span>
-                </div>
-              </div>
-              <div className="p-space-lg flex flex-col gap-space-xs">
-                <div className="flex items-center justify-between text-outline font-label-sm text-label-sm tracking-widest uppercase">
-                  <span className="">JAIPUR HAVELI PREP &amp; VOWS</span>
-                  <span className="text-primary font-medium">35MM ANALOG</span>
-                </div>
-                <h3 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors duration-300">
-              Vikram &amp; Ananya — Heritage Monochrome
-            </h3>
-                <p className="font-body-sm text-body-sm text-on-surface-variant line-clamp-2">
-              Deep shadows and delicate lace reflections captured in the quiet prelude before the grand baraat procession at Samode.
-            </p>
-              </div>
-            </article>
-            <article className="portfolio-item md:col-span-12 lg:col-span-7 group relative bg-surface-container rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_40px_-10px_rgba(0,184,200,0.14)] flex flex-col justify-between" data-category="weddings films">
-              <div className="relative aspect-[16/10] overflow-hidden bg-surface-container-high">
-                <img className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-95" data-alt="Indian bride and groom in opulent deep maroon velvet and antique gold zardozi sherwani embracing under majestic carved sandstone arches overlooking illuminated ancient Mehrangarh fort during blue hour twilight, ambient warm earthen oil lamps glowing around them" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOGyW9pc1EubyVnzhDQJetqOukbzc4yMaqizmOeYxR7qGgw7nOoYbCllaRapjSruhivlxG7C_F76ggL0iboys1lOY6H2uGj7unyp2iTBMylZyT2M4PpNhsuoy1GGY7FUU_sTuoPEIHnEx5O5cJnaAST1i3qWMr2JqiKWo-Y5sy_KTjFW46SiANW027UN3nDscsUH1zrvnqd3hyGi6HVKEsnPYsgpFuVDhCH7KfuqNaKcga-MZYh8yM3w" />
-                <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-black/20"></div>
-                <div className="absolute top-space-md left-space-md flex gap-space-2xs">
-                  <span className="px-space-xs py-space-2xs rounded bg-surface-container-lowest/80 backdrop-blur-sm text-secondary font-label-sm text-label-sm tracking-wider uppercase">Twilight Vows</span>
-                  <span className="px-space-xs py-space-2xs rounded bg-surface-container-lowest/80 backdrop-blur-sm text-primary font-label-sm text-label-sm tracking-wider uppercase">Jodhpur</span>
-                </div>
-                <div className="absolute bottom-space-md left-space-md flex items-center gap-space-2xs bg-surface-container-lowest/80 backdrop-blur-sm px-space-xs py-space-2xs rounded font-label-sm text-label-sm text-on-surface uppercase tracking-wider">
-                  <span className="material-symbols-outlined text-primary text-[14px]">hd</span>
-                  <span className="">DIRECTOR'S CUT AVAILABLE</span>
-                </div>
-              </div>
-              <div className="p-space-lg flex flex-col gap-space-xs">
-                <div className="flex items-center justify-between text-outline font-label-sm text-label-sm tracking-widest uppercase">
-                  <span className="">MEHRANGARH RAMPARTS</span>
-                  <span className="text-primary font-medium">OCTOBER 2024</span>
-                </div>
-                <h3 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors duration-300">
-              Kabir &amp; Tara — Twilight Vows at Mehrangarh
-            </h3>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">
-              An architectural drama set against blue city ramparts. Golden rim lighting highlights raw hand-embellished silk and emotional gazes as night settles over Rajasthan.
-            </p>
-              </div>
-            </article>
-            <article className="portfolio-item md:col-span-12 lg:col-span-6 group relative bg-surface-container rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_40px_-10px_rgba(0,184,200,0.14)] flex flex-col justify-between" data-category="pre-weddings">
-              <div className="relative aspect-[16/10] overflow-hidden bg-surface-container-high">
-                <img className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-100" data-alt="Joyful bride radiant in bright yellow attire covered in golden turmeric haldi laughing euphorically surrounded by loving family members hands applying turmeric paste under cascaded marigold flower canopies in sunlit heritage courtyard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBne6J962TsrZTi3vS_ZlQJvesYvuNgtb1oXm-B0gHuqh91ErRBXLvsLza8RuQCtiG_Sq7MVgZqzOuXmcTDJt__QNQQDOR93G4N1_27iWfsn4x6rQxWp1y8HuFNo9NNfcvcP5z6NqQlY7IfzNf484ruxVNVPvyEbVvitPhoL10waz40j6pcVrh0jD5pI1Twoya1gFUQ02Od5rJ3XiNRQQhBudN2-pkPE54SjOfAhGjaKnZJreJGEsLzkg" />
-                <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-black/20"></div>
-                <div className="absolute top-space-md left-space-md flex gap-space-2xs">
-                  <span className="px-space-xs py-space-2xs rounded bg-surface-container-lowest/80 backdrop-blur-sm text-primary font-label-sm text-label-sm tracking-wider uppercase">Kodak Portra</span>
-                  <span className="px-space-xs py-space-2xs rounded bg-surface-container-lowest/80 backdrop-blur-sm text-on-surface font-label-sm text-label-sm tracking-wider uppercase">Raw Candid</span>
-                </div>
-              </div>
-              <div className="p-space-lg flex flex-col gap-space-xs">
-                <div className="flex items-center justify-between text-outline font-label-sm text-label-sm tracking-widest uppercase">
-                  <span className="">MARIGOLD COURTYARD • JAIPUR</span>
-                  <span className="text-secondary font-medium">DAY 01</span>
-                </div>
-                <h3 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors duration-300">
-              Dev &amp; Myra — Haldi Sunlight &amp; Festivities
-            </h3>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">
-              Unfiltered joy in motion. Splashes of saffron water, yellow silk dupattas, and natural laughter caught on high-speed medium format analog lenses.
-            </p>
-              </div>
-            </article>
-            <article className="portfolio-item md:col-span-12 lg:col-span-6 group relative bg-surface-container rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_40px_-10px_rgba(0,184,200,0.14)] flex flex-col justify-between" data-category="weddings">
-              <div className="relative aspect-[16/10] overflow-hidden bg-surface-container-high">
-                <img className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter contrast-105" data-alt="Deeply emotional moment of an Indian father shedding genuine tears holding his daughter bride tight during the emotional vidaai wedding farewell ceremony, authentic tears of joy and bittersweet warmth captured in cinematic natural backlight" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAfxA6nU3FE1OzPKUCY63_Gy4opS7nUrvt10bcwF4TpVULb7RXBs4Ye4UwVaptCUIfve6LTLbBcasqf6PaiHRm6O9Xzd-5WfUg-KwnKB97flgXchSSaa8xP0b7lCF_URgX_5XoQWzHkEuhMTpTzUlAIF9IzGSMmBOjXycYyyWLMDq2WAzs-EXwfCkW4OU7EcnZJFp0qrgO3wxOgq3V4aMNPLDi9h4gF1eW6PFI4gBOxx4ifOnfNJQepVQ" />
-                <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-black/20"></div>
-                <div className="absolute top-space-md left-space-md flex gap-space-2xs">
-                  <span className="px-space-xs py-space-2xs rounded bg-surface-container-lowest/80 backdrop-blur-sm text-primary font-label-sm text-label-sm tracking-wider uppercase">Emotional Documentary</span>
-                  <span className="px-space-xs py-space-2xs rounded bg-surface-container-lowest/80 backdrop-blur-sm text-on-surface font-label-sm text-label-sm tracking-wider uppercase">35mm Film Still</span>
-                </div>
-              </div>
-              <div className="p-space-lg flex flex-col gap-space-xs">
-                <div className="flex items-center justify-between text-outline font-label-sm text-label-sm tracking-widest uppercase">
-                  <span className="">RAMBAGH MANDAP • CEREMONY</span>
-                  <span className="text-primary font-medium">FAMILY HEIRLOOM</span>
-                </div>
-                <h3 className="font-headline-sm text-headline-sm text-on-surface group-hover:text-primary transition-colors duration-300">
-              Samarth &amp; Tanvi — The Varmala Embrace
-            </h3>
-                <p className="font-body-sm text-body-sm text-on-surface-variant">
-              Tears of joy and ancestral pride captured without intrusion. Quiet long-focal documentations that turn split seconds into multi-generational memories.
-            </p>
-              </div>
-            </article>
-            <article className="portfolio-item md:col-span-12 group relative bg-surface-container-low rounded-xl overflow-hidden shadow-xl transition-all duration-500 hover:shadow-[0_15px_45px_-10px_rgba(0,184,200,0.18)]" data-category="pre-weddings engagements">
-              <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-center">
-                <div className="lg:col-span-5 p-space-lg lg:p-space-xl flex flex-col justify-center order-2 lg:order-1">
-                  <div className="flex items-center gap-space-xs text-secondary font-label-sm text-label-sm uppercase tracking-widest mb-space-2xs">
-                    <span className="material-symbols-outlined text-[15px]">diamond</span>
-                    <span className="">EDITORIAL PRE-WEDDING ARCHIVE</span>
-                  </div>
-                  <h3 className="font-headline-md text-headline-md text-on-surface group-hover:text-primary transition-colors duration-300 mb-space-xs">
-                Arjun &amp; Kiara — Lake Pichola Twilight Glow
-              </h3>
-                  <p className="font-body-sm text-body-sm text-on-surface-variant mb-space-md">
-                Conducted at Jagmandir Island at sunset. The couple was styled in bespoke velvet smoking jackets and champagne couture chiffon, mirrored by the tranquil ripples of Udaipur's golden waters.
-              </p>
-                  <div className="flex flex-wrap items-center gap-space-md font-label-sm text-label-sm text-outline uppercase tracking-wider">
-                    <div className="flex items-center gap-space-2xs">
-                      <span className="material-symbols-outlined text-primary text-[16px]">location_on</span>
-                      <span className="">UDAIPUR, INDIA</span>
-                    </div>
-                    <div className="flex items-center gap-space-2xs">
-                      <span className="material-symbols-outlined text-primary text-[16px]">schedule</span>
-                      <span className="">GOLDEN HOUR SESSION</span>
-                    </div>
-                  </div>
-                </div>
-                <div className="lg:col-span-7 relative aspect-[16/9] lg:aspect-[16/10] overflow-hidden bg-surface-container-high order-1 lg:order-2">
-                  <img className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105 filter brightness-95" data-alt="Luxury couple romantic portrait in regal historic palace pavilion overlooking shimmering serene lake waters at dusk, dramatic amber glow from palace chandeliers mixing with twilight deep blue sky, haute couture editorial styling" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyMlQ6QdfKnj8mGvDTBt54in92xh4bBcpAZy2_wEUMh7m8vgxMFTC0T-wo6jvGD4A080I20d3RWRVdY_7d9-eLLgR1uleFQGN1PBsqmBLdJb7EdJizqV894gDHDHy_c1QBdcgvf8mHRkQ5yzyUiaplKNMhpH0KpG2VMO2g3SFfDVl7XGujlZwBxJ-ugZ8oBYptBcdRW7G2NX8D78HDFkGiMBpWBKHHcU-x9OnU9FrHG1UoL0crutg9WQ" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-surface-container-low via-transparent to-transparent lg:hidden"></div>
-                  <div className="absolute top-space-md right-space-md bg-surface-container-lowest/80 backdrop-blur-md px-space-sm py-space-2xs rounded text-primary font-label-sm text-label-sm tracking-widest uppercase">
-                FINE ART EXHIBITION
-              </div>
-                </div>
-              </div>
-            </article>
+            {shown.map((it, i) => (
+              <PortfolioCard key={it.id || i} item={it} />
+            ))}
           </div>
         </section>
         <section className="w-full px-margin-mobile lg:px-margin-desktop py-space-2xl bg-surface-container-low/60 relative overflow-hidden mt-space-xl">

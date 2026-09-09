@@ -15,6 +15,7 @@ const TABS = [
   { key: 'leads', label: 'Leads', icon: 'inbox' },
   { key: 'packages', label: 'Packages', icon: 'sell' },
   { key: 'services', label: 'Services', icon: 'movie_filter' },
+  { key: 'portfolio', label: 'Portfolio', icon: 'collections_bookmark' },
   { key: 'gallery', label: 'Gallery', icon: 'photo_library' },
   { key: 'contact', label: 'Contact', icon: 'contact_phone' },
 ];
@@ -312,6 +313,99 @@ function ServicesTab({ value, onChange }) {
   );
 }
 
+// ── Portfolio ─────────────────────────────────────────────────
+const LAYOUTS = [
+  ['standard', 'Standard — image over caption'],
+  ['feature', 'Feature — wide, image + side panel'],
+  ['split', 'Split — copy beside image'],
+];
+const SPANS = [['12', 'Full width'], ['7', 'Two thirds'], ['6', 'Half'], ['5', 'Narrow']];
+const ASPECTS = [['16/10', 'Landscape 16:10'], ['16/9', 'Widescreen 16:9'], ['4/5', 'Portrait 4:5']];
+
+function PortfolioTab({ value, onChange }) {
+  const items = value.items || [];
+  const categories = value.categories || [];
+  const set = (i, patch) => onChange({ ...value, items: items.map((p, j) => (j === i ? { ...p, ...patch } : p)) });
+  const toggleCat = (i, key) => {
+    const cur = (items[i].categories || '').split(' ').filter(Boolean);
+    const next = cur.includes(key) ? cur.filter((c) => c !== key) : [...cur, key];
+    set(i, { categories: next.join(' ') });
+  };
+  const add = () => onChange({
+    ...value,
+    items: [...items, { id: `pf-${Date.now()}`, layout: 'standard', span: '6', aspect: '16/10', categories: '', youtubeId: '', image: '', eyebrow: '', note: '', tags: [], title: 'NEW PROJECT', desc: '', metaLeft: '', metaRight: '' }],
+  });
+
+  return (
+    <div className="flex flex-col gap-space-md">
+      <p className="font-body-sm text-body-sm text-outline">
+        Cards on the Portfolio page. Categories drive the filter buttons and their counts. Add a YouTube link to make a card click-to-play.
+      </p>
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-space-md">
+        {items.map((p, i) => (
+          <div key={i} className={cls.card + ' flex flex-col gap-space-sm'}>
+            <div className="flex items-center justify-between">
+              <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Project {i + 1}</span>
+              <ListControls i={i} n={items.length} onMove={(a, d) => onChange({ ...value, items: moveItem(items, a, d) })} onRemove={(a) => onChange({ ...value, items: items.filter((_, j) => j !== a) })} />
+            </div>
+            <div className="flex gap-space-sm">
+              <img src={p.image ? (/^https?:/.test(p.image) ? p.image : withBase(p.image)) : ''} alt="" className="w-28 aspect-video object-cover rounded border border-primary-container/20 bg-surface-container-lowest shrink-0" />
+              <div className="flex-1 flex flex-col gap-space-2xs min-w-0">
+                <Field label="Image URL" value={p.image} onChange={(v) => set(i, { image: v })} placeholder="https://… or /assets/photo.jpg" />
+                <UploadButton onDone={(url) => set(i, { image: url })} />
+              </div>
+            </div>
+            <Field label="YouTube link or ID (optional)" value={p.youtubeId} onChange={(v) => set(i, { youtubeId: v ? ytId(v) : '' })} placeholder="https://www.youtube.com/watch?v=…" hint="Leave blank for a still-image card." />
+            <Field label="Title" value={p.title} onChange={(v) => set(i, { title: v })} />
+            <Field label="Description" textarea value={p.desc} onChange={(v) => set(i, { desc: v })} />
+            <div>
+              <span className={cls.label}>Categories</span>
+              <div className="flex flex-wrap gap-space-2xs">
+                {categories.map((c) => {
+                  const on = (p.categories || '').split(' ').filter(Boolean).includes(c.key);
+                  return (
+                    <button key={c.key} type="button" onClick={() => toggleCat(i, c.key)} className={`${cls.btn} ${on ? cls.btnGold : cls.btnGhost}`}>{c.label}</button>
+                  );
+                })}
+              </div>
+            </div>
+            <div className="grid grid-cols-3 gap-space-sm">
+              <label className="block">
+                <span className={cls.label}>Layout</span>
+                <select className={cls.input} value={p.layout || 'standard'} onChange={(e) => set(i, { layout: e.target.value })}>
+                  {LAYOUTS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+                </select>
+              </label>
+              <label className="block">
+                <span className={cls.label}>Width</span>
+                <select className={cls.input} value={String(p.span || '6')} onChange={(e) => set(i, { span: e.target.value })}>
+                  {SPANS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+                </select>
+              </label>
+              <label className="block">
+                <span className={cls.label}>Image shape</span>
+                <select className={cls.input} value={p.aspect || '16/10'} onChange={(e) => set(i, { aspect: e.target.value })}>
+                  {ASPECTS.map(([v, l]) => <option key={v} value={v}>{l}</option>)}
+                </select>
+              </label>
+            </div>
+            <Field label="Chips over the image (comma separated)" value={(p.tags || []).join(', ')} onChange={(v) => set(i, { tags: v.split(',').map((s) => s.trim()).filter(Boolean) })} placeholder="Chiaroscuro, Portra 400" />
+            <div className="grid grid-cols-2 gap-space-sm">
+              <Field label="Caption left" value={p.metaLeft} onChange={(v) => set(i, { metaLeft: v })} placeholder="JAIPUR HAVELI PREP" />
+              <Field label="Caption right" value={p.metaRight} onChange={(v) => set(i, { metaRight: v })} placeholder="35MM ANALOG" />
+            </div>
+            <div className="grid grid-cols-2 gap-space-sm">
+              <Field label="Eyebrow" value={p.eyebrow} onChange={(v) => set(i, { eyebrow: v })} hint="Feature & split layouts." />
+              <Field label="Badge" value={p.note} onChange={(v) => set(i, { note: v })} hint="Small chip over the image." />
+            </div>
+          </div>
+        ))}
+      </div>
+      <button type="button" onClick={add} className={`${cls.btn} ${cls.btnGhost} self-start`}><span className="material-symbols-outlined text-[16px]">add</span>Add project</button>
+    </div>
+  );
+}
+
 // ── Gallery ───────────────────────────────────────────────────
 function GalleryTab({ value, onChange }) {
   const [sub, setSub] = useState('videos');
@@ -486,6 +580,7 @@ export default function AdminPanel() {
         <div className="flex flex-col gap-space-md">
           {tab === 'packages' && <PackagesTab value={draft.packages} onChange={(v) => setDraft({ ...draft, packages: v })} />}
           {tab === 'services' && <ServicesTab value={draft.services} onChange={(v) => setDraft({ ...draft, services: v })} />}
+          {tab === 'portfolio' && <PortfolioTab value={draft.portfolio} onChange={(v) => setDraft({ ...draft, portfolio: v })} />}
           {tab === 'gallery' && <GalleryTab value={draft.gallery} onChange={(v) => setDraft({ ...draft, gallery: v })} />}
           {tab === 'contact' && <ContactTab value={draft.contact} onChange={(v) => setDraft({ ...draft, contact: v })} />}
           <SaveBar dirty={dirty} saving={saving} onSave={save} onReset={reset} updated={JSON.stringify(content[tab]) !== JSON.stringify(DEFAULTS[tab])} />
