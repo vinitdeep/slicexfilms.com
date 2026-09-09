@@ -1,0 +1,19 @@
+{
+  "name": "SliceX Films",
+  "short_name": "SliceX",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#0e1314",
+  "background_color": "#0e1314",
+  "display": "standalone"
+}

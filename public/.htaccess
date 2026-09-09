@@ -1,5 +1,11 @@
 ErrorDocument 404 /404.html
 
+# Apache serves .webmanifest as text/plain otherwise, which can stop Android
+# using the icons for a home-screen install.
+<IfModule mod_mime.c>
+  AddType application/manifest+json .webmanifest
+</IfModule>
+
 # Hashed build assets are immutable; everything else revalidates.
 <IfModule mod_expires.c>
   ExpiresActive On

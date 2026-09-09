@@ -4,7 +4,19 @@ export const metadata = {
   title: 'SliceX Films | Luxury Wedding Cinematography',
   description:
     'A creative production house crafting visual experiences across films, advertising, weddings, podcasts, brands, events and documentaries.',
+  // Tab-sized icons use a clean X; the striped mark only reads above ~64px.
+  icons: {
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon-32x32.png', type: 'image/png', sizes: '32x32' },
+      { url: '/icon-192.png', type: 'image/png', sizes: '192x192' },
+    ],
+    apple: [{ url: '/apple-touch-icon.png', sizes: '180x180' }],
+  },
+  manifest: '/site.webmanifest',
 };
+
+export const viewport = { themeColor: '#0e1314' };
 
 export default function RootLayout({ children }) {
   return (
