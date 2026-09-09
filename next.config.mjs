@@ -4,7 +4,8 @@ const basePath = process.env.NEXT_PUBLIC_BASE_PATH || '';
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
+  // Only use static export for builds, not dev server
+  ...(process.env.NODE_ENV === 'production' ? { output: 'export' } : {}),
   images: { unoptimized: true },
   basePath,
   // Emit /about/index.html instead of /about.html so static hosts (GitHub
