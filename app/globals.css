@@ -41,7 +41,10 @@
     overflow-x: hidden;
   }
   body {
-    overscroll-behavior: none;
+    /* x-only: a blanket `none` also kills vertical scroll chaining, which
+       freezes the page whenever the cursor is over a nested scroll container
+       (e.g. the home page film strip). */
+    overscroll-behavior-x: none;
   }
   main > :first-child {
     margin-top: 0 !important;
