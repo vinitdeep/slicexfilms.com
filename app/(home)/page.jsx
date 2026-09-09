@@ -92,6 +92,71 @@ function InquiryForm({ copy }) {
   );
 }
 
+// Screening-room player. The selector boxes sit outside the data-yt element so
+// picking a film only swaps the poster — playback is the player itself.
+function ScreeningCarousel({ videos, watchLabel }) {
+  const [active, setActive] = useState(0);
+  if (!videos.length) return null;
+  const current = videos[Math.min(active, videos.length - 1)];
+
+  return (
+    <div className="flex flex-col gap-space-sm">
+      <div data-yt={current.id} className="relative w-full aspect-video md:max-h-[700px] bg-surface-container overflow-hidden group cursor-pointer shadow-[0_10px_50px_rgba(0,0,0,0.8)] border border-primary-container/25">
+        {videos.map((v, i) => (
+          <div
+            key={v.id || i}
+            aria-hidden={i !== active}
+            className="absolute inset-0 w-full h-full bg-cover bg-center transition-opacity duration-700 ease-in-out group-hover:scale-102"
+            style={{ backgroundImage: `url('${thumb(v.id)}')`, opacity: i === active ? 1 : 0 }}
+          />
+        ))}
+        <div className="absolute inset-0 bg-surface-container-lowest/40 group-hover:bg-surface-container-lowest/20 transition-colors"></div>
+        <div className="absolute inset-0 flex items-center justify-center">
+          <span className="w-24 h-24 rounded-full bg-gradient-to-tr from-[#00b8c8] to-[#3ee6f0] text-[#001f23] flex items-center justify-center shadow-[0_0_40px_rgba(0,184,200,0.6)] group-hover:scale-110 group-hover:shadow-[0_0_60px_rgba(0,184,200,0.9)] transition-all duration-300">
+            <span className="material-symbols-outlined text-[42px] translate-x-0.5">play_arrow</span>
+          </span>
+        </div>
+        <div className="absolute bottom-0 left-0 right-0 p-space-md lg:p-space-lg bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/80 to-transparent flex flex-col gap-space-xs">
+          <div className="flex items-center justify-between text-secondary font-metadata-dense text-metadata-dense uppercase tracking-widest font-semibold">
+            <span className="text-primary-fixed">
+              {current.category ? `${current.category} • ` : ''}{(current.title || '').toUpperCase()}
+            </span>
+            <span className="text-primary">{watchLabel}</span>
+          </div>
+          <div className="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden relative border border-primary-container/20">
+            <div className="h-full bg-gradient-to-r from-primary-container to-primary rounded-full shadow-[0_0_8px_#3ee6f0] transition-all duration-500" style={{ width: `${((active + 1) / videos.length) * 100}%` }} />
+          </div>
+        </div>
+      </div>
+
+      {videos.length > 1 && (
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-space-xs">
+          {videos.map((v, i) => (
+            <button
+              key={v.id || i}
+              type="button"
+              aria-pressed={i === active}
+              onClick={() => setActive(i)}
+              className={`text-left px-space-sm py-space-xs rounded-sm border transition-all duration-300 ${
+                i === active
+                  ? 'border-primary bg-primary/10 shadow-[0_0_10px_rgba(0,184,200,0.25)]'
+                  : 'border-primary-container/25 bg-surface-container/40 hover:border-primary/50 hover:bg-surface-container'
+              }`}
+            >
+              <span className={`block font-metadata-dense text-metadata-dense uppercase tracking-widest ${i === active ? 'text-primary' : 'text-outline'}`}>
+                {v.category || `Film ${String(i + 1).padStart(2, '0')}`}
+              </span>
+              <span className={`block font-label-uppercase text-label-uppercase uppercase tracking-wider truncate ${i === active ? 'text-primary-fixed' : 'text-on-surface-variant'}`}>
+                {v.title}
+              </span>
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function HomePage() {
   const home = useContent('home');
   const hero = home.hero || {};
@@ -104,7 +169,7 @@ export default function HomePage() {
   const method = home.method || {};
   const commission = home.commission || {};
   const FILM_STRIP = strip.items || [];
-  const FEATURE_FILM = { id: screening.featureId, title: screening.featureTitle || '' };
+  const featureVideos = (screening.featureVideos || []).filter((v) => v.id);
 
   // Film-strip reel: auto-scrolls, pauses on hover, and can be dragged /
   // wheel-scrolled to slide through the films. A drag suppresses the click so
@@ -432,24 +497,7 @@ export default function HomePage() {
           <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg uppercase font-light text-primary tracking-tight mt-space-2xs">{screening.title}</h2>
           <p className="font-body-md text-body-md text-on-surface-variant mt-space-sm">{screening.blurb}</p>
         </div>
-        <div data-yt={FEATURE_FILM.id} className="relative w-full aspect-video md:max-h-[700px] bg-surface-container overflow-hidden group cursor-pointer shadow-[0_10px_50px_rgba(0,0,0,0.8)] border border-primary-container/25">
-          <div className="absolute inset-0 w-full h-full bg-cover bg-center group-hover:scale-102 transition-transform duration-700" style={{ backgroundImage: `url('${thumb(FEATURE_FILM.id)}')` }}></div>
-          <div className="absolute inset-0 bg-surface-container-lowest/40 group-hover:bg-surface-container-lowest/20 transition-colors"></div>
-          <div className="absolute inset-0 flex items-center justify-center">
-            <button aria-label="Play Master Film" className="w-24 h-24 rounded-full bg-gradient-to-tr from-[#00b8c8] to-[#3ee6f0] text-[#001f23] flex items-center justify-center shadow-[0_0_40px_rgba(0,184,200,0.6)] group-hover:scale-110 group-hover:shadow-[0_0_60px_rgba(0,184,200,0.9)] transition-all duration-300">
-              <span className="material-symbols-outlined text-[42px] translate-x-0.5">play_arrow</span>
-            </button>
-          </div>
-          <div className="absolute bottom-0 left-0 right-0 p-space-md lg:p-space-lg bg-gradient-to-t from-surface-container-lowest via-surface-container-lowest/80 to-transparent flex flex-col gap-space-xs">
-            <div className="flex items-center justify-between text-secondary font-metadata-dense text-metadata-dense uppercase tracking-widest font-semibold">
-              <span className="text-primary-fixed">{(FEATURE_FILM.title || '').toUpperCase()}</span>
-              <span className="text-primary">{screening.watchLabel}</span>
-            </div>
-            <div className="w-full h-1 bg-surface-container-highest rounded-full overflow-hidden relative cursor-pointer border border-primary-container/20">
-              <div className="h-full bg-gradient-to-r from-primary-container to-primary w-1/4 rounded-full shadow-[0_0_8px_#3ee6f0]"></div>
-            </div>
-          </div>
-        </div>
+        <ScreeningCarousel videos={featureVideos} watchLabel={screening.watchLabel} />
         <div className="mt-space-2xl grid grid-cols-1 md:grid-cols-3 gap-space-lg">
           {(screening.cards || []).map((c, i) => (
             <div key={i} className="p-space-lg bg-surface-container/50 hover:bg-surface-container border border-primary-container/15 hover:border-primary/40 transition-all flex flex-col justify-between group">

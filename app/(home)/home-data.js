@@ -68,8 +68,12 @@ export const HOME = {
     index: '04 / THE SCREENING ROOM',
     title: 'CINEMATIC MASTERPIECES',
     blurb: 'Experience our bespoke 4K theatrical edits calibrated for acoustic precision and high-dynamic-range color artistry.',
-    featureId: 'MIBoIxNjfXM',
-    featureTitle: 'Pratap & Supriya — The Wedding Film',
+    featureVideos: [
+      { id: '96ztpzXcrlQ', title: 'Ananya & Swapnil', category: 'Wedding Film' },
+      { id: '6GrJci58sFQ', title: 'Abhishek & Neha', category: 'Engagement' },
+      { id: '1VxeldJy_4s', title: 'Safar · Part 3 — Akanksha & Bikash', category: 'Wedding Film' },
+      { id: 'YomPpYhVIws', title: 'Niharika & Chandan', category: 'Pre-Wedding' },
+    ],
     watchLabel: 'WATCH ON YOUTUBE',
     cards: [
       { meta: 'FILM #104 • 14 MIN', title: 'SHREYA & ROHAN', desc: 'The Grand Bikaner Fort Extravaganza', cta: 'VIEW TEASER' },

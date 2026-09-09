@@ -625,17 +625,41 @@ function HomeTab({ value, onChange, services, onServicesChange }) {
               <Field label="Heading" value={part.title} onChange={f('title')} />
             </div>
             <Field label="Blurb" textarea value={part.blurb} onChange={f('blurb')} />
-            <div className="flex gap-space-sm">
-              <div className="w-28 aspect-video shrink-0 self-start rounded overflow-hidden bg-surface-container-lowest border border-primary-container/20">
-                {part.featureId ? <img src={`https://i.ytimg.com/vi/${part.featureId}/hqdefault.jpg`} alt="" className="w-full h-full object-cover" /> : null}
-              </div>
-              <div className="flex-1 flex flex-col gap-space-2xs">
-                <Field label="Feature film (YouTube link or ID)" value={part.featureId} onChange={(v) => set({ featureId: ytId(v) })} />
-                <Field label="Feature title" value={part.featureTitle} onChange={f('featureTitle')} />
-                <Field label="Watch label" value={part.watchLabel} onChange={f('watchLabel')} />
-              </div>
-            </div>
+            <Field label="Watch label" value={part.watchLabel} onChange={f('watchLabel')} />
           </div>
+          <div className="flex flex-col gap-space-2xs">
+            <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">
+              Feature films {(part.featureVideos || []).length ? `(${(part.featureVideos || []).length})` : ''}
+            </span>
+            <p className="font-body-sm text-body-sm text-outline">
+              Each film gets a selector box under the player. Visitors tap a box to switch the poster; the film only opens when they click the player itself.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-space-sm">
+            {(part.featureVideos || []).map((v, i) => {
+              const vids = part.featureVideos || [];
+              const upd = (patch) => setList('featureVideos', vids.map((y, j) => (j === i ? { ...y, ...patch } : y)));
+              return (
+                <div key={i} className={cls.card + ' flex gap-space-sm'}>
+                  <div className="w-28 aspect-video shrink-0 self-start rounded overflow-hidden bg-surface-container-lowest border border-primary-container/20">
+                    {v.id ? <img src={`https://i.ytimg.com/vi/${v.id}/hqdefault.jpg`} alt="" className="w-full h-full object-cover" /> : null}
+                  </div>
+                  <div className="flex-1 flex flex-col gap-space-2xs min-w-0">
+                    <div className="flex items-center justify-between">
+                      <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Film {i + 1}</span>
+                      <ListControls i={i} n={vids.length} onMove={(a, d) => setList('featureVideos', moveItem(vids, a, d))} onRemove={(a) => setList('featureVideos', vids.filter((_, j) => j !== a))} />
+                    </div>
+                    <Field label="YouTube link or ID" value={v.id} onChange={(x) => upd({ id: ytId(x) })} placeholder="https://www.youtube.com/watch?v=…" />
+                    <Field label="Title" value={v.title} onChange={(x) => upd({ title: x })} />
+                    <Field label="Category" value={v.category} onChange={(x) => upd({ category: x })} placeholder="Wedding Film" />
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          <button type="button" onClick={() => setList('featureVideos', [...(part.featureVideos || []), { id: '', title: '', category: '' }])} className={`${cls.btn} ${cls.btnGhost} self-start`}>
+            <span className="material-symbols-outlined text-[16px]">add</span>Add feature film
+          </button>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-space-sm">
             {(part.cards || []).map((c, i) => {
               const cards = part.cards || [];
