@@ -421,7 +421,7 @@ const HOME_SUBS = [
   ['commission', 'Commission & inquiry'],
 ];
 
-function HomeTab({ value, onChange }) {
+function HomeTab({ value, onChange, services, onServicesChange }) {
   const [sub, setSub] = useState('hero');
   const part = value[sub] || {};
   const set = (patch) => onChange({ ...value, [sub]: { ...part, ...patch } });
@@ -520,11 +520,20 @@ function HomeTab({ value, onChange }) {
       )}
 
       {sub === 'services' && (
-        <div className={cls.card + ' flex flex-col gap-space-sm max-w-2xl'}>
-          <p className="font-body-sm text-body-sm text-outline">The service cards themselves are edited in the Services tab.</p>
-          <Field label="Index label" value={part.index} onChange={f('index')} />
-          <Field label="Heading" value={part.title} onChange={f('title')} />
-          <Field label="Blurb" textarea value={part.blurb} onChange={f('blurb')} />
+        <div className="flex flex-col gap-space-md">
+          <div className={cls.card + ' flex flex-col gap-space-sm max-w-2xl'}>
+            <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Section heading</span>
+            <Field label="Index label" value={part.index} onChange={f('index')} />
+            <Field label="Heading" value={part.title} onChange={f('title')} />
+            <Field label="Blurb" textarea value={part.blurb} onChange={f('blurb')} />
+          </div>
+          <div className="flex flex-col gap-space-2xs">
+            <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Service cards</span>
+            <p className="font-body-sm text-body-sm text-outline">
+              The same cards as the Services tab — editing them here updates both the home page grid and the Services page.
+            </p>
+          </div>
+          <ServicesTab value={services} onChange={onServicesChange} />
         </div>
       )}
 
@@ -960,12 +969,19 @@ export default function AdminPanel() {
   }, [session]);
 
   const signOut = async () => { await getSupabase().auth.signOut(); setSession(null); };
-  const dirty = draft && content && JSON.stringify(draft[tab]) !== JSON.stringify(content[tab]);
+  // The Home tab also edits the service cards, which live under their own key.
+  const keysFor = (t) => (t === 'home' ? ['home', 'services'] : [t]);
+  const changed = (k) => draft && content && JSON.stringify(draft[k]) !== JSON.stringify(content[k]);
+  const dirty = keysFor(tab).some(changed);
   const save = async () => {
     setSaving(true);
     try {
-      const merged = await saveContent(tab, draft[tab], session.user.email);
-      setContent((c) => ({ ...c, [tab]: merged })); setDraft((d) => ({ ...d, [tab]: JSON.parse(JSON.stringify(merged)) }));
+      for (const k of keysFor(tab)) {
+        if (!changed(k)) continue;
+        const merged = await saveContent(k, draft[k], session.user.email);
+        setContent((c) => ({ ...c, [k]: merged }));
+        setDraft((d) => ({ ...d, [k]: JSON.parse(JSON.stringify(merged)) }));
+      }
       toast('Saved — live on the site now');
     } catch (e) { toast(e.message, true); }
     setSaving(false);
@@ -973,8 +989,11 @@ export default function AdminPanel() {
   const reset = async () => {
     if (!confirm('Discard saved edits for this section and go back to the built-in defaults?')) return;
     try {
-      await resetContent(tab);
-      setContent((c) => ({ ...c, [tab]: DEFAULTS[tab] })); setDraft((d) => ({ ...d, [tab]: JSON.parse(JSON.stringify(DEFAULTS[tab])) }));
+      for (const k of keysFor(tab)) {
+        await resetContent(k);
+        setContent((c) => ({ ...c, [k]: DEFAULTS[k] }));
+        setDraft((d) => ({ ...d, [k]: JSON.parse(JSON.stringify(DEFAULTS[k])) }));
+      }
       toast('Reset to defaults');
     } catch (e) { toast(e.message, true); }
   };
@@ -1016,14 +1035,14 @@ export default function AdminPanel() {
       {tab === 'leads' && <LeadsTab toast={toast} />}
       {tab !== 'leads' && draft && (
         <div className="flex flex-col gap-space-md">
-          {tab === 'home' && <HomeTab value={draft.home} onChange={(v) => setDraft({ ...draft, home: v })} />}
+          {tab === 'home' && <HomeTab value={draft.home} onChange={(v) => setDraft({ ...draft, home: v })} services={draft.services} onServicesChange={(v) => setDraft({ ...draft, services: v })} />}
           {tab === 'packages' && <PackagesTab value={draft.packages} onChange={(v) => setDraft({ ...draft, packages: v })} />}
           {tab === 'services' && <ServicesTab value={draft.services} onChange={(v) => setDraft({ ...draft, services: v })} />}
           {tab === 'portfolio' && <PortfolioTab value={draft.portfolio} onChange={(v) => setDraft({ ...draft, portfolio: v })} />}
           {tab === 'films' && <FilmsTab value={draft.films} onChange={(v) => setDraft({ ...draft, films: v })} />}
           {tab === 'gallery' && <GalleryTab value={draft.gallery} onChange={(v) => setDraft({ ...draft, gallery: v })} />}
           {tab === 'contact' && <ContactTab value={draft.contact} onChange={(v) => setDraft({ ...draft, contact: v })} />}
-          <SaveBar dirty={dirty} saving={saving} onSave={save} onReset={reset} updated={JSON.stringify(content[tab]) !== JSON.stringify(DEFAULTS[tab])} />
+          <SaveBar dirty={dirty} saving={saving} onSave={save} onReset={reset} updated={keysFor(tab).some((k) => JSON.stringify(content[k]) !== JSON.stringify(DEFAULTS[k]))} />
         </div>
       )}
       <Toast msg={toastMsg} />
