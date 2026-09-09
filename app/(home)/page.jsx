@@ -81,7 +81,7 @@ export default function HomePage() {
       if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
     };
     const wheel = (e) => {
-      if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) { el.scrollLeft += e.deltaY; e.preventDefault(); }
+      if (Math.abs(e.deltaX) > Math.abs(e.deltaY)) { el.scrollLeft += e.deltaX; e.preventDefault(); }
     };
 
     el.addEventListener('mouseenter', enter);
