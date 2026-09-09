@@ -625,14 +625,17 @@ function HomeTab({ value, onChange, services, onServicesChange }) {
               <Field label="Heading" value={part.title} onChange={f('title')} />
             </div>
             <Field label="Blurb" textarea value={part.blurb} onChange={f('blurb')} />
-            <Field label="Watch label" value={part.watchLabel} onChange={f('watchLabel')} />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-space-sm">
+              <Field label="Watch label" value={part.watchLabel} onChange={f('watchLabel')} />
+              <Field label="Active card label" value={part.nowShowingLabel} onChange={f('nowShowingLabel')} placeholder="NOW SHOWING" />
+            </div>
           </div>
           <div className="flex flex-col gap-space-2xs">
             <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">
               Feature films {(part.featureVideos || []).length ? `(${(part.featureVideos || []).length})` : ''}
             </span>
             <p className="font-body-sm text-body-sm text-outline">
-              Each film gets a selector box under the player. Visitors tap a box to switch the poster; the film only opens when they click the player itself.
+              These are the cards under the player. Tapping one swaps the film shown above — it only opens when the player itself is clicked.
             </p>
           </div>
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-space-sm">
@@ -650,35 +653,18 @@ function HomeTab({ value, onChange, services, onServicesChange }) {
                       <ListControls i={i} n={vids.length} onMove={(a, d) => setList('featureVideos', moveItem(vids, a, d))} onRemove={(a) => setList('featureVideos', vids.filter((_, j) => j !== a))} />
                     </div>
                     <Field label="YouTube link or ID" value={v.id} onChange={(x) => upd({ id: ytId(x) })} placeholder="https://www.youtube.com/watch?v=…" />
+                    <Field label="Card heading (small)" value={v.category} onChange={(x) => upd({ category: x })} placeholder="FILM 01 • WEDDING FILM" />
                     <Field label="Title" value={v.title} onChange={(x) => upd({ title: x })} />
-                    <Field label="Category" value={v.category} onChange={(x) => upd({ category: x })} placeholder="Wedding Film" />
+                    <Field label="Description" textarea value={v.desc} onChange={(x) => upd({ desc: x })} hint="Optional — hidden when blank." />
+                    <Field label="Link label" value={v.cta} onChange={(x) => upd({ cta: x })} placeholder="VIEW FILM" />
                   </div>
                 </div>
               );
             })}
           </div>
-          <button type="button" onClick={() => setList('featureVideos', [...(part.featureVideos || []), { id: '', title: '', category: '' }])} className={`${cls.btn} ${cls.btnGhost} self-start`}>
-            <span className="material-symbols-outlined text-[16px]">add</span>Add feature film
+          <button type="button" onClick={() => setList('featureVideos', [...(part.featureVideos || []), { id: '', category: '', title: '', desc: '', cta: 'VIEW FILM' }])} className={`${cls.btn} ${cls.btnGhost} self-start`}>
+            <span className="material-symbols-outlined text-[16px]">add</span>Add film
           </button>
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-space-sm">
-            {(part.cards || []).map((c, i) => {
-              const cards = part.cards || [];
-              const upd = (patch) => setList('cards', cards.map((y, j) => (j === i ? { ...y, ...patch } : y)));
-              return (
-                <div key={i} className={cls.card + ' flex flex-col gap-space-2xs'}>
-                  <div className="flex items-center justify-between">
-                    <span className="font-label-sm text-label-sm uppercase tracking-widest text-primary">Card {i + 1}</span>
-                    <ListControls i={i} n={cards.length} onMove={(a, d) => setList('cards', moveItem(cards, a, d))} onRemove={(a) => setList('cards', cards.filter((_, j) => j !== a))} />
-                  </div>
-                  <Field label="Meta" value={c.meta} onChange={(x) => upd({ meta: x })} placeholder="FILM #104 • 14 MIN" />
-                  <Field label="Title" value={c.title} onChange={(x) => upd({ title: x })} />
-                  <Field label="Description" value={c.desc} onChange={(x) => upd({ desc: x })} />
-                  <Field label="Link label" value={c.cta} onChange={(x) => upd({ cta: x })} />
-                </div>
-              );
-            })}
-          </div>
-          <button type="button" onClick={() => setList('cards', [...(part.cards || []), { meta: '', title: '', desc: '', cta: 'VIEW TEASER' }])} className={`${cls.btn} ${cls.btnGhost} self-start`}><span className="material-symbols-outlined text-[16px]">add</span>Add card</button>
         </div>
       )}
 

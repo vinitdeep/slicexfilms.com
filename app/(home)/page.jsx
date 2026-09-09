@@ -94,7 +94,7 @@ function InquiryForm({ copy }) {
 
 // Screening-room player. The selector boxes sit outside the data-yt element so
 // picking a film only swaps the poster — playback is the player itself.
-function ScreeningCarousel({ videos, watchLabel }) {
+function ScreeningCarousel({ videos, watchLabel, nowShowingLabel }) {
   const [active, setActive] = useState(0);
   if (!videos.length) return null;
   const current = videos[Math.min(active, videos.length - 1)];
@@ -130,27 +130,39 @@ function ScreeningCarousel({ videos, watchLabel }) {
       </div>
 
       {videos.length > 1 && (
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-space-xs">
-          {videos.map((v, i) => (
-            <button
-              key={v.id || i}
-              type="button"
-              aria-pressed={i === active}
-              onClick={() => setActive(i)}
-              className={`text-left px-space-sm py-space-xs rounded-sm border transition-all duration-300 ${
-                i === active
-                  ? 'border-primary bg-primary/10 shadow-[0_0_10px_rgba(0,184,200,0.25)]'
-                  : 'border-primary-container/25 bg-surface-container/40 hover:border-primary/50 hover:bg-surface-container'
-              }`}
-            >
-              <span className={`block font-metadata-dense text-metadata-dense uppercase tracking-widest ${i === active ? 'text-primary' : 'text-outline'}`}>
-                {v.category || `Film ${String(i + 1).padStart(2, '0')}`}
-              </span>
-              <span className={`block font-label-uppercase text-label-uppercase uppercase tracking-wider truncate ${i === active ? 'text-primary-fixed' : 'text-on-surface-variant'}`}>
-                {v.title}
-              </span>
-            </button>
-          ))}
+        <div className="mt-space-2xl grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-space-lg">
+          {videos.map((v, i) => {
+            const on = i === active;
+            return (
+              <button
+                key={v.id || i}
+                type="button"
+                aria-pressed={on}
+                onClick={() => setActive(i)}
+                className={`text-left p-space-lg border transition-all flex flex-col justify-between group/card ${
+                  on
+                    ? 'bg-surface-container border-primary shadow-[0_0_18px_rgba(0,184,200,0.2)]'
+                    : 'bg-surface-container/50 border-primary-container/15 hover:bg-surface-container hover:border-primary/40'
+                }`}
+              >
+                <div>
+                  <span className={`font-metadata-dense text-metadata-dense tracking-widest uppercase font-semibold ${on ? 'text-primary' : 'text-secondary'}`}>
+                    {v.category}
+                  </span>
+                  <h4 className={`font-headline-sm text-headline-sm uppercase font-light mt-space-2xs transition-colors ${on ? 'text-primary' : 'text-primary group-hover/card:text-secondary'}`}>
+                    {v.title}
+                  </h4>
+                  {v.desc && <p className="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">{v.desc}</p>}
+                </div>
+                <div className={`mt-space-lg flex items-center justify-between font-label-uppercase text-label-uppercase tracking-widest font-semibold ${on ? 'text-primary' : 'text-primary'}`}>
+                  <span>{on ? nowShowingLabel : v.cta}</span>
+                  <span className={`material-symbols-outlined text-[16px] transition-transform ${on ? '' : 'group-hover/card:translate-x-1'}`}>
+                    {on ? 'play_circle' : 'arrow_forward'}
+                  </span>
+                </div>
+              </button>
+            );
+          })}
         </div>
       )}
     </div>
@@ -497,22 +509,7 @@ export default function HomePage() {
           <h2 className="font-display-lg text-display-lg-mobile md:text-display-lg uppercase font-light text-primary tracking-tight mt-space-2xs">{screening.title}</h2>
           <p className="font-body-md text-body-md text-on-surface-variant mt-space-sm">{screening.blurb}</p>
         </div>
-        <ScreeningCarousel videos={featureVideos} watchLabel={screening.watchLabel} />
-        <div className="mt-space-2xl grid grid-cols-1 md:grid-cols-3 gap-space-lg">
-          {(screening.cards || []).map((c, i) => (
-            <div key={i} className="p-space-lg bg-surface-container/50 hover:bg-surface-container border border-primary-container/15 hover:border-primary/40 transition-all flex flex-col justify-between group">
-              <div>
-                <span className="font-metadata-dense text-metadata-dense text-secondary tracking-widest uppercase font-semibold">{c.meta}</span>
-                <h4 className="font-headline-sm text-headline-sm uppercase text-primary group-hover:text-secondary transition-colors font-light mt-space-2xs">{c.title}</h4>
-                <p className="font-body-sm text-body-sm text-on-surface-variant mt-space-2xs">{c.desc}</p>
-              </div>
-              <div className="mt-space-lg flex items-center justify-between font-label-uppercase text-label-uppercase text-primary tracking-widest font-semibold">
-                <span>{c.cta}</span>
-                <span className="material-symbols-outlined text-[16px] group-hover:translate-x-1 transition-transform">arrow_forward</span>
-              </div>
-            </div>
-          ))}
-        </div>
+        <ScreeningCarousel videos={featureVideos} watchLabel={screening.watchLabel} nowShowingLabel={screening.nowShowingLabel} />
       </section>
       <section className="w-full bg-surface-container-lowest py-space-5xl px-margin-mobile lg:px-margin-desktop flex flex-col justify-center items-center text-center overflow-hidden relative">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,184,200,0.08)_0%,_transparent_70%)] pointer-events-none"></div>

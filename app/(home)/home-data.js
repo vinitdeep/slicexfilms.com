@@ -68,17 +68,15 @@ export const HOME = {
     index: '04 / THE SCREENING ROOM',
     title: 'CINEMATIC MASTERPIECES',
     blurb: 'Experience our bespoke 4K theatrical edits calibrated for acoustic precision and high-dynamic-range color artistry.',
-    featureVideos: [
-      { id: '96ztpzXcrlQ', title: 'Ananya & Swapnil', category: 'Wedding Film' },
-      { id: '6GrJci58sFQ', title: 'Abhishek & Neha', category: 'Engagement' },
-      { id: '1VxeldJy_4s', title: 'Safar · Part 3 — Akanksha & Bikash', category: 'Wedding Film' },
-      { id: 'YomPpYhVIws', title: 'Niharika & Chandan', category: 'Pre-Wedding' },
-    ],
     watchLabel: 'WATCH ON YOUTUBE',
-    cards: [
-      { meta: 'FILM #104 • 14 MIN', title: 'SHREYA & ROHAN', desc: 'The Grand Bikaner Fort Extravaganza', cta: 'VIEW TEASER' },
-      { meta: 'FILM #105 • 19 MIN', title: 'ARJUN & NIKITA', desc: 'Intimate Forest Sanctuary & Vows', cta: 'VIEW TEASER' },
-      { meta: 'FILM #106 • 22 MIN', title: 'VARUN & SIMRAN', desc: 'Royal Haveli Celebration & Baraat', cta: 'VIEW TEASER' },
+    nowShowingLabel: 'NOW SHOWING',
+    // Each card is a selector: tapping one swaps the film shown in the player
+    // above. Descriptions are left blank to be written in the admin.
+    featureVideos: [
+      { id: '96ztpzXcrlQ', category: 'FILM 01 • WEDDING FILM', title: 'ANANYA & SWAPNIL', desc: '', cta: 'VIEW FILM' },
+      { id: '6GrJci58sFQ', category: 'FILM 02 • ENGAGEMENT', title: 'ABHISHEK & NEHA', desc: '', cta: 'VIEW FILM' },
+      { id: '1VxeldJy_4s', category: 'FILM 03 • WEDDING FILM', title: 'SAFAR · PART 3 — AKANKSHA & BIKASH', desc: '', cta: 'VIEW FILM' },
+      { id: 'YomPpYhVIws', category: 'FILM 04 • PRE-WEDDING', title: 'NIHARIKA & CHANDAN', desc: '', cta: 'VIEW FILM' },
     ],
   },
   creed: {
