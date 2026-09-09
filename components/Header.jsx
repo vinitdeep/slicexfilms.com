@@ -47,20 +47,12 @@ export default function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-surface-container-lowest/90 backdrop-blur-xl border-b border-primary-container/20 shadow-[0_4px_30px_rgba(0,0,0,0.4)]">
       <div className="h-20 w-full px-margin-mobile lg:px-margin-desktop flex items-center justify-between gap-space-md">
         <div className="flex items-center gap-space-md">
-          <Link className="flex items-center gap-space-sm group" data-path="home" href="/">
+          <Link className="flex items-center group" data-path="home" href="/">
             <img
-              alt="SliceX Films Logo"
-              className="h-8 w-auto object-contain transition-transform group-hover:scale-105"
-              src={withBase("/assets/logo.jpg")}
+              alt="SliceX Films"
+              className="h-11 md:h-12 w-auto object-contain transition-transform group-hover:scale-105"
+              src={withBase('/assets/slicex-logo.png')}
             />
-            <div className="flex flex-col">
-              <span className="font-['Playfair_Display'] text-[20px] uppercase tracking-wider text-primary font-normal leading-none">
-                SLICEX FILMS
-              </span>
-              <span className="font-['Manrope'] text-[10px] text-secondary tracking-widest uppercase mt-1">
-                CAPTURE | CREATE | INSPIRE
-              </span>
-            </div>
           </Link>
         </div>
         <nav className="hidden xl:flex items-center gap-space-lg">
